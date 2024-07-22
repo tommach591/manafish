@@ -11,31 +11,6 @@ export function useMana() {
   return useContext(ManaContext);
 }
 
-const RetrieveStoredManaContext = createContext();
-export function useRetrieveStoredMana() {
-  return useContext(RetrieveStoredManaContext);
-}
-
-const StoredManaContext = createContext();
-export function useStoredMana() {
-  return useContext(StoredManaContext);
-}
-
-const MaxStoredManaContext = createContext();
-export function useMaxStoredMana() {
-  return useContext(MaxStoredManaContext);
-}
-
-const LastManaIntervalContext = createContext();
-export function useLastManaInterval() {
-  return useContext(LastManaIntervalContext);
-}
-
-const NextManaIntervalContext = createContext();
-export function useNextManaInterval() {
-  return useContext(NextManaIntervalContext);
-}
-
 export function IncomeProvider({ children }) {
   localStorage.clear();
 
@@ -104,18 +79,18 @@ export function IncomeProvider({ children }) {
   }, [lastManaInterval, maxStoredMana, nextManaInterval, storedMana]);
 
   return (
-    <ManaContext.Provider value={mana}>
-      <RetrieveStoredManaContext.Provider value={retrieveStoredMana}>
-        <StoredManaContext.Provider value={storedMana}>
-          <MaxStoredManaContext.Provider value={maxStoredMana}>
-            <LastManaIntervalContext.Provider value={lastManaInterval}>
-              <NextManaIntervalContext.Provider value={nextManaInterval}>
-                {children}
-              </NextManaIntervalContext.Provider>
-            </LastManaIntervalContext.Provider>
-          </MaxStoredManaContext.Provider>
-        </StoredManaContext.Provider>
-      </RetrieveStoredManaContext.Provider>
+    <ManaContext.Provider
+      value={{
+        mana,
+        retrieveStoredMana,
+        storedMana,
+        maxStoredMana,
+        setMaxStoredMana,
+        lastManaInterval,
+        nextManaInterval,
+      }}
+    >
+      {children}
     </ManaContext.Provider>
   );
 }
