@@ -17,6 +17,16 @@ export function IncomeProvider({ children }) {
   const TICK_RATE = 1000;
   const REGEN_RATE = 14000; // subtract 1000
 
+  const [userID, setUserID] = useState(() => {
+    const savedUserID = localStorage.getItem("userID");
+    return savedUserID ? JSON.parse(savedUserID) : "";
+  });
+
+  const handleLogin = useCallback((id) => {
+    localStorage.setItem("userID", JSON.stringify(id));
+    setUserID(id);
+  }, []);
+
   const [mana, setMana] = useState(() => {
     const savedMana = localStorage.getItem("mana");
     return savedMana ? JSON.parse(savedMana) : 0;
@@ -81,6 +91,8 @@ export function IncomeProvider({ children }) {
   return (
     <ManaContext.Provider
       value={{
+        userID,
+        handleLogin,
         mana,
         retrieveStoredMana,
         storedMana,

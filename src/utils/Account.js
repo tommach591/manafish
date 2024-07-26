@@ -9,10 +9,10 @@ export function getAllAccount() {
     .catch((err) => console.error(err));
 }
 
-export function loginAccount(id, pw) {
+export function loginAccount(usernameEntered, passwordEntered) {
   const body = {
-    userID: id,
-    userPW: pw,
+    username: usernameEntered,
+    password: passwordEntered,
   };
 
   return fetch(`${serverURL}/api/account/login`, {
@@ -30,13 +30,12 @@ export function loginAccount(id, pw) {
     .catch((err) => console.error(err));
 }
 
-export function createAccount(id, pw) {
+export function createAccount(usernameEntered, passwordEntered) {
   const body = {
-    userID: id,
-    userPW: pw,
+    username: usernameEntered,
+    password: passwordEntered,
   };
 
-  console.log("A");
   return fetch(`${serverURL}/api/account/signup`, {
     method: "POST",
     headers: {
@@ -52,10 +51,10 @@ export function createAccount(id, pw) {
     .catch((err) => console.error(err));
 }
 
-export function deleteAccount(id, pw) {
+export function deleteAccount(usernameEntered, passwordEntered) {
   const body = {
-    userID: id,
-    userPW: pw,
+    username: usernameEntered,
+    password: passwordEntered,
   };
 
   return fetch(`${serverURL}/api/account/delete`, {

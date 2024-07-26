@@ -1,50 +1,7 @@
 .App {
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-.Mana {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  padding: 0.5rem;
-  border-bottom: 1px solid black;
-}
-
-.StoredMana {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  padding: 0.5rem;
-  border-bottom: 1px solid black;
-}
-
-.ClaimMana {
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  height: 2rem;
-
-  border: 1px solid black;
-  border-radius: 5px;
-
-  background: none;
-  margin: 0.5rem;
-  padding: 0.5rem;
-}
-
-.Credentials {
-  display: flex;
-  flex-direction: column;
 }
