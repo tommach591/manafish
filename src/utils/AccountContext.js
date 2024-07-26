@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
 } from "react";
+import { createBalance, getBalance, updateBalance } from "./Balance";
 
 const ManaContext = createContext();
 export function useMana() {
@@ -12,7 +13,7 @@ export function useMana() {
 }
 
 export function IncomeProvider({ children }) {
-  localStorage.clear();
+  // localStorage.clear();
 
   const TICK_RATE = 1000;
   const REGEN_RATE = 14000; // subtract 1000
@@ -27,72 +28,84 @@ export function IncomeProvider({ children }) {
     setUserID(id);
   }, []);
 
-  const [mana, setMana] = useState(() => {
-    const savedMana = localStorage.getItem("mana");
-    return savedMana ? JSON.parse(savedMana) : 0;
-  });
+  const handleLogout = useCallback(() => {
+    localStorage.setItem("userID", JSON.stringify(""));
+    setUserID("");
+  }, []);
 
-  const [storedMana, setStoredMana] = useState(() => {
-    const savedStoredMana = localStorage.getItem("storedMana");
-    return savedStoredMana ? JSON.parse(savedStoredMana) : 0;
-  });
-
-  const [maxStoredMana, setMaxStoredMana] = useState(() => {
-    const savedMaxStoredMana = localStorage.getItem("maxStoredMana");
-    return savedMaxStoredMana ? JSON.parse(savedMaxStoredMana) : 480;
-  });
-
-  const [lastManaInterval, setLastManaInterval] = useState(() => {
-    const savedLastManaInterval = localStorage.getItem("lastManaInterval");
-    return savedLastManaInterval
-      ? new Date(JSON.parse(savedLastManaInterval))
-      : new Date();
-  });
-
-  const [nextManaInterval, setNextManaInterval] = useState(() => {
-    const savedNextManaInterval = localStorage.getItem("nextManaInterval");
-    return savedNextManaInterval
-      ? new Date(JSON.parse(savedNextManaInterval))
-      : new Date();
-  });
+  const [mana, setMana] = useState(0);
+  const [storedMana, setStoredMana] = useState(0);
+  const [maxStoredMana, setMaxStoredMana] = useState(480);
+  const [lastManaInterval, setLastManaInterval] = useState(new Date());
+  const [nextManaInterval, setNextManaInterval] = useState(new Date());
 
   const retrieveStoredMana = useCallback(() => {
-    setMana((prevMana) => prevMana + storedMana);
+    const updateFields = {};
+    updateFields.mana = mana + storedMana;
+    updateFields.storedMana = 0;
+
+    setMana(updateFields.mana);
     setStoredMana(0);
-  }, [storedMana]);
+    updateBalance(userID, updateFields);
+  }, [userID, mana, storedMana]);
 
   useEffect(() => {
+    if (!userID) return;
+    else {
+      getBalance(userID).then((res) => {
+        if (res) {
+          setMana(res.mana);
+          setStoredMana(res.storedMana);
+          setMaxStoredMana(res.maxStoredMana);
+          setLastManaInterval(new Date(res.lastManaInterval));
+          setNextManaInterval(new Date(res.nextManaInterval));
+        } else {
+          createBalance(userID);
+          setMana(50);
+          setStoredMana(0);
+          setMaxStoredMana(480);
+          setLastManaInterval(new Date());
+          setNextManaInterval(new Date());
+        }
+      });
+    }
+  }, [userID]);
+
+  useEffect(() => {
+    if (!userID) return;
     const manaRegenInterval = setInterval(() => {
+      const updateFields = {};
       const now = new Date();
       const timeElapsed = nextManaInterval - lastManaInterval;
       if (storedMana >= maxStoredMana) {
         now.setTime(now.getTime() + REGEN_RATE);
-        localStorage.setItem("nextManaInterval", JSON.stringify(now));
         setNextManaInterval(new Date(now.getTime()));
+        updateFields.nextManaInterval = now;
       } else if (timeElapsed < 0) {
-        setStoredMana((prevStoredMana) => {
-          const newStoredMana =
-            prevStoredMana +
-            Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000)));
-          localStorage.setItem("storedMana", JSON.stringify(newStoredMana));
-          return newStoredMana;
-        });
+        const newStoredMana =
+          storedMana + Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000)));
+        setStoredMana(newStoredMana);
+        updateFields.storedMana = newStoredMana;
+
         now.setTime(now.getTime() + REGEN_RATE);
-        localStorage.setItem("nextManaInterval", JSON.stringify(now));
         setNextManaInterval(new Date(now.getTime()));
+        updateFields.nextManaInterval = now;
       }
 
       setLastManaInterval(new Date());
+      updateFields.lastManaInterval = new Date();
+      updateBalance(userID, updateFields);
     }, TICK_RATE - (new Date() % TICK_RATE));
 
     return () => clearInterval(manaRegenInterval);
-  }, [lastManaInterval, maxStoredMana, nextManaInterval, storedMana]);
+  }, [userID, lastManaInterval, maxStoredMana, nextManaInterval, storedMana]);
 
   return (
     <ManaContext.Provider
       value={{
         userID,
         handleLogin,
+        handleLogout,
         mana,
         retrieveStoredMana,
         storedMana,
