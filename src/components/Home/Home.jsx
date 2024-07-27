@@ -33,7 +33,11 @@ function Home() {
         <h1>{`Stored Mana: ${storedMana}/${maxStoredMana}`}</h1>
         <h1>
           {`Next Increment:
-        ${Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1}s`}
+        ${
+          Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1 < 0
+            ? 15
+            : Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1
+        }s`}
         </h1>
       </div>
       <button className="ClaimMana" onClick={retrieveStoredMana}>
@@ -49,6 +53,15 @@ function Home() {
         }}
       >
         Print Balances
+      </button>
+
+      <button
+        className="ClaimMana"
+        onClick={() => {
+          navigate("/arcade");
+        }}
+      >
+        Arcade
       </button>
     </div>
   );

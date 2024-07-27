@@ -1,0 +1,20 @@
+.Arcade {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Bet {
+  margin: 1rem;
+  text-align: center;
+}
+
+.Bet > input {
+  text-align: center;
+}
+
+.ArcadeButton {
+  width: 50%;
+  margin: 0.25rem;
+}

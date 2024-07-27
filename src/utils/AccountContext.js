@@ -39,6 +39,16 @@ export function IncomeProvider({ children }) {
   const [lastManaInterval, setLastManaInterval] = useState(new Date());
   const [nextManaInterval, setNextManaInterval] = useState(new Date());
 
+  const updateMana = useCallback(
+    (value) => {
+      const updateFields = {};
+      updateFields.mana = mana + value;
+      setMana(updateFields.mana);
+      updateBalance(userID, updateFields);
+    },
+    [userID, mana]
+  );
+
   const retrieveStoredMana = useCallback(() => {
     const updateFields = {};
     updateFields.mana = mana + storedMana;
@@ -83,7 +93,11 @@ export function IncomeProvider({ children }) {
         updateFields.nextManaInterval = now;
       } else if (timeElapsed < 0) {
         const newStoredMana =
-          storedMana + Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000)));
+          storedMana + Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000))) >
+          maxStoredMana
+            ? maxStoredMana
+            : storedMana +
+              Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000)));
         setStoredMana(newStoredMana);
         updateFields.storedMana = newStoredMana;
 
@@ -107,6 +121,7 @@ export function IncomeProvider({ children }) {
         handleLogin,
         handleLogout,
         mana,
+        updateMana,
         retrieveStoredMana,
         storedMana,
         maxStoredMana,

@@ -1,7 +1,8 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Login from "../Login";
-import Home from "../Home/Home";
+import Home from "../Home";
+import Arcade from "../Arcade";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/arcade" element={<Arcade />} />
       </Routes>
     </div>
   );
