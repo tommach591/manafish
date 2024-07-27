@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useMana } from "../../utils/AccountContext";
 import "./Arcade.css";
 import Modal from "../Modal";
+import Scratch from "./Scratch";
+import Blackjack from "./Blackjack";
+import { useNavigate } from "react-router-dom";
 
 function Arcade() {
-  const { mana } = useMana();
-  const MINBET = 50;
+  const { mana, updateMana } = useMana();
+  const MINBET = 5;
   const [bet, setBet] = useState(MINBET);
-  const [winnings, setWinnings] = useState(0);
 
   const [isScratchOpen, setIsScratchOpen] = useState(false);
   const [isBJOpen, setIsBJOpen] = useState(false);
@@ -17,6 +19,8 @@ function Arcade() {
 
   const openBJ = () => setIsBJOpen(true);
   const closeBJ = () => setIsBJOpen(false);
+
+  const navigate = useNavigate();
 
   return (
     <div className="Arcade">
@@ -35,22 +39,42 @@ function Arcade() {
           }}
         />
       </div>
-      <button className="ArcadeButton" onClick={openScratch}>
+      <button
+        className="ArcadeButton"
+        onClick={() => {
+          if (bet < MINBET) alert(`Minimum bet is ${MINBET} mana!`);
+          else if (mana < bet) alert("Not enough mana!");
+          else {
+            updateMana(-bet);
+            openScratch();
+          }
+        }}
+      >
         Scratch
       </button>
-      <button className="ArcadeButton" onClick={openBJ}>
+      <button
+        className="ArcadeButton"
+        onClick={() => {
+          if (bet < MINBET) alert(`Minimum bet is ${MINBET} mana!`);
+          else if (mana < bet) alert("Not enough mana!");
+          else {
+            updateMana(-bet);
+            openBJ();
+          }
+        }}
+      >
         BlackJack
       </button>
 
-      <Modal
-        isOpen={isScratchOpen}
-        onClose={closeScratch}
-        title="Scratch Cards"
-      >
-        <div>Scratch</div>
+      <button className="ArcadeButton" onClick={() => navigate("/")}>
+        Home
+      </button>
+
+      <Modal isOpen={isScratchOpen} onClose={closeScratch} title="Scratch">
+        <Scratch bet={bet} />
       </Modal>
-      <Modal isOpen={isBJOpen} onClose={closeBJ} title="Black Jack">
-        <div>BlackJack</div>
+      <Modal isOpen={isBJOpen} onClose={closeBJ} title="Blackjack">
+        <Blackjack bet={bet} />
       </Modal>
     </div>
   );

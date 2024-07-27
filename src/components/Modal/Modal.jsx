@@ -15,7 +15,7 @@ function Modal({ children, isOpen, onClose, title }) {
         <div className="ModalBody">{children}</div>
         <div className="ModalFooter">
           <button className="ModalCloseButton" onClick={onClose}>
-            Forfeit
+            Close
           </button>
         </div>
       </div>

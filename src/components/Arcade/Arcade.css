@@ -15,6 +15,13 @@
 }
 
 .ArcadeButton {
-  width: 50%;
+  width: 12rem;
   margin: 0.25rem;
+}
+
+.Warning {
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 14px;
+  line-height: 18px;
 }
