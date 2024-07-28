@@ -109,7 +109,7 @@ function Scratch({ bet }) {
       {numbers.includes(0) ? (
         <div />
       ) : (
-        <div
+        <button
           className="ResetGame"
           onClick={() => {
             if (mana < bet) alert("Not enough mana!");
@@ -120,7 +120,7 @@ function Scratch({ bet }) {
           }}
         >
           Reset
-        </div>
+        </button>
       )}
       <div className="Warning">
         Closing before finishing will not reward you of your winnings.

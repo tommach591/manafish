@@ -1,0 +1,38 @@
+.Fishionary {
+  width: 100%;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.Fish {
+  width: 95%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem;
+  padding: 0.5;
+  border: 1px solid black;
+}
+
+.Fish > img {
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem;
+}
+
+.FishInfo {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  text-wrap: wrap;
+}
+
+.FishInfo > h1 {
+  margin: 0.25rem;
+}

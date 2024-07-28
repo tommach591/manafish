@@ -29,9 +29,6 @@ function Arcade() {
 
   return (
     <div className="Arcade">
-      <div className="Mana">
-        <h1>{`Mana: ${mana}`}</h1>
-      </div>
       <div className="Bet">
         <h1>Bet</h1>
         <input

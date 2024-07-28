@@ -63,3 +63,22 @@
   margin: 1rem;
   cursor: pointer;
 }
+
+.SlotChart {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  box-sizing: border-box;
+
+  padding-bottom: 1rem;
+  font-size: 14px;
+}
+
+.Condition {
+  text-align: left;
+}
+
+.Multiplier {
+  text-align: right;
+}

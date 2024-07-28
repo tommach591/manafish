@@ -9,7 +9,6 @@ function Home() {
   const {
     userID,
     handleLogout,
-    mana,
     storedMana,
     maxStoredMana,
     lastManaInterval,
@@ -26,9 +25,6 @@ function Home() {
 
   return (
     <div className="Home">
-      <div className="Mana">
-        <h1>{`Mana: ${mana}`}</h1>
-      </div>
       <div className="StoredMana">
         <h1>{`Stored Mana: ${storedMana}/${maxStoredMana}`}</h1>
         <h1>
@@ -40,14 +36,9 @@ function Home() {
         }s`}
         </h1>
       </div>
-      <button className="ClaimMana" onClick={retrieveStoredMana}>
-        Claim Stored Mana
-      </button>
-      <button className="ClaimMana" onClick={handleLogout}>
-        Logout
-      </button>
+      <button onClick={retrieveStoredMana}>Claim Stored Mana</button>
+      <button onClick={handleLogout}>Logout</button>
       <button
-        className="ClaimMana"
         onClick={() => {
           getAllBalance().then((res) => console.log(res));
         }}
@@ -56,7 +47,13 @@ function Home() {
       </button>
 
       <button
-        className="ClaimMana"
+        onClick={() => {
+          navigate("/fishing");
+        }}
+      >
+        Fishing
+      </button>
+      <button
         onClick={() => {
           navigate("/arcade");
         }}

@@ -93,20 +93,45 @@ function Slots({ bet }) {
       >
         Stop
       </button>
+
       {spinning && !slots.includes("") ? (
         <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
           winnings - bet
         } mana.`}</div>
       ) : (
-        <div className="Winnings">
-          {`Slots! Match symbols for rewards! Match 💧 and ☂️ for bonus!`}
-        </div>
+        <div />
       )}
+      <div className="Winnings">
+        <div className="SlotChart">
+          <h1 className="Condition">{`Conditions`}</h1>
+          <h1 className="Multiplier">{`Bet Multiplier`}</h1>
+          <h1 className="Condition">{`5 💧`}</h1>
+          <h1 className="Multiplier">{`150.0x`}</h1>
+          <h1 className="Condition">{`5 ☂️`}</h1>
+          <h1 className="Multiplier">{`100.0x`}</h1>
+          <h1 className="Condition">{`Any 5`}</h1>
+          <h1 className="Multiplier">{`50.0x`}</h1>
+          <h1 className="Condition">{`4 💧`}</h1>
+          <h1 className="Multiplier">{`20.0x`}</h1>
+          <h1 className="Condition">{`4 ☂️`}</h1>
+          <h1 className="Multiplier">{`15.0x`}</h1>
+          <h1 className="Condition">{`Any 4`}</h1>
+          <h1 className="Multiplier">{`10.0x`}</h1>
+          <h1 className="Condition">{`3 💧`}</h1>
+          <h1 className="Multiplier">{`5.0x`}</h1>
+          <h1 className="Condition">{`3 ☂️`}</h1>
+          <h1 className="Multiplier">{`4.0x`}</h1>
+          <h1 className="Condition">{`Any 3`}</h1>
+          <h1 className="Multiplier">{`1.5x`}</h1>
+          <h1 className="Condition">{`Any 2`}</h1>
+          <h1 className="Multiplier">{`0.5x`}</h1>
+        </div>
+      </div>
       <div className="Warning">
         Closing before finishing will not reward you of your winnings.
       </div>
       {spinning && !slots.includes("") ? (
-        <div
+        <button
           className="ResetGame"
           onClick={() => {
             if (mana < bet) alert("Not enough mana!");
@@ -117,7 +142,7 @@ function Slots({ bet }) {
           }}
         >
           Reset
-        </div>
+        </button>
       ) : (
         <div />
       )}
