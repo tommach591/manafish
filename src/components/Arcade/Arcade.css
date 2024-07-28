@@ -35,6 +35,13 @@
   cursor: pointer;
 }
 
+.Winnings {
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 14px;
+  line-height: 18px;
+}
+
 .Warning {
   width: 100%;
   margin-top: 1rem;

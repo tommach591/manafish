@@ -98,11 +98,11 @@ function Scratch({ bet }) {
         ))}
       </div>
       {numbers.includes(0) ? (
-        <div className="ScratchWinnings">
+        <div className="Winnings">
           {`Match Three! Each additional number beyond the third gets added to total winnings!`}
         </div>
       ) : (
-        <div className="ScratchWinnings">{`Earned ${winnings} mana. Net gain ${
+        <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
           winnings - bet
         } mana.`}</div>
       )}

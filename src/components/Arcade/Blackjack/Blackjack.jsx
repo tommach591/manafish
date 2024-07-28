@@ -261,11 +261,11 @@ function Blackjack({ bet }) {
           ))}
       </div>
       {!game.done ? (
-        <div className="BJWinnings">
+        <div className="Winnings">
           {`Blackjack! Beat the dealer, but don't go over 21!`}
         </div>
       ) : (
-        <div className="BJWinnings">{`Earned ${winnings} mana. Net gain ${
+        <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
           winnings - game.bet
         } mana.`}</div>
       )}

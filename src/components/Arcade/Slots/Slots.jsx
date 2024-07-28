@@ -89,11 +89,11 @@ function Slots({ bet }) {
         Stop
       </button>
       {spinning && !slots.includes("") ? (
-        <div className="BJWinnings">{`Earned ${winnings} mana. Net gain ${
+        <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
           winnings - bet
         } mana.`}</div>
       ) : (
-        <div className="BJWinnings">
+        <div className="Winnings">
           {`Match TWO get 2x bet. Match THREE get 10x bet!`}
         </div>
       )}
