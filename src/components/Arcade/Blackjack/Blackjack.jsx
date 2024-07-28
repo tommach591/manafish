@@ -269,6 +269,19 @@ function Blackjack({ bet }) {
           winnings - game.bet
         } mana.`}</div>
       )}
+      {!game.done ? (
+        <div />
+      ) : (
+        <div
+          className="ResetGame"
+          onClick={() => {
+            updateMana(-bet);
+            setup();
+          }}
+        >
+          Reset
+        </div>
+      )}
       <div className="Warning">
         Closing before finishing will not reward you of your winnings.
       </div>

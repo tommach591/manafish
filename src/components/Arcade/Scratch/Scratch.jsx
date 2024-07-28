@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./Scratch.css";
 import { useMana } from "../../../utils/AccountContext";
 
@@ -20,7 +20,7 @@ function Scratch({ bet }) {
     "#f4e8ff",
   ];
 
-  useEffect(() => {
+  const setup = useCallback(() => {
     function generateRange(median) {
       median = Number(median);
       const newRange = new Array(7);
@@ -33,8 +33,14 @@ function Scratch({ bet }) {
 
       return newRange;
     }
+    setNumbers(Array.from({ length: 9 }, (_, i) => i).fill(0));
     setRange(generateRange(bet));
+    setWinnings(0);
   }, [bet]);
+
+  useEffect(() => {
+    setup();
+  }, [setup]);
 
   useEffect(() => {
     function calculateWinnings() {
@@ -99,6 +105,19 @@ function Scratch({ bet }) {
         <div className="ScratchWinnings">{`Earned ${winnings} mana. Net gain ${
           winnings - bet
         } mana.`}</div>
+      )}
+      {numbers.includes(0) ? (
+        <div />
+      ) : (
+        <div
+          className="ResetGame"
+          onClick={() => {
+            updateMana(-bet);
+            setup();
+          }}
+        >
+          Reset
+        </div>
       )}
       <div className="Warning">
         Closing before finishing will not reward you of your winnings.

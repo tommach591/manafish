@@ -5,6 +5,7 @@ import Modal from "../Modal";
 import Scratch from "./Scratch";
 import Blackjack from "./Blackjack";
 import { useNavigate } from "react-router-dom";
+import Slots from "./Slots";
 
 function Arcade() {
   const { mana, updateMana } = useMana();
@@ -13,12 +14,16 @@ function Arcade() {
 
   const [isScratchOpen, setIsScratchOpen] = useState(false);
   const [isBJOpen, setIsBJOpen] = useState(false);
+  const [isSlotsOpen, setIsSlotsOpen] = useState(false);
 
   const openScratch = () => setIsScratchOpen(true);
   const closeScratch = () => setIsScratchOpen(false);
 
   const openBJ = () => setIsBJOpen(true);
   const closeBJ = () => setIsBJOpen(false);
+
+  const openSlots = () => setIsSlotsOpen(true);
+  const closeSlots = () => setIsSlotsOpen(false);
 
   const navigate = useNavigate();
 
@@ -65,6 +70,19 @@ function Arcade() {
       >
         Blackjack
       </button>
+      <button
+        className="ArcadeButton"
+        onClick={() => {
+          if (bet < MINBET) alert(`Minimum bet is ${MINBET} mana!`);
+          else if (mana < bet) alert("Not enough mana!");
+          else {
+            updateMana(-bet);
+            openSlots();
+          }
+        }}
+      >
+        Slots
+      </button>
 
       <button className="ArcadeButton" onClick={() => navigate("/")}>
         Home
@@ -75,6 +93,9 @@ function Arcade() {
       </Modal>
       <Modal isOpen={isBJOpen} onClose={closeBJ} title="Blackjack">
         <Blackjack bet={bet} />
+      </Modal>
+      <Modal isOpen={isSlotsOpen} onClose={closeSlots} title="Slots">
+        <Slots bet={bet} />
       </Modal>
     </div>
   );
