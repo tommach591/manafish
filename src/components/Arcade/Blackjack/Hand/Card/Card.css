@@ -1,0 +1,28 @@
+.Card {
+  width: 2.25rem;
+  height: 3.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0.25rem;
+
+  background: white;
+}
+
+.Value {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.Suite {
+  width: 1rem;
+}

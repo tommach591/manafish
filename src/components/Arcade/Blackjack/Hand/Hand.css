@@ -1,0 +1,18 @@
+.Hand {
+  width: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.Count {
+  color: black;
+  position: absolute;
+  text-align: center;
+  right: 1rem;
+  top: 50%;
+
+  font-size: 14px;
+}
