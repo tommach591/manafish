@@ -8,7 +8,7 @@ function Scratch({ bet }) {
     Array.from({ length: 9 }, (_, i) => i).fill(0)
   );
   const [winnings, setWinnings] = useState(0);
-  const { updateMana } = useMana();
+  const { mana, updateMana } = useMana();
 
   const COLORS = [
     "#ffe8e8",
@@ -112,8 +112,11 @@ function Scratch({ bet }) {
         <div
           className="ResetGame"
           onClick={() => {
-            updateMana(-bet);
-            setup();
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              updateMana(-bet);
+              setup();
+            }
           }}
         >
           Reset

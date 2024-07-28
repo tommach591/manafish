@@ -3,15 +3,15 @@ import "./Slots.css";
 import { useMana } from "../../../utils/AccountContext";
 
 function Slots({ bet }) {
-  const { updateMana } = useMana();
-  const [slots, setSlots] = useState(["", "", ""]);
+  const { mana, updateMana } = useMana();
+  const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [winnings, setWinnings] = useState(0);
   const [spinning, setSpinning] = useState(false);
 
-  const SYMBOLS = ["🍒", "🍋", "🍊", "🍉", "🔔", "⭐", "7️⃣"];
+  const SYMBOLS = ["💩", "🌼", "🌻", "🥀", "🌷", "☂️", "💧"];
 
   const setup = useCallback(() => {
-    setSlots(["", "", ""]);
+    setSlots(["", "", "", "", ""]);
     setWinnings(0);
     setSpinning(false);
   }, []);
@@ -29,11 +29,16 @@ function Slots({ bet }) {
     let winnings = 0;
     Object.keys(counts).forEach((symbol) => {
       const count = counts[symbol];
-      if (count === 3) {
-        winnings += bet * 10;
-      } else if (count === 2) {
-        winnings += bet * 2;
-      }
+      if (count === 5 && symbol === "💧") winnings += bet * 150;
+      else if (count === 5 && symbol === "☂️") winnings += bet * 100;
+      else if (count === 5) winnings += bet * 50;
+      else if (count === 4 && symbol === "💧") winnings += bet * 20;
+      else if (count === 4 && symbol === "☂️") winnings += bet * 15;
+      else if (count === 4) winnings += bet * 10;
+      else if (count === 3 && symbol === "💧") winnings += bet * 5;
+      else if (count === 3 && symbol === "☂️") winnings += bet * 4;
+      else if (count === 3) winnings += Math.floor(bet * 1.5);
+      else if (count === 2) winnings += Math.floor(bet * 0.5);
     });
 
     return winnings;
@@ -94,7 +99,7 @@ function Slots({ bet }) {
         } mana.`}</div>
       ) : (
         <div className="Winnings">
-          {`Match TWO get 2x bet. Match THREE get 10x bet!`}
+          {`Slots! Match symbols for rewards! Match 💧 and ☂️ for bonus!`}
         </div>
       )}
       <div className="Warning">
@@ -104,8 +109,11 @@ function Slots({ bet }) {
         <div
           className="ResetGame"
           onClick={() => {
-            updateMana(-bet);
-            setup();
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              updateMana(-bet);
+              setup();
+            }
           }}
         >
           Reset

@@ -6,7 +6,7 @@ import Hand from "./Hand";
 
 function Blackjack({ bet }) {
   const [winnings, setWinnings] = useState(0);
-  const { updateMana } = useMana();
+  const { mana, updateMana } = useMana();
 
   const [BLACKJACK, DEALERMIN] = [21, 16];
 
@@ -70,7 +70,7 @@ function Blackjack({ bet }) {
       dealer: dealerHand,
       player: [playerHand],
       selected: 0,
-      bet: bet,
+      bet: Number(bet),
       done: countHand(playerHand) === BLACKJACK,
       paid: false,
     });
@@ -133,10 +133,10 @@ function Blackjack({ bet }) {
         const push = playerVal <= BLACKJACK && playerVal === dealerVal;
 
         if (blackjack) {
-          totalEarned += Math.round(newGame.bet * 2.5);
+          totalEarned += Math.round(Number(bet) * 2.5);
         } else if (higherValue || dealerBust || fiveCards) {
-          totalEarned += newGame.bet * 2;
-        } else if (push) totalEarned += newGame.bet;
+          totalEarned += Number(bet) * 2;
+        } else if (push) totalEarned += Number(bet);
       });
 
       if (!newGame.paid) {
@@ -170,6 +170,7 @@ function Blackjack({ bet }) {
       newGame.deck.shift(),
     ]);
     newGame.player[newGame.selected].push(newGame.deck.shift());
+    newGame.bet += Number(bet);
     setGame(newGame);
 
     updateMana(Number(-bet));
@@ -179,7 +180,7 @@ function Blackjack({ bet }) {
   const double = useCallback(() => {
     const newGame = JSON.parse(JSON.stringify(game));
     newGame.player[newGame.selected].push(newGame.deck.shift());
-    newGame.bet *= 2;
+    newGame.bet += Number(bet);
 
     updateMana(Number(-bet));
     dealDealer(newGame);
@@ -217,7 +218,8 @@ function Blackjack({ bet }) {
             game.player[game.selected]?.length === 2 &&
             Math.floor(game.player[game.selected][0]) ===
               Math.floor(game.player[game.selected][1]) &&
-            game.player.length < 4
+            game.player.length < 4 &&
+            mana >= bet
           }
           params={null}
         />
@@ -227,7 +229,8 @@ function Blackjack({ bet }) {
           active={
             !game.done &&
             game.player[game.selected]?.length === 2 &&
-            game.player.length === 1
+            game.player.length === 1 &&
+            mana >= bet
           }
           params={null}
         />
@@ -265,9 +268,9 @@ function Blackjack({ bet }) {
           {`Blackjack! Beat the dealer, but don't go over 21!`}
         </div>
       ) : (
-        <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
-          winnings - game.bet
-        } mana.`}</div>
+        <div className="Winnings">{`Earned ${Number(
+          winnings
+        )} mana. Net gain ${Number(winnings - game.bet)} mana.`}</div>
       )}
       {!game.done ? (
         <div />
@@ -275,8 +278,11 @@ function Blackjack({ bet }) {
         <div
           className="ResetGame"
           onClick={() => {
-            updateMana(-bet);
-            setup();
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              updateMana(-bet);
+              setup();
+            }
           }}
         >
           Reset
