@@ -11,15 +11,25 @@ function Scratch({ bet }) {
 
   const { updateMana } = useMana();
 
+  const COLORS = [
+    "#ffe8e8",
+    "#fff1e8",
+    "#ffffe8",
+    "#edffe8",
+    "#e8feff",
+    "#e8eeff",
+    "#f4e8ff",
+  ];
+
   useEffect(() => {
     function generateRange(median) {
       median = Number(median);
-      const newRange = new Array(8);
+      const newRange = new Array(7);
       newRange[3] = median;
 
       const increment = Math.floor(0.1 * (2 * median));
       for (let i = 2; i >= 0; i--) newRange[i] = newRange[i + 1] - increment;
-      for (let i = 4; i < newRange.length; i++)
+      for (let i = 3; i < newRange.length; i++)
         newRange[i] = newRange[i - 1] + increment;
 
       return newRange;
@@ -68,6 +78,7 @@ function Scratch({ bet }) {
                   return [...prevNumbers];
                 });
             }}
+            style={{ backgroundColor: COLORS[range.indexOf(val)] }}
           >
             <div
               className="Ink"

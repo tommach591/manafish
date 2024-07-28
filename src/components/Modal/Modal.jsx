@@ -4,7 +4,7 @@ function Modal({ children, isOpen, onClose, title }) {
   if (!isOpen) return null;
 
   return (
-    <div className="ModalOverlay" onClick={onClose}>
+    <div className="ModalOverlay">
       <div
         className="ModalContent"
         onClick={(event) => event.stopPropagation()}

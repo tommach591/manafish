@@ -1,28 +1,38 @@
+.Scratch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
 .ScratchGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 10px;
+  box-sizing: border-box;
 
-  padding: 1rem;
+  padding-bottom: 1rem;
 }
 
 .Square {
-  height: 75px; /* Adjust the size as needed */
-  width: 75px; /* Adjust the size as needed */
+  width: 75px; /* Adjust the size of the squares as needed */
+  height: 75px;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background-color: white; /* Adjust the background color as needed */
-  border: 1px solid black; /* Adjust the border as needed */
-  font-size: 20px; /* Adjust the font size as needed */
+  background-color: white;
+  border: 1px solid black;
+  font-size: 20px;
 
   position: relative;
 }
 
 .Ink {
-  width: 75px;
+  width: 75px; /* Adjust the size of the squares as needed */
   height: 75px;
   position: absolute;
   background-color: rgba(220, 220, 220, 1);
