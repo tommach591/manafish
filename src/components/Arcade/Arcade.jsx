@@ -63,7 +63,7 @@ function Arcade() {
           }
         }}
       >
-        BlackJack
+        Blackjack
       </button>
 
       <button className="ArcadeButton" onClick={() => navigate("/")}>
