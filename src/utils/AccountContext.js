@@ -19,56 +19,142 @@ export function IncomeProvider({ children }) {
   const REGEN_RATE = 14000; // subtract 1000
 
   const [userID, setUserID] = useState(() => {
-    const savedUserID = localStorage.getItem("userID");
+    const savedUserID = JSON.stringify(localStorage.getItem("userID"));
     return savedUserID ? JSON.parse(savedUserID) : "";
   });
 
-  const handleLogin = useCallback((id) => {
-    localStorage.setItem("userID", JSON.stringify(id));
-    setUserID(id);
+  const initializeState = useCallback((id, key, defaultValue) => {
+    const savedState = localStorage.getItem(id);
+    if (savedState) {
+      const parsedState = JSON.parse(savedState);
+      return parsedState[key] !== undefined ? parsedState[key] : defaultValue;
+    }
+    return defaultValue;
   }, []);
 
-  const handleLogout = useCallback(() => {
-    localStorage.setItem("userID", JSON.stringify(""));
-    setUserID("");
-  }, []);
-
-  const [mana, setMana] = useState(0);
-  const [storedMana, setStoredMana] = useState(0);
-  const [maxStoredMana, setMaxStoredMana] = useState(480);
-  const [lastManaInterval, setLastManaInterval] = useState(new Date());
-  const [nextManaInterval, setNextManaInterval] = useState(new Date());
-
-  const updateMana = useCallback(
-    (value) => {
-      const updateFields = {};
-      updateFields.mana = mana + value;
-      setMana(updateFields.mana);
-      updateBalance(userID, updateFields);
-    },
-    [userID, mana]
+  const [mana, setMana] = useState((user) =>
+    initializeState(userID, "mana", 0)
+  );
+  const [storedMana, setStoredMana] = useState(() =>
+    initializeState(userID, "storedMana", 0)
+  );
+  const [maxStoredMana, setMaxStoredMana] = useState(() =>
+    initializeState(userID, "maxStoredMana", 480)
+  );
+  const [lastManaInterval, setLastManaInterval] = useState(
+    () => new Date(initializeState(userID, "lastManaInterval", new Date()))
+  );
+  const [nextManaInterval, setNextManaInterval] = useState(
+    () => new Date(initializeState(userID, "nextManaInterval", new Date()))
   );
 
-  const retrieveStoredMana = useCallback(() => {
-    const updateFields = {};
-    updateFields.mana = mana + storedMana;
-    updateFields.storedMana = 0;
+  const updateMana = useCallback((val) => {
+    setMana((prev) => prev + val);
+  }, []);
 
-    setMana(updateFields.mana);
+  const retrieveStoredMana = useCallback(() => {
+    setMana((prev) => prev + storedMana);
     setStoredMana(0);
-    updateBalance(userID, updateFields);
-  }, [userID, mana, storedMana]);
+  }, [storedMana]);
+
+  const updateServerMana = useCallback(() => {
+    const updateFields = JSON.parse(localStorage.getItem(userID));
+    if (userID) updateBalance(userID, updateFields);
+  }, [userID]);
+
+  const handleLogin = useCallback(
+    (id) => {
+      setMana(initializeState(id, "mana", 0));
+      setStoredMana(initializeState(id, "storedMana", 0));
+      setMaxStoredMana(initializeState(id, "maxStoredMana", 480));
+      setLastManaInterval(
+        new Date(initializeState(id, "lastManaInterval", new Date()))
+      );
+      setNextManaInterval(
+        new Date(initializeState(id, "nextManaInterval", new Date()))
+      );
+      setUserID(id);
+      localStorage.setItem("userID", id);
+    },
+    [initializeState]
+  );
+
+  const handleLogout = useCallback(() => {
+    updateServerMana();
+    const updateFields = {
+      mana: mana,
+      storedMana: storedMana,
+      maxStoredMana: maxStoredMana,
+      lastManaInterval: lastManaInterval,
+      nextManaInterval: nextManaInterval,
+    };
+    localStorage.setItem(userID, JSON.stringify(updateFields));
+    localStorage.setItem("userID", "");
+    setUserID("");
+  }, [
+    userID,
+    mana,
+    storedMana,
+    maxStoredMana,
+    lastManaInterval,
+    nextManaInterval,
+    updateServerMana,
+  ]);
+
+  useEffect(() => {
+    const saveInterval = setInterval(() => {
+      const updateFields = {
+        mana: mana,
+        storedMana: storedMana,
+        maxStoredMana: maxStoredMana,
+        lastManaInterval: lastManaInterval,
+        nextManaInterval: nextManaInterval,
+      };
+      localStorage.setItem(userID, JSON.stringify(updateFields));
+    }, 1000);
+
+    return () => clearInterval(saveInterval);
+  }, [
+    userID,
+    mana,
+    storedMana,
+    maxStoredMana,
+    lastManaInterval,
+    nextManaInterval,
+  ]);
+
+  useEffect(() => {
+    const saveInterval = setInterval(() => {
+      updateServerMana();
+    }, 1000 * 60 * 10);
+
+    return () => {
+      clearInterval(saveInterval);
+    };
+  }, [updateServerMana]);
 
   useEffect(() => {
     if (!userID) return;
     else {
       getBalance(userID).then((res) => {
         if (res) {
-          setMana(res.mana);
-          setStoredMana(res.storedMana);
-          setMaxStoredMana(res.maxStoredMana);
-          setLastManaInterval(new Date(res.lastManaInterval));
-          setNextManaInterval(new Date(res.nextManaInterval));
+          if (!localStorage.getItem(userID)) {
+            console.log("Loading server data...");
+            setMana(res.mana);
+            setStoredMana(res.storedMana);
+            setMaxStoredMana(res.maxStoredMana);
+            setLastManaInterval(new Date(res.lastManaInterval));
+            setNextManaInterval(new Date(res.nextManaInterval));
+
+            const updateFields = {
+              mana: res.mana,
+              storedMana: res.storedMana,
+              maxStoredMana: res.maxStoredMana,
+              lastManaInterval: new Date(res.lastManaInterval),
+              nextManaInterval: new Date(res.nextManaInterval),
+            };
+            localStorage.setItem(userID, JSON.stringify(updateFields));
+          }
         } else {
           createBalance(userID);
           setMana(50);
@@ -83,14 +169,13 @@ export function IncomeProvider({ children }) {
 
   useEffect(() => {
     if (!userID) return;
+
     const manaRegenInterval = setInterval(() => {
-      const updateFields = {};
       const now = new Date();
       const timeElapsed = nextManaInterval - lastManaInterval;
       if (storedMana >= maxStoredMana) {
         now.setTime(now.getTime() + REGEN_RATE);
         setNextManaInterval(new Date(now.getTime()));
-        updateFields.nextManaInterval = now;
       } else if (timeElapsed < 0) {
         const newStoredMana =
           storedMana + Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000))) >
@@ -99,16 +184,12 @@ export function IncomeProvider({ children }) {
             : storedMana +
               Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000)));
         setStoredMana(newStoredMana);
-        updateFields.storedMana = newStoredMana;
 
         now.setTime(now.getTime() + REGEN_RATE);
         setNextManaInterval(new Date(now.getTime()));
-        updateFields.nextManaInterval = now;
       }
 
       setLastManaInterval(new Date());
-      updateFields.lastManaInterval = new Date();
-      updateBalance(userID, updateFields);
     }, TICK_RATE - (new Date() % TICK_RATE));
 
     return () => clearInterval(manaRegenInterval);
@@ -121,7 +202,7 @@ export function IncomeProvider({ children }) {
         handleLogin,
         handleLogout,
         mana,
-        updateMana,
+        updateMana: updateMana,
         retrieveStoredMana,
         storedMana,
         maxStoredMana,
