@@ -32,9 +32,7 @@ export function IncomeProvider({ children }) {
     return defaultValue;
   }, []);
 
-  const [mana, setMana] = useState((user) =>
-    initializeState(userID, "mana", 0)
-  );
+  const [mana, setMana] = useState(() => initializeState(userID, "mana", 0));
   const [storedMana, setStoredMana] = useState(() =>
     initializeState(userID, "storedMana", 0)
   );
@@ -80,7 +78,6 @@ export function IncomeProvider({ children }) {
   );
 
   const handleLogout = useCallback(() => {
-    updateServerMana();
     const updateFields = {
       mana: mana,
       storedMana: storedMana,
@@ -89,6 +86,8 @@ export function IncomeProvider({ children }) {
       nextManaInterval: nextManaInterval,
     };
     localStorage.setItem(userID, JSON.stringify(updateFields));
+    updateServerMana();
+
     localStorage.setItem("userID", "");
     setUserID("");
   }, [
@@ -101,6 +100,7 @@ export function IncomeProvider({ children }) {
     updateServerMana,
   ]);
 
+  // Save Locally.
   useEffect(() => {
     const saveInterval = setInterval(() => {
       const updateFields = {
@@ -123,10 +123,11 @@ export function IncomeProvider({ children }) {
     nextManaInterval,
   ]);
 
+  // Save to Server
   useEffect(() => {
     const saveInterval = setInterval(() => {
       updateServerMana();
-    }, 1000 * 60 * 10);
+    }, 1000 * 60 * 30);
 
     return () => {
       clearInterval(saveInterval);
@@ -154,14 +155,26 @@ export function IncomeProvider({ children }) {
               nextManaInterval: new Date(res.nextManaInterval),
             };
             localStorage.setItem(userID, JSON.stringify(updateFields));
+          } else {
+            console.log("Using local data...");
           }
         } else {
           createBalance(userID);
+
           setMana(50);
           setStoredMana(0);
           setMaxStoredMana(480);
           setLastManaInterval(new Date());
           setNextManaInterval(new Date());
+
+          const updateFields = {
+            mana: 50,
+            storedMana: 0,
+            maxStoredMana: 480,
+            lastManaInterval: new Date(),
+            nextManaInterval: new Date(),
+          };
+          localStorage.setItem(userID, JSON.stringify(updateFields));
         }
       });
     }

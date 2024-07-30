@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./Lobby.css";
 import io from "socket.io-client";
 
@@ -9,9 +9,9 @@ function Lobby() {
   const [message, setMessage] = useState("");
   const [messageRecieved, setMessageRecieved] = useState([]);
 
-  const sendMessage = () => {
+  const sendMessage = useCallback(() => {
     socket.emit("sendMessage", message);
-  };
+  }, [message]);
 
   useEffect(() => {
     socket.on("recieveMessage", (data) => {
