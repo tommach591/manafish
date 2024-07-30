@@ -6,3 +6,32 @@
   flex-direction: column;
   align-items: center;
 }
+
+.LobbyInput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.LobbyInput > input {
+  width: 70%;
+  height: 2.5rem;
+  margin: 0.5rem;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.LobbyButtons {
+  width: 80%;
+  display: flex;
+}
+
+.LobbyButtons > button {
+  width: 40%;
+  height: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}

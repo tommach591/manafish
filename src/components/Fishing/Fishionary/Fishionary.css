@@ -10,14 +10,15 @@
 }
 
 .Fish {
-  width: 95%;
+  width: 90%;
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin: 1rem;
-  padding: 0.5;
+  padding: 0.5rem;
   border: 1px solid black;
+  border-radius: 10px;
 }
 
 .Fish > img {
