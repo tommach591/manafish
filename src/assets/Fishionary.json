@@ -62,13 +62,13 @@
   "10": {
     "id": "10",
     "name": "Raccoon (M) Fish",
-    "value": 25,
+    "value": 27,
     "info": "The male Raccoon Fish spends his time flirting with the female Raccoon Fish."
   },
   "11": {
     "id": "11",
     "name": "Raccoon (F) Fish",
-    "value": 25,
+    "value": 28,
     "info": "The female Raccoon Fish spends her time flirting with the male Raccoon Fish."
   },
   "12": {
@@ -99,7 +99,7 @@
     "id": "16",
     "name": "Shark Girl",
     "value": 25,
-    "info": "This shark got famous for saying 'A' during her first livestream."
+    "info": "A"
   },
   "17": {
     "id": "17",
@@ -111,30 +111,30 @@
     "id": "18",
     "name": "Pink Starfish",
     "value": 4,
-    "info": "No, this is Patrick!"
+    "info": "Now where is his pants..."
   },
   "19": {
     "id": "19",
     "name": "Green Starfish",
     "value": 4,
-    "info": "This is just Patrick covered in seaweed..."
+    "info": "It thinks its hiding."
   },
   "20": {
     "id": "20",
     "name": "Blue Starfish",
     "value": 4,
-    "info": "Wait a minute, this isn't a Starmie..."
+    "info": "Wait a minute, this isn't a Starmee..."
   },
   "21": {
     "id": "21",
     "name": "Whale",
-    "value": 25,
+    "value": 28,
     "info": "Yes, that is a whale in my pocket. Wink wonk."
   },
   "22": {
     "id": "22",
     "name": "Clownfish",
-    "value": 25,
+    "value": 30,
     "info": "They tend to tell jokes then go 'HONK HONK!'"
   },
   "23": {
@@ -152,73 +152,73 @@
   "25": {
     "id": "25",
     "name": "Pink Shrimp",
-    "value": 4,
+    "value": 2,
     "info": "Everyone's favorite shrimp!"
   },
   "26": {
     "id": "26",
     "name": "Cyan Shrimp",
-    "value": 4,
+    "value": 2,
     "info": "This shrimp likes to eat human skin cells."
   },
   "27": {
     "id": "27",
     "name": "Lime Shrimp",
-    "value": 4,
+    "value": 2,
     "info": "Basically shrimp ceviche."
   },
   "28": {
     "id": "28",
     "name": "Violet Shrimp",
-    "value": 4,
+    "value": 2,
     "info": "The last shrimp of the rainbow."
   },
   "29": {
     "id": "29",
     "name": "Airplane Fish",
-    "value": 7,
+    "value": 3,
     "info": "Like a shooting star."
   },
   "30": {
     "id": "30",
     "name": "Bao",
-    "value": 7,
+    "value": 5,
     "info": "I wonder what is inside? Egg? Pork? Soup?"
   },
   "31": {
     "id": "31",
     "name": "Potato Fish",
-    "value": 7,
+    "value": 9,
     "info": "You can make fish and chips with this one fish!"
   },
   "32": {
     "id": "32",
     "name": "Fast AF Fish",
-    "value": 7,
+    "value": 9,
     "info": "This fish FAST AF!"
   },
   "33": {
     "id": "33",
     "name": "Tumbao Fish",
-    "value": 25,
+    "value": 26,
     "info": "This is just a Bao Fish with a face!"
   },
   "34": {
     "id": "34",
     "name": "Strawberry Milk",
-    "value": 40,
+    "value": 42,
     "info": "Yes, this is a fish."
   },
   "35": {
     "id": "35",
     "name": "Swordfish",
-    "value": 25,
+    "value": 26,
     "info": "ENDGARDE!"
   },
   "36": {
     "id": "36",
     "name": "Melon Fish",
-    "value": 40,
+    "value": 45,
     "info": "This fish tastes even better during summer seasons!"
   },
   "37": {
@@ -236,7 +236,7 @@
   "39": {
     "id": "39",
     "name": "Candy",
-    "value": 40,
+    "value": 47,
     "info": "Candeez nutz fit in your mouth? Gottem!"
   },
   "40": {
@@ -248,7 +248,7 @@
   "41": {
     "id": "41",
     "name": "Froge",
-    "value": 8,
+    "value": 9,
     "info": "Next cryptocurrency is going to be Frogecoin!"
   },
   "42": {
@@ -320,32 +320,32 @@
   "53": {
     "id": "53",
     "name": "Eggplant Fish",
-    "value": 75,
+    "value": 65,
     "info": "Such an enormous girth!"
   },
   "54": {
     "id": "54",
     "name": "Cat Fish",
-    "value": 75,
+    "value": 65,
     "info": "Fried cat fish is delicious!"
   },
   "55": {
     "id": "55",
     "name": "Dog Fish",
-    "value": 75,
+    "value": 65,
     "info": "Don't eat this."
   },
   "56": {
     "id": "56",
     "name": "Sea Horse",
-    "value": 75,
+    "value": 55,
     "info": "Neigh nay?!"
   },
   "57": {
     "id": "57",
     "name": "Sea Lion",
     "value": 75,
-    "info": "Rawr! Nuzzles! Pounces on you! Uwu u so warm!"
+    "info": "Nuzzles, pounces on you. UwU, you're so warm."
   },
   "58": {
     "id": "58",
@@ -356,7 +356,7 @@
   "59": {
     "id": "59",
     "name": "Zebra Turkey Fish",
-    "value": 75,
+    "value": 80,
     "info": "What is this thing?!"
   },
   "60": {

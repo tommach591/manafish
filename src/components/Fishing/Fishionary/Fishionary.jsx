@@ -1,4 +1,4 @@
-import { getFishImage } from "../../../utils/Fishdex";
+import { getFishImage } from "../../../utils/Fishionary";
 import fishionary from "../../../assets/Fishionary.json";
 import "./Fishionary.css";
 

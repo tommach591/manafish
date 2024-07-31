@@ -1,0 +1,53 @@
+.FishingGame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.FishingDisplay {
+  width: 15rem;
+  height: 15rem;
+
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.FishingDisplay > img {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 5px;
+}
+
+.FishCaughtInfo {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.FishCaughtInfo > img {
+  width: 5rem;
+}
+
+.FishCaughtInfo > h1 {
+  width: 90%;
+  text-align: center;
+  margin: 0.25rem;
+}
+
+.PlayersFishing {
+  width: 15rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  box-sizing: border-box;
+
+  padding-top: 5rem;
+  padding-bottom: 1rem;
+}

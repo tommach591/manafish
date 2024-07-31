@@ -5,20 +5,17 @@ import Fishionary from "./Fishionary";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { useMana } from "../../utils/AccountContext";
+import FishingGame from "./FishingGame/FishingGame";
 
 const SERVERURL = "http://localhost:3001";
 const socket = io.connect(SERVERURL);
 
 function Fishing() {
-  const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
-  const openFishionary = () => setIsFishionaryOpen(true);
-  const closeFishionary = () => setIsFishionaryOpen(false);
   const navigate = useNavigate();
 
   const { userID } = useMana();
   const [room, setRoom] = useState("");
-  const [message, setMessage] = useState("");
-  const [messageRecieved, setMessageRecieved] = useState([]);
+  const [messagesRecieved, setMessagesRecieved] = useState([]);
   const [playerList, setPlayerList] = useState([]);
 
   function generateLobbyCode() {
@@ -30,7 +27,7 @@ function Fishing() {
       code += characters[randomIndex];
     }
 
-    setRoom(code);
+    return code;
   }
 
   const validateRoomCode = (code) => {
@@ -38,19 +35,18 @@ function Fishing() {
     return regex.test(code);
   };
 
-  const sendMessage = useCallback(() => {
-    if (room && message) socket.emit("sendMessage", { room, message });
-  }, [message, room]);
+  const sendMessage = useCallback(
+    (message) => {
+      if (room && message) socket.emit("sendMessage", { room, message });
+    },
+    [room]
+  );
 
   const joinRoom = useCallback(() => {
-    if (validateRoomCode(room) && userID) {
+    if (validateRoomCode(room) && userID && !playerList.includes(userID)) {
       socket.emit("joinRoom", { room, userID });
-    } else {
-      alert(
-        "Invalid room code. It must start with 'F' and contain 6 total uppercase letters."
-      );
     }
-  }, [room, userID]);
+  }, [playerList, room, userID]);
 
   const leaveRoom = useCallback(() => {
     if (room && userID) socket.emit("leaveRoom", { room, userID });
@@ -61,7 +57,7 @@ function Fishing() {
       setPlayerList([...data]);
     };
     const handleReceiveMessage = (data) => {
-      setMessageRecieved((prev) => [...prev, data]);
+      setMessagesRecieved((prev) => [...prev, data]);
     };
 
     socket.on("lobbyPlayers", handleLobbyPlayers);
@@ -72,6 +68,26 @@ function Fishing() {
       socket.off("recieveMessage", handleReceiveMessage);
     };
   }, []);
+
+  const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
+  const openFishionary = () => setIsFishionaryOpen(true);
+  const closeFishionary = () => setIsFishionaryOpen(false);
+
+  const [isFishingGameOpen, setIsFishingGameOpen] = useState(false);
+  const openFishingGame = () => {
+    if (validateRoomCode(room) && userID && !playerList.includes(userID)) {
+      setIsFishingGameOpen(true);
+      joinRoom();
+    } else {
+      alert(
+        "Invalid room code. It must start with 'F' and contain 6 total uppercase letters."
+      );
+    }
+  };
+  const closeFishingGame = () => {
+    setIsFishingGameOpen(false);
+    leaveRoom();
+  };
 
   return (
     <div className="Fishing">
@@ -102,23 +118,33 @@ function Fishing() {
           <button
             onClick={() => {
               if (!playerList.includes(userID)) {
-                generateLobbyCode();
+                setRoom(generateLobbyCode());
               }
             }}
-            disabled={playerList.includes(userID)}
           >
-            Create Room
+            Random Room
           </button>
           <button
             onClick={() => {
-              if (!playerList.includes(userID)) joinRoom();
-              else leaveRoom();
+              if (!playerList.includes(userID)) openFishingGame();
             }}
           >
-            {!playerList.includes(userID) ? "Join Room" : "Leave Room"}
+            Join Room
           </button>
         </div>
       </div>
+
+      <Modal
+        isOpen={isFishingGameOpen}
+        onClose={closeFishingGame}
+        title={`Fishing - ${room}`}
+      >
+        <FishingGame
+          playerList={playerList}
+          sendMessage={sendMessage}
+          messagesRecieved={messagesRecieved}
+        />
+      </Modal>
 
       <Modal
         isOpen={isFishionaryOpen}
