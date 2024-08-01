@@ -4,7 +4,7 @@ import Login from "../Login";
 import Home from "../Home";
 import Fishing from "../Fishing";
 import Arcade from "../Arcade";
-import { useMana } from "../../utils/AccountContext";
+import { useMana } from "../../utils/ManaContext";
 import { useEffect } from "react";
 
 function App() {

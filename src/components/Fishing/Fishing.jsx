@@ -4,7 +4,7 @@ import Modal from "../Modal";
 import Fishionary from "./Fishionary";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
-import { useMana } from "../../utils/AccountContext";
+import { useMana } from "../../utils/ManaContext";
 import FishingGame from "./FishingGame/FishingGame";
 
 const SERVERURL = "http://localhost:3001";

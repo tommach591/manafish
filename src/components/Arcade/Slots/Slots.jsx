@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./Slots.css";
-import { useMana } from "../../../utils/AccountContext";
+import { useMana } from "../../../utils/ManaContext";
 
 function Slots({ bet }) {
   const { mana, updateMana } = useMana();

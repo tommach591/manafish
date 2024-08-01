@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMana } from "../../utils/AccountContext";
+import { useMana } from "../../utils/ManaContext";
 import "./Arcade.css";
 import Modal from "../Modal";
 import Scratch from "./Scratch";

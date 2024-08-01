@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useMana } from "../../utils/AccountContext";
+import { useMana } from "../../utils/ManaContext";
 import { useNavigate } from "react-router-dom";
 import { getAllBalance } from "../../utils/Balance";
 

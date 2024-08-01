@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./Blackjack.css";
-import { useMana } from "../../../utils/AccountContext";
+import { useMana } from "../../../utils/ManaContext";
 import Button from "./Button";
 import Hand from "./Hand";
 

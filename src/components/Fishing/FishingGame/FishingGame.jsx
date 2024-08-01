@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import "./FishingGame.css";
 import fishionary from "../../../assets/Fishionary.json";
 import { getFishImage } from "../../../utils/Fishionary";
-import { useMana } from "../../../utils/AccountContext";
+import { useMana } from "../../../utils/ManaContext";
 import FishingPlayer from "./FishingPlayer/FishingPlayer";
 
 function FishingGame({ playerList, sendMessage, messagesRecieved }) {

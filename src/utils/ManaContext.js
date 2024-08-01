@@ -12,7 +12,7 @@ export function useMana() {
   return useContext(ManaContext);
 }
 
-export function IncomeProvider({ children }) {
+export function ManaProvider({ children }) {
   // localStorage.clear();
 
   const TICK_RATE = 1000;

@@ -4,15 +4,18 @@ import { BrowserRouter } from "react-router-dom";
 import "./reset.css";
 import "./index.css";
 import App from "./components/App";
-import { IncomeProvider } from "./utils/AccountContext";
+import { ManaProvider } from "./utils/ManaContext";
+import { FishProvider } from "./utils/FishContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <IncomeProvider>
-        <App />
-      </IncomeProvider>
+      <ManaProvider>
+        <FishProvider>
+          <App />
+        </FishProvider>
+      </ManaProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -6,7 +6,7 @@ import {
   loginAccount,
 } from "../../utils/Account";
 import { useNavigate } from "react-router-dom";
-import { useMana } from "../../utils/AccountContext";
+import { useMana } from "../../utils/ManaContext";
 
 function Login() {
   const navigate = useNavigate();

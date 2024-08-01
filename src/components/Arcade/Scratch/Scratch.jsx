@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./Scratch.css";
-import { useMana } from "../../../utils/AccountContext";
+import { useMana } from "../../../utils/ManaContext";
 
 function Scratch({ bet }) {
   const [range, setRange] = useState([0]);
