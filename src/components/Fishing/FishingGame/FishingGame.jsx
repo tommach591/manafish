@@ -12,7 +12,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
   const [autoFish, setAutoFish] = useState(false);
 
   const [messageQueue, setMessageQueue] = useState({});
-  const BAITCOST = 15;
+  const BAITCOST = 10;
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
@@ -29,9 +29,9 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
         FISHES[2].push({ ...item });
       } else if (value > 50 && value <= 75) {
         FISHES[3].push({ ...item });
-      } else if (value > 75 && value <= 100) {
+      } else if (value > 75 && value <= 99) {
         FISHES[4].push({ ...item });
-      } else if (value > 100 && value <= 300) {
+      } else if (value > 99 && value <= 300) {
         FISHES[5].push({ ...item });
       } else {
         FISHES[6].push({ ...item });
@@ -190,7 +190,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
                 handleMessageQueueShift={handleMessageQueueShift}
               />
             );
-          else return <></>;
+          else return null;
         })}
       </div>
     </div>

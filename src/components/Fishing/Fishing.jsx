@@ -59,15 +59,24 @@ function Fishing() {
     const handleReceiveMessage = (data) => {
       setMessagesRecieved((prev) => [...prev, data]);
     };
+    const handleRoomFull = (data) => {
+      alert("Uh oh. Room is full, try another code.");
+    };
 
     socket.on("lobbyPlayers", handleLobbyPlayers);
     socket.on("recieveMessage", handleReceiveMessage);
+    socket.on("roomFull", handleRoomFull);
 
     return () => {
       socket.off("lobbyPlayers", handleLobbyPlayers);
       socket.off("recieveMessage", handleReceiveMessage);
+      socket.off("roomFull", handleRoomFull);
     };
   }, []);
+
+  useEffect(() => {
+    setIsFishingGameOpen(playerList.includes(userID));
+  }, [playerList, userID]);
 
   const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
   const openFishionary = () => setIsFishionaryOpen(true);
@@ -76,7 +85,6 @@ function Fishing() {
   const [isFishingGameOpen, setIsFishingGameOpen] = useState(false);
   const openFishingGame = () => {
     if (validateRoomCode(room) && userID && !playerList.includes(userID)) {
-      setIsFishingGameOpen(true);
       joinRoom();
     } else {
       alert(

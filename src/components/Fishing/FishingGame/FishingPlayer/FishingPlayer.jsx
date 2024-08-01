@@ -12,10 +12,6 @@ function FishingPlayer({ playerID, messageQueue, handleMessageQueueShift }) {
     }
   }, [playerID, messageQueue, handleMessageQueueShift]);
 
-  useEffect(() => {
-    console.log(messageQueue, message);
-  }, [message, messageQueue]);
-
   return (
     <div className="FishingPlayer">
       <div className="PlayerContent">
@@ -23,12 +19,22 @@ function FishingPlayer({ playerID, messageQueue, handleMessageQueueShift }) {
           src="https://api.iconify.design/material-symbols:person.svg?color=%2300000"
           alt=""
         />
-        <div className="FishMessage">
-          <img
-            src={message ? getFishImage(message.message.fish.id) : ""}
-            alt=""
-          />
-        </div>
+        {message ? (
+          <div
+            className="FishMessage"
+            style={{
+              animation: "messageAndFade 4s forwards ease-in-out 1",
+            }}
+            onAnimationEnd={() => setMessage("")}
+          >
+            <img
+              src={message ? getFishImage(message.message.fish.id) : ""}
+              alt=""
+            />
+          </div>
+        ) : (
+          <div />
+        )}
       </div>
     </div>
   );
