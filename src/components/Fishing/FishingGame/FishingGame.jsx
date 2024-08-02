@@ -31,14 +31,15 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
         FISHES[2].push({ ...item });
       } else if (value > 50 && value <= 75) {
         FISHES[3].push({ ...item });
-      } else if (value > 75 && value <= 99) {
+      } else if (value > 75 && value <= 100) {
         FISHES[4].push({ ...item });
-      } else if (value > 99 && value <= 300) {
+      } else if (value > 100 && value <= 300) {
         FISHES[5].push({ ...item });
       } else {
         FISHES[6].push({ ...item });
       }
     });
+
     // Define weights for each category (higher index = lower weight)
     const weights = [600, 300, 75, 25, 5, 1, 0.01];
     const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);

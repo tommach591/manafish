@@ -44,19 +44,19 @@
   "7": {
     "id": "7",
     "name": "Rock Fish",
-    "value": 7,
+    "value": 12,
     "info": "Paper!"
   },
   "8": {
     "id": "8",
     "name": "Paper Fish",
-    "value": 7,
+    "value": 12,
     "info": "Rock! Wait..."
   },
   "9": {
     "id": "9",
     "name": "Scissor Fish",
-    "value": 7,
+    "value": 12,
     "info": "GUN! PEW PEW!"
   },
   "10": {
@@ -74,7 +74,7 @@
   "12": {
     "id": "12",
     "name": "Egg",
-    "value": 8,
+    "value": 16,
     "info": "Who's egg is this?!"
   },
   "13": {
@@ -92,7 +92,7 @@
   "15": {
     "id": "15",
     "name": "Seaweed",
-    "value": 4,
+    "value": 7,
     "info": "Now I can make sushi!"
   },
   "16": {
@@ -200,7 +200,7 @@
   "33": {
     "id": "33",
     "name": "Tumbao Fish",
-    "value": 26,
+    "value": 15,
     "info": "This is just a Bao Fish with a face!"
   },
   "34": {
@@ -212,7 +212,7 @@
   "35": {
     "id": "35",
     "name": "Swordfish",
-    "value": 26,
+    "value": 18,
     "info": "ENDGARDE!"
   },
   "36": {
@@ -242,13 +242,13 @@
   "40": {
     "id": "40",
     "name": "Butterfly Fish",
-    "value": 8,
+    "value": 22,
     "info": "Shouldn't this be fluttering in the air?"
   },
   "41": {
     "id": "41",
     "name": "Froge",
-    "value": 9,
+    "value": 24,
     "info": "Next cryptocurrency is going to be Frogecoin!"
   },
   "42": {
@@ -260,7 +260,7 @@
   "43": {
     "id": "43",
     "name": "Bobfish",
-    "value": 8,
+    "value": 10,
     "info": "Not a blobfish, but a fish named Bob."
   },
   "44": {
@@ -272,31 +272,31 @@
   "45": {
     "id": "45",
     "name": "Sussy Baka (Red)",
-    "value": 4,
+    "value": 10,
     "info": "Most likely sus."
   },
   "46": {
     "id": "47",
     "name": "Sussy Baka (Yellow)",
-    "value": 4,
+    "value": 10,
     "info": "Probably dead."
   },
   "47": {
     "id": "47",
     "name": "Sussy Baka (Green)",
-    "value": 4,
+    "value": 10,
     "info": "Probably doing tasks."
   },
   "48": {
     "id": "48",
     "name": "Sussy Baka (Blue)",
-    "value": 4,
+    "value": 10,
     "info": "Doing some weird 50000 IQ strat."
   },
   "49": {
     "id": "49",
     "name": "Sussy Baka (Purple)",
-    "value": 4,
+    "value": 10,
     "info": "Probably on cams."
   },
   "50": {
@@ -344,19 +344,19 @@
   "57": {
     "id": "57",
     "name": "Sea Lion",
-    "value": 75,
+    "value": 80,
     "info": "Nuzzles, pounces on you. UwU, you're so warm."
   },
   "58": {
     "id": "58",
     "name": "Sea Bear",
-    "value": 75,
+    "value": 90,
     "info": "First off, don't play the clarinet, never wave your flashlight back and forth really fast. Don't stomp around, they take that as a challenge, don't ever eat cheese. Cubed, sliced is fine, never wear a sombrero..."
   },
   "59": {
     "id": "59",
     "name": "Zebra Turkey Fish",
-    "value": 80,
+    "value": 90,
     "info": "What is this thing?!"
   },
   "60": {
@@ -392,7 +392,7 @@
   "65": {
     "id": "65",
     "name": "Magical Karp",
-    "value": 75,
+    "value": 99,
     "info": "This karp is actually just useless."
   },
   "66": {
@@ -434,7 +434,7 @@
   "72": {
     "id": "72",
     "name": "Koi Fish",
-    "value": 100,
+    "value": 120,
     "info": "Tis but a kiss I beg, Why art thou koi?"
   },
   "73": {
@@ -452,13 +452,13 @@
   "75": {
     "id": "75",
     "name": "Angel Fish",
-    "value": 100,
+    "value": 150,
     "info": "Not to be confused with Angle Fish."
   },
   "76": {
     "id": "76",
     "name": "Devil Fish",
-    "value": 100,
+    "value": 150,
     "info": "#edgy."
   },
   "77": {
@@ -590,7 +590,7 @@
   "98": {
     "id": "98",
     "name": "Cake",
-    "value": 100,
+    "value": 110,
     "info": "The cake is a lie!"
   },
   "99": {
@@ -602,7 +602,7 @@
   "100": {
     "id": "100",
     "name": "Tako",
-    "value": 100,
+    "value": 200,
     "info": "A rare octopus!"
   },
   "101": {

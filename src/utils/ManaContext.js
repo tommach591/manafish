@@ -13,7 +13,7 @@ export function useMana() {
 }
 
 export function ManaProvider({ children }) {
-  //localStorage.clear();
+  // localStorage.clear();
 
   const TICK_RATE = 1000;
   const REGEN_RATE = 14000; // subtract 1000
@@ -166,7 +166,7 @@ export function ManaProvider({ children }) {
     else {
       getBalance(userID).then((res) => {
         if (res) {
-          if (!localStorage.getItem(userID)) {
+          if (!localStorage.getItem(userID)?.balance) {
             console.log("Loading server balance data...");
             setMana(res.mana);
             setStoredMana(res.storedMana);

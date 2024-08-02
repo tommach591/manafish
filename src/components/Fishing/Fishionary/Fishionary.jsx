@@ -5,6 +5,7 @@ import { useFish } from "../../../utils/FishContext";
 
 function Fishionary() {
   const { fishCaught } = useFish();
+
   return (
     <div className="Fishionary">
       {Object.entries(fishionary).map((entries, i) => {
