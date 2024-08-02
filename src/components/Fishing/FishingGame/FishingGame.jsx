@@ -15,6 +15,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
 
   const [messageQueue, setMessageQueue] = useState({});
   const BAITCOST = 15;
+  const FISHINGTIME = 1000 * 7;
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
@@ -81,13 +82,13 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
       const startFishingTimeout = setTimeout(() => {
         handleCatchFish();
         setIsFishing(false);
-      }, 1000 * 5);
+      }, FISHINGTIME);
 
       return () => {
         clearTimeout(startFishingTimeout);
       };
     }
-  }, [isFishing, handleCatchFish]);
+  }, [FISHINGTIME, isFishing, handleCatchFish]);
 
   useEffect(() => {
     if (autoFish) {
@@ -101,7 +102,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
               const startFishingTimeout = setTimeout(() => {
                 handleCatchFish();
                 setIsFishing(false);
-              }, 1000 * 5);
+              }, FISHINGTIME);
 
               return () => {
                 clearTimeout(startFishingTimeout);
@@ -112,12 +113,12 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
             alert("Not enough mana!");
           }
         }
-      }, 1000 * 3);
+      }, 1000 * 4);
       return () => {
         clearInterval(autoFishInterval);
       };
     }
-  }, [autoFish, isFishing, mana, updateMana, handleCatchFish]);
+  }, [FISHINGTIME, autoFish, isFishing, mana, updateMana, handleCatchFish]);
 
   useEffect(() => {
     if (messagesRecieved.length > 0) {

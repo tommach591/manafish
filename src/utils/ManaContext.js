@@ -16,7 +16,7 @@ export function ManaProvider({ children }) {
   // localStorage.clear();
 
   const TICK_RATE = 1000;
-  const REGEN_RATE = 14000; // subtract 1000
+  const REGEN_RATE = 30000 - 1000;
 
   const [userID, setUserID] = useState(() => {
     const savedUserID = JSON.stringify(localStorage.getItem("userID"));
@@ -256,7 +256,14 @@ export function ManaProvider({ children }) {
     }, TICK_RATE - (new Date() % TICK_RATE));
 
     return () => clearInterval(manaRegenInterval);
-  }, [userID, lastManaInterval, maxStoredMana, nextManaInterval, storedMana]);
+  }, [
+    REGEN_RATE,
+    userID,
+    lastManaInterval,
+    maxStoredMana,
+    nextManaInterval,
+    storedMana,
+  ]);
 
   return (
     <ManaContext.Provider
