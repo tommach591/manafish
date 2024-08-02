@@ -11,6 +11,10 @@ function App() {
   const { userID, mana } = useMana();
   const navigate = useNavigate();
 
+  function formatNumberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   useEffect(() => {
     if (!userID) {
       navigate("/login");
@@ -21,7 +25,7 @@ function App() {
     <div className="App">
       {userID ? (
         <div className="Mana">
-          <h1>{`Mana: ${mana}`}</h1>
+          <h1>{`Mana: ${formatNumberWithCommas(mana)}`}</h1>
         </div>
       ) : (
         <div />

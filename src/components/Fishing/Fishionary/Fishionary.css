@@ -7,10 +7,12 @@
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 .Fish {
-  width: 90%;
+  width: 85%;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -36,4 +38,17 @@
 
 .FishInfo > h1 {
   margin: 0.25rem;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.FishInfo > h2 {
+  margin: 0.25rem;
+  font-size: 12px;
+}
+
+.FishInfo > h3 {
+  margin: 0.25rem;
+  margin-bottom: 0rem;
+  font-size: 10px;
 }

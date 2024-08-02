@@ -4,15 +4,17 @@ import fishionary from "../../../assets/Fishionary.json";
 import { getFishImage } from "../../../utils/Fishionary";
 import { useMana } from "../../../utils/ManaContext";
 import FishingPlayer from "./FishingPlayer/FishingPlayer";
+import { useFish } from "../../../utils/FishContext";
 
 function FishingGame({ playerList, sendMessage, messagesRecieved }) {
   const { userID, mana, updateMana } = useMana();
-  const [fishCaught, setFishCaught] = useState("");
+  const { fishCaught, addFish } = useFish();
+  const [fishPrize, setFishPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
 
   const [messageQueue, setMessageQueue] = useState({});
-  const BAITCOST = 10;
+  const BAITCOST = 15;
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
@@ -38,7 +40,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
       }
     });
     // Define weights for each category (higher index = lower weight)
-    const weights = [600, 300, 80, 20, 5, 1, 0.01];
+    const weights = [600, 300, 75, 25, 5, 1, 0.01];
     const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
 
     const getRandomCategory = () => {
@@ -56,10 +58,11 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
     const category = getRandomCategory();
     const index = Math.floor(Math.random() * FISHES[category].length);
     const fish = FISHES[category][index];
-    setFishCaught(fish);
+    setFishPrize(fish);
+    addFish(fish.id);
     sendMessage({ userID, fish });
     updateMana(Number(fish.value));
-  }, [userID, updateMana, sendMessage]);
+  }, [userID, updateMana, sendMessage, addFish]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
     setMessageQueue((prev) => {
@@ -92,7 +95,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
           if (mana >= BAITCOST) {
             updateMana(-BAITCOST);
             setIsFishing(true);
-            setFishCaught("");
+            setFishPrize("");
             if (isFishing) {
               const startFishingTimeout = setTimeout(() => {
                 handleCatchFish();
@@ -136,12 +139,16 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
             src="https://i.pinimg.com/originals/9f/40/34/9f403475da2a117ff5074c7d661753e2.gif"
             alt=""
           />
-        ) : fishCaught ? (
+        ) : fishPrize ? (
           <div className="FishCaughtInfo">
-            <img src={getFishImage(fishCaught.id)} alt="" />
-            <h1>{fishCaught.name}</h1>
-            <h1>{fishCaught.info}</h1>
-            <h1>Value: {fishCaught.value}</h1>
+            <img src={getFishImage(fishPrize.id)} alt="" />
+            <h1 className="NewFishCaught">
+              {fishCaught[fishPrize.id] === 1 ? "NEW!!!" : ""}
+            </h1>
+            <h1>{fishPrize.name}</h1>
+            <h2>{fishPrize.info}</h2>
+            <h3>Value: {fishPrize.value}</h3>
+            <h3>Caught: {fishCaught[fishPrize.id]}</h3>
           </div>
         ) : (
           <div />
@@ -153,7 +160,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
           else {
             updateMana(-BAITCOST);
             setIsFishing(true);
-            setFishCaught("");
+            setFishPrize("");
           }
         }}
         disabled={isFishing || autoFish}
@@ -172,7 +179,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
                   setAutoFish(true);
                   if (!isFishing) updateMana(-BAITCOST);
                   setIsFishing(true);
-                  setFishCaught("");
+                  setFishPrize("");
                 }
               }
         }

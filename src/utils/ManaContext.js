@@ -13,7 +13,7 @@ export function useMana() {
 }
 
 export function ManaProvider({ children }) {
-  // localStorage.clear();
+  //localStorage.clear();
 
   const TICK_RATE = 1000;
   const REGEN_RATE = 14000; // subtract 1000
@@ -27,7 +27,11 @@ export function ManaProvider({ children }) {
     const savedState = localStorage.getItem(id);
     if (savedState) {
       const parsedState = JSON.parse(savedState);
-      return parsedState[key] !== undefined ? parsedState[key] : defaultValue;
+      if (parsedState["balance"])
+        return parsedState["balance"][key] !== undefined
+          ? parsedState["balance"][key]
+          : defaultValue;
+      else return defaultValue;
     }
     return defaultValue;
   }, []);
@@ -57,10 +61,10 @@ export function ManaProvider({ children }) {
 
   const updateServerMana = useCallback(() => {
     const updateFields = JSON.parse(localStorage.getItem(userID));
-    if (userID) updateBalance(userID, updateFields);
+    if (userID) updateBalance(userID, updateFields.balance);
   }, [userID]);
 
-  const handleLogin = useCallback(
+  const handleBalanceLogin = useCallback(
     (id) => {
       setMana(initializeState(id, "mana", 0));
       setStoredMana(initializeState(id, "storedMana", 0));
@@ -77,15 +81,26 @@ export function ManaProvider({ children }) {
     [initializeState]
   );
 
-  const handleLogout = useCallback(() => {
+  const handleBalanceLogout = useCallback(() => {
     const updateFields = {
-      mana: mana,
-      storedMana: storedMana,
-      maxStoredMana: maxStoredMana,
-      lastManaInterval: lastManaInterval,
-      nextManaInterval: nextManaInterval,
+      balance: {
+        mana: mana,
+        storedMana: storedMana,
+        maxStoredMana: maxStoredMana,
+        lastManaInterval: lastManaInterval,
+        nextManaInterval: nextManaInterval,
+      },
     };
-    localStorage.setItem(userID, JSON.stringify(updateFields));
+    const existingData = JSON.parse(localStorage.getItem(userID)) || {};
+
+    const mergedData = {
+      ...existingData,
+      balance: {
+        ...existingData.balance,
+        ...updateFields.balance,
+      },
+    };
+    localStorage.setItem(userID, JSON.stringify(mergedData));
     updateServerMana();
 
     localStorage.setItem("userID", "");
@@ -104,13 +119,25 @@ export function ManaProvider({ children }) {
   useEffect(() => {
     const saveInterval = setInterval(() => {
       const updateFields = {
-        mana: mana,
-        storedMana: storedMana,
-        maxStoredMana: maxStoredMana,
-        lastManaInterval: lastManaInterval,
-        nextManaInterval: nextManaInterval,
+        balance: {
+          mana: mana,
+          storedMana: storedMana,
+          maxStoredMana: maxStoredMana,
+          lastManaInterval: lastManaInterval,
+          nextManaInterval: nextManaInterval,
+        },
       };
-      localStorage.setItem(userID, JSON.stringify(updateFields));
+      const existingData = JSON.parse(localStorage.getItem(userID)) || {};
+
+      const mergedData = {
+        ...existingData,
+        balance: {
+          ...existingData.balance,
+          ...updateFields.balance,
+        },
+      };
+
+      localStorage.setItem(userID, JSON.stringify(mergedData));
     }, 1000);
 
     return () => clearInterval(saveInterval);
@@ -140,7 +167,7 @@ export function ManaProvider({ children }) {
       getBalance(userID).then((res) => {
         if (res) {
           if (!localStorage.getItem(userID)) {
-            console.log("Loading server data...");
+            console.log("Loading server balance data...");
             setMana(res.mana);
             setStoredMana(res.storedMana);
             setMaxStoredMana(res.maxStoredMana);
@@ -148,15 +175,26 @@ export function ManaProvider({ children }) {
             setNextManaInterval(new Date(res.nextManaInterval));
 
             const updateFields = {
-              mana: res.mana,
-              storedMana: res.storedMana,
-              maxStoredMana: res.maxStoredMana,
-              lastManaInterval: new Date(res.lastManaInterval),
-              nextManaInterval: new Date(res.nextManaInterval),
+              balance: {
+                mana: res.mana,
+                storedMana: res.storedMana,
+                maxStoredMana: res.maxStoredMana,
+                lastManaInterval: new Date(res.lastManaInterval),
+                nextManaInterval: new Date(res.nextManaInterval),
+              },
             };
-            localStorage.setItem(userID, JSON.stringify(updateFields));
+            const existingData = JSON.parse(localStorage.getItem(userID)) || {};
+            const mergedData = {
+              ...existingData,
+              balance: {
+                ...existingData.balance,
+                ...updateFields.balance,
+              },
+            };
+
+            localStorage.setItem(userID, JSON.stringify(mergedData));
           } else {
-            console.log("Using local data...");
+            console.log("Using local balance data...");
           }
         } else {
           createBalance(userID);
@@ -168,13 +206,25 @@ export function ManaProvider({ children }) {
           setNextManaInterval(new Date());
 
           const updateFields = {
-            mana: 50,
-            storedMana: 0,
-            maxStoredMana: 480,
-            lastManaInterval: new Date(),
-            nextManaInterval: new Date(),
+            balance: {
+              mana: 50,
+              storedMana: 0,
+              maxStoredMana: 480,
+              lastManaInterval: new Date(),
+              nextManaInterval: new Date(),
+            },
           };
-          localStorage.setItem(userID, JSON.stringify(updateFields));
+
+          const existingData = JSON.parse(localStorage.getItem(userID)) || {};
+          const mergedData = {
+            ...existingData,
+            balance: {
+              ...existingData.balance,
+              ...updateFields.balance,
+            },
+          };
+
+          localStorage.setItem(userID, JSON.stringify(mergedData));
         }
       });
     }
@@ -212,10 +262,10 @@ export function ManaProvider({ children }) {
     <ManaContext.Provider
       value={{
         userID,
-        handleLogin,
-        handleLogout,
+        handleBalanceLogin,
+        handleBalanceLogout,
         mana,
-        updateMana: updateMana,
+        updateMana,
         retrieveStoredMana,
         storedMana,
         maxStoredMana,

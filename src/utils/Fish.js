@@ -38,8 +38,10 @@ export function createFish(userIDEntered) {
     .catch((err) => console.error(err));
 }
 
-export function updateFish(userIDEntered, updatedFishCaught) {
-  const body = { userID: userIDEntered, fishCaught: updatedFishCaught };
+export function updateFish(userIDEntered, updatedBody) {
+  const body = { userID: userIDEntered };
+  if (updatedBody.fishCaught !== undefined)
+    body.fishCaught = updatedBody.fishCaught;
 
   return fetch(`${serverURL}/api/fish/update`, {
     method: "POST",

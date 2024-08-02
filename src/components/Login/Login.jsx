@@ -7,12 +7,14 @@ import {
 } from "../../utils/Account";
 import { useNavigate } from "react-router-dom";
 import { useMana } from "../../utils/ManaContext";
+import { useFish } from "../../utils/FishContext";
 
 function Login() {
   const navigate = useNavigate();
-  const { handleLogin } = useMana();
+  const { handleBalanceLogin } = useMana();
+  const { handleFishLogin } = useFish();
 
-  const [username, serUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   return (
@@ -20,7 +22,7 @@ function Login() {
       <input
         type="text"
         value={username}
-        onChange={(event) => serUsername(event.currentTarget.value)}
+        onChange={(event) => setUsername(event.currentTarget.value)}
       />
       <input
         type="text"
@@ -46,7 +48,8 @@ function Login() {
           if (username && password)
             loginAccount(username, password).then((res) => {
               if (res) {
-                handleLogin(res._id);
+                handleBalanceLogin(res._id);
+                handleFishLogin(res._id);
                 navigate("/");
               } else {
                 alert("Invalid username or password.");

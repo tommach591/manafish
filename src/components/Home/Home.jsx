@@ -2,17 +2,19 @@ import "./Home.css";
 import { useMana } from "../../utils/ManaContext";
 import { useNavigate } from "react-router-dom";
 import { getAllBalance } from "../../utils/Balance";
+import { useFish } from "../../utils/FishContext";
 
 function Home() {
   const navigate = useNavigate();
   const {
-    handleLogout,
+    handleBalanceLogout,
     storedMana,
     maxStoredMana,
     lastManaInterval,
     nextManaInterval,
     retrieveStoredMana,
   } = useMana();
+  const { handleFishLogout } = useFish();
   const TICK_RATE = 1000;
 
   return (
@@ -29,7 +31,14 @@ function Home() {
         </h1>
       </div>
       <button onClick={retrieveStoredMana}>Claim Stored Mana</button>
-      <button onClick={handleLogout}>Logout</button>
+      <button
+        onClick={() => {
+          handleFishLogout();
+          handleBalanceLogout();
+        }}
+      >
+        Logout
+      </button>
       <button
         onClick={() => {
           getAllBalance().then((res) => console.log(res));
