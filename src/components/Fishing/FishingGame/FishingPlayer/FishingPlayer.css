@@ -7,6 +7,15 @@
   position: relative;
 }
 
+button {
+  width: 8.5rem;
+}
+
+.ButtonHolder {
+  display: flex;
+  margin: 0.5rem;
+}
+
 .PlayerContent {
   position: absolute;
   top: 0;

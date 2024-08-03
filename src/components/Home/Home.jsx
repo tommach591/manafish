@@ -1,7 +1,6 @@
 import "./Home.css";
 import { useMana } from "../../utils/ManaContext";
 import { useNavigate } from "react-router-dom";
-import { getAllBalance } from "../../utils/Balance";
 import { useFish } from "../../utils/FishContext";
 
 function Home() {
@@ -39,14 +38,6 @@ function Home() {
       >
         Logout
       </button>
-      <button
-        onClick={() => {
-          getAllBalance().then((res) => console.log(res));
-        }}
-      >
-        Print Balances
-      </button>
-
       <button
         onClick={() => {
           navigate("/fishing");

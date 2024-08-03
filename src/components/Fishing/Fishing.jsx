@@ -99,21 +99,23 @@ function Fishing() {
 
   return (
     <div className="Fishing">
-      <button
-        onClick={() => {
-          openFishionary();
-        }}
-      >
-        Fishionary
-      </button>
-      <button
-        onClick={() => {
-          leaveRoom();
-          navigate("/");
-        }}
-      >
-        Home
-      </button>
+      <div className="ButtonHolder">
+        <button
+          onClick={() => {
+            leaveRoom();
+            navigate("/");
+          }}
+        >
+          Home
+        </button>
+        <button
+          onClick={() => {
+            openFishionary();
+          }}
+        >
+          Fishionary
+        </button>
+      </div>
 
       <div className="LobbyInput">
         <input

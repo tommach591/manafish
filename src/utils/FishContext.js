@@ -126,7 +126,10 @@ export function FishProvider({ children }) {
     else {
       getFish(userID).then((res) => {
         if (res) {
-          if (!localStorage.getItem(userID)?.fish) {
+          const savedData = localStorage.getItem(userID)
+            ? JSON.parse(localStorage.getItem(userID))
+            : null;
+          if (!savedData?.fish) {
             console.log("Loading server fish data...");
             setFishCaught(res.fishCaught);
 

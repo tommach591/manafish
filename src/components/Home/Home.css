@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+button {
+  width: 10rem;
+}
+
 .Mana {
   width: 100%;
   display: flex;

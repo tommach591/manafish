@@ -166,7 +166,10 @@ export function ManaProvider({ children }) {
     else {
       getBalance(userID).then((res) => {
         if (res) {
-          if (!localStorage.getItem(userID)?.balance) {
+          const savedData = localStorage.getItem(userID)
+            ? JSON.parse(localStorage.getItem(userID))
+            : null;
+          if (!savedData?.balance) {
             console.log("Loading server balance data...");
             setMana(res.mana);
             setStoredMana(res.storedMana);
@@ -241,11 +244,10 @@ export function ManaProvider({ children }) {
         setNextManaInterval(new Date(now.getTime()));
       } else if (timeElapsed < 0) {
         const newStoredMana =
-          storedMana + Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000))) >
+          storedMana + Math.abs(Math.floor(timeElapsed / REGEN_RATE)) >
           maxStoredMana
             ? maxStoredMana
-            : storedMana +
-              Math.abs(Math.floor(timeElapsed / (REGEN_RATE + 1000)));
+            : storedMana + Math.abs(Math.floor(timeElapsed / REGEN_RATE));
         setStoredMana(newStoredMana);
 
         now.setTime(now.getTime() + REGEN_RATE);
