@@ -40,7 +40,7 @@ function Login() {
             if (username && password)
               loginAccount(username, password).then((res) => {
                 if (res) {
-                  handleBalanceLogin(res._id);
+                  handleBalanceLogin(res._id, username);
                   handleFishLogin(res._id);
                   navigate("/");
                 } else alert("Invalid username or password.");

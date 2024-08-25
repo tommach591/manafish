@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import "./FishingPlayer.css";
 import { getFishImage } from "../../../../utils/Fishionary";
+import { getProfileIcon } from "../../../../utils/ProfileIcon";
 
-function FishingPlayer({ playerID, messageQueue, handleMessageQueueShift }) {
+function FishingPlayer({
+  playerID,
+  playerInfo,
+  messageQueue,
+  handleMessageQueueShift,
+}) {
   const [message, setMessage] = useState();
 
   useEffect(() => {
@@ -10,15 +16,14 @@ function FishingPlayer({ playerID, messageQueue, handleMessageQueueShift }) {
       setMessage(messageQueue[0]);
       handleMessageQueueShift(playerID);
     }
-  }, [playerID, messageQueue, handleMessageQueueShift]);
+    console.log(message);
+  }, [playerID, messageQueue, handleMessageQueueShift, message]);
 
   return (
     <div className="FishingPlayer">
       <div className="PlayerContent">
-        <img
-          src="https://api.iconify.design/material-symbols:person.svg?color=%2300000"
-          alt=""
-        />
+        <h1>{playerInfo.username}</h1>
+        <img src={getProfileIcon(playerInfo.currentProfileIcon)} alt="" />
         {message ? (
           <div
             className="FishMessage"
@@ -28,7 +33,7 @@ function FishingPlayer({ playerID, messageQueue, handleMessageQueueShift }) {
             onAnimationEnd={() => setMessage("")}
           >
             <img
-              src={message ? getFishImage(message.message.fish.id) : ""}
+              src={message ? getFishImage(message?.message.fish.id) : ""}
               alt=""
             />
           </div>

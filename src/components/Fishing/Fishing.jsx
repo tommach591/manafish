@@ -13,10 +13,10 @@ const socket = io.connect(SERVERURL);
 function Fishing() {
   const navigate = useNavigate();
 
-  const { userID } = useMana();
+  const { userID, username, currentProfileIcon } = useMana();
   const [room, setRoom] = useState("");
   const [messagesRecieved, setMessagesRecieved] = useState([]);
-  const [playerList, setPlayerList] = useState([]);
+  const [playerList, setPlayerList] = useState({});
 
   function generateLobbyCode() {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -37,16 +37,20 @@ function Fishing() {
 
   const sendMessage = useCallback(
     (message) => {
-      if (room && message) socket.emit("sendMessage", { room, message });
+      if (room && message)
+        socket.emit("sendMessage", {
+          room,
+          message,
+        });
     },
     [room]
   );
 
   const joinRoom = useCallback(() => {
-    if (validateRoomCode(room) && userID && !playerList.includes(userID)) {
-      socket.emit("joinRoom", { room, userID });
+    if (validateRoomCode(room) && userID && !playerList[userID]) {
+      socket.emit("joinRoom", { room, userID, username, currentProfileIcon });
     }
-  }, [playerList, room, userID]);
+  }, [playerList, room, userID, username, currentProfileIcon]);
 
   const leaveRoom = useCallback(() => {
     if (room && userID) socket.emit("leaveRoom", { room, userID });
@@ -54,7 +58,7 @@ function Fishing() {
 
   useEffect(() => {
     const handleLobbyPlayers = (data) => {
-      setPlayerList([...data]);
+      setPlayerList({ ...data });
     };
     const handleReceiveMessage = (data) => {
       setMessagesRecieved((prev) => [...prev, data]);
@@ -75,7 +79,7 @@ function Fishing() {
   }, []);
 
   useEffect(() => {
-    setIsFishingGameOpen(playerList.includes(userID));
+    setIsFishingGameOpen(playerList[userID]);
   }, [playerList, userID]);
 
   const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
@@ -84,7 +88,7 @@ function Fishing() {
 
   const [isFishingGameOpen, setIsFishingGameOpen] = useState(false);
   const openFishingGame = () => {
-    if (validateRoomCode(room) && userID && !playerList.includes(userID)) {
+    if (validateRoomCode(room) && userID && !playerList[userID]) {
       joinRoom();
     } else {
       alert(
@@ -122,12 +126,12 @@ function Fishing() {
           placeholder="Room #"
           value={room}
           onChange={(event) => setRoom(event.currentTarget.value)}
-          disabled={playerList.includes(userID)}
+          disabled={playerList[userID] !== undefined}
         />
         <div className="LobbyButtons">
           <button
             onClick={() => {
-              if (!playerList.includes(userID)) {
+              if (!playerList[userID]) {
                 setRoom(generateLobbyCode());
               }
             }}
@@ -136,7 +140,7 @@ function Fishing() {
           </button>
           <button
             onClick={() => {
-              if (!playerList.includes(userID)) openFishingGame();
+              if (!playerList[userID]) openFishingGame();
             }}
           >
             Join Room

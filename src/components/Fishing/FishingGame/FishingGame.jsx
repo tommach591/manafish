@@ -189,17 +189,19 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
         {autoFish ? "Stop Autofish" : "Start Autofish"}
       </button>
       <div className="PlayersFishing">
-        {playerList.map((playerID, i) => {
-          if (playerID !== userID)
+        {Object.keys(playerList).map((playerID, i) => {
+          if (playerID !== userID) {
+            const playerInfo = playerList[playerID]; // Access the player's information
             return (
               <FishingPlayer
                 key={i}
                 playerID={playerID}
+                playerInfo={playerInfo}
                 messageQueue={messageQueue[playerID]}
                 handleMessageQueueShift={handleMessageQueueShift}
               />
             );
-          else return null;
+          } else return null;
         })}
       </div>
     </div>

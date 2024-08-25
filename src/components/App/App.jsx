@@ -6,9 +6,10 @@ import Fishing from "../Fishing";
 import Arcade from "../Arcade";
 import { useMana } from "../../utils/ManaContext";
 import { useEffect } from "react";
+import { getProfileIcon } from "../../utils/ProfileIcon";
 
 function App() {
-  const { userID, mana } = useMana();
+  const { userID, username, mana, currentProfileIcon } = useMana();
   const navigate = useNavigate();
 
   function formatNumberWithCommas(x) {
@@ -24,8 +25,14 @@ function App() {
   return (
     <div className="App">
       {userID ? (
-        <div className="Mana">
-          <h1>{`Mana: ${formatNumberWithCommas(mana)}`}</h1>
+        <div className="AppHeader">
+          <div className="Mana">
+            <h1>{`${username}`}</h1>
+            <h1>{`Mana: ${formatNumberWithCommas(mana)}`}</h1>
+          </div>
+          <div className="ProfileIcon">
+            <img src={getProfileIcon(currentProfileIcon)} alt="" />
+          </div>
         </div>
       ) : (
         <div />

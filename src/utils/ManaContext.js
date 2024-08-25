@@ -23,6 +23,11 @@ export function ManaProvider({ children }) {
     return savedUserID ? JSON.parse(savedUserID) : "";
   });
 
+  const [username, setUsername] = useState(() => {
+    const savedUsername = JSON.stringify(localStorage.getItem("username"));
+    return savedUsername ? JSON.parse(savedUsername) : "";
+  });
+
   const initializeState = useCallback((id, key, defaultValue) => {
     const savedState = localStorage.getItem(id);
     if (savedState) {
@@ -49,6 +54,12 @@ export function ManaProvider({ children }) {
   const [nextManaInterval, setNextManaInterval] = useState(
     () => new Date(initializeState(userID, "nextManaInterval", new Date()))
   );
+  const [currentProfileIcon, setCurrentProfileIcon] = useState(() =>
+    initializeState(userID, "currentProfileIcon", 0)
+  );
+  const [profileIcons, setProfileIcons] = useState(() =>
+    initializeState(userID, "profileIcons", [0])
+  );
 
   const updateMana = useCallback((val) => {
     setMana((prev) => prev + val);
@@ -65,7 +76,7 @@ export function ManaProvider({ children }) {
   }, [userID]);
 
   const handleBalanceLogin = useCallback(
-    (id) => {
+    (id, username) => {
       setMana(initializeState(id, "mana", 0));
       setStoredMana(initializeState(id, "storedMana", 0));
       setMaxStoredMana(initializeState(id, "maxStoredMana", 480));
@@ -76,7 +87,9 @@ export function ManaProvider({ children }) {
         new Date(initializeState(id, "nextManaInterval", new Date()))
       );
       setUserID(id);
+      setUsername(username);
       localStorage.setItem("userID", id);
+      localStorage.setItem("username", username);
     },
     [initializeState]
   );
@@ -89,6 +102,8 @@ export function ManaProvider({ children }) {
         maxStoredMana: maxStoredMana,
         lastManaInterval: lastManaInterval,
         nextManaInterval: nextManaInterval,
+        currentProfileIcon: currentProfileIcon,
+        profileIcons: profileIcons,
       },
     };
     const existingData = JSON.parse(localStorage.getItem(userID)) || {};
@@ -105,6 +120,8 @@ export function ManaProvider({ children }) {
 
     localStorage.setItem("userID", "");
     setUserID("");
+    localStorage.setItem("username", "");
+    setUsername("");
   }, [
     userID,
     mana,
@@ -112,6 +129,8 @@ export function ManaProvider({ children }) {
     maxStoredMana,
     lastManaInterval,
     nextManaInterval,
+    currentProfileIcon,
+    profileIcons,
     updateServerMana,
   ]);
 
@@ -125,6 +144,8 @@ export function ManaProvider({ children }) {
           maxStoredMana: maxStoredMana,
           lastManaInterval: lastManaInterval,
           nextManaInterval: nextManaInterval,
+          currentProfileIcon: currentProfileIcon,
+          profileIcons: profileIcons,
         },
       };
       const existingData = JSON.parse(localStorage.getItem(userID)) || {};
@@ -148,6 +169,8 @@ export function ManaProvider({ children }) {
     maxStoredMana,
     lastManaInterval,
     nextManaInterval,
+    currentProfileIcon,
+    profileIcons,
   ]);
 
   // Save to Server
@@ -176,6 +199,8 @@ export function ManaProvider({ children }) {
             setMaxStoredMana(res.maxStoredMana);
             setLastManaInterval(new Date(res.lastManaInterval));
             setNextManaInterval(new Date(res.nextManaInterval));
+            setCurrentProfileIcon(res.currentProfileIcon);
+            setProfileIcons(res.profileIcons);
 
             const updateFields = {
               balance: {
@@ -184,6 +209,8 @@ export function ManaProvider({ children }) {
                 maxStoredMana: res.maxStoredMana,
                 lastManaInterval: new Date(res.lastManaInterval),
                 nextManaInterval: new Date(res.nextManaInterval),
+                currentProfileIcon: res.currentProfileIcon,
+                profileIcons: res.profileIcons,
               },
             };
             const existingData = JSON.parse(localStorage.getItem(userID)) || {};
@@ -215,6 +242,8 @@ export function ManaProvider({ children }) {
               maxStoredMana: 480,
               lastManaInterval: new Date(),
               nextManaInterval: new Date(),
+              currentProfileIcon: 0,
+              profileIcons: [0],
             },
           };
 
@@ -271,6 +300,7 @@ export function ManaProvider({ children }) {
     <ManaContext.Provider
       value={{
         userID,
+        username,
         handleBalanceLogin,
         handleBalanceLogout,
         mana,
@@ -281,6 +311,8 @@ export function ManaProvider({ children }) {
         setMaxStoredMana,
         lastManaInterval,
         nextManaInterval,
+        currentProfileIcon,
+        profileIcons,
       }}
     >
       {children}
