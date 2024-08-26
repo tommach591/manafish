@@ -312,7 +312,9 @@ export function ManaProvider({ children }) {
         lastManaInterval,
         nextManaInterval,
         currentProfileIcon,
+        setCurrentProfileIcon,
         profileIcons,
+        setProfileIcons,
       }}
     >
       {children}

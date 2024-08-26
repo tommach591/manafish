@@ -86,13 +86,31 @@ function Slots({ bet }) {
           </div>
         ))}
       </div>
-      <button
-        className="SpinButton"
-        onClick={() => handleSpin()}
-        disabled={spinning}
-      >
-        Stop
-      </button>
+      {!spinning && slots.includes("") ? (
+        <button
+          className="SpinButton"
+          onClick={() => {
+            handleSpin();
+          }}
+          disabled={spinning}
+        >
+          {slots[0] === "" ? "Stop" : "Reset"}
+        </button>
+      ) : (
+        <button
+          className="SpinButton"
+          onClick={() => {
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              updateMana(-bet);
+              setup();
+            }
+          }}
+          disabled={slots.includes("")}
+        >
+          Reset
+        </button>
+      )}
 
       {spinning && !slots.includes("") ? (
         <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
@@ -130,22 +148,6 @@ function Slots({ bet }) {
       <div className="Warning">
         Closing before finishing will not reward you of your winnings.
       </div>
-      {spinning && !slots.includes("") ? (
-        <button
-          className="ResetGame"
-          onClick={() => {
-            if (mana < bet) alert("Not enough mana!");
-            else {
-              updateMana(-bet);
-              setup();
-            }
-          }}
-        >
-          Reset
-        </button>
-      ) : (
-        <div />
-      )}
     </div>
   );
 }

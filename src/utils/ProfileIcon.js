@@ -18,6 +18,12 @@ const images = importAll(
   require.context("../assets/profileImage", false, /\.(png|jpe?g|svg)$/)
 );
 
+export function getProfileIconList() {
+  const length = Object.keys(images).length;
+  const profileIconList = Array.from({ length: length }, (_, i) => i);
+  return profileIconList;
+}
+
 export function getProfileIcon(index) {
   return images[`${index}.png`];
 }

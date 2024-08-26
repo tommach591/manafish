@@ -5,38 +5,25 @@ import { useFish } from "../../utils/FishContext";
 
 function Home() {
   const navigate = useNavigate();
-  const {
-    handleBalanceLogout,
-    storedMana,
-    maxStoredMana,
-    lastManaInterval,
-    nextManaInterval,
-    retrieveStoredMana,
-  } = useMana();
+  const { handleBalanceLogout, retrieveStoredMana } = useMana();
   const { handleFishLogout } = useFish();
-  const TICK_RATE = 1000;
 
   return (
     <div className="Home">
-      <div className="StoredMana">
-        <h1>{`Stored Mana: ${storedMana}/${maxStoredMana}`}</h1>
-        <h1>
-          {`Next Increment:
-        ${
-          Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1 < 0
-            ? 15
-            : Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1
-        }s`}
-        </h1>
-      </div>
       <button onClick={retrieveStoredMana}>Claim Stored Mana</button>
       <button
         onClick={() => {
-          handleFishLogout();
-          handleBalanceLogout();
+          navigate("/shop");
         }}
       >
-        Logout
+        Shop
+      </button>
+      <button
+        onClick={() => {
+          navigate("/arcade");
+        }}
+      >
+        Arcade
       </button>
       <button
         onClick={() => {
@@ -47,10 +34,11 @@ function Home() {
       </button>
       <button
         onClick={() => {
-          navigate("/arcade");
+          handleFishLogout();
+          handleBalanceLogout();
         }}
       >
-        Arcade
+        Logout
       </button>
     </div>
   );

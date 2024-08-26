@@ -27,8 +27,10 @@
 }
 
 .ModalCloseButton {
+  width: fit-content;
   background: none;
   border: none;
+  text-align: right;
   font-size: 14px;
   cursor: pointer;
 }

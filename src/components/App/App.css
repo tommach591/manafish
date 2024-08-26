@@ -10,10 +10,13 @@
 
 .AppHeader {
   width: 100%;
-  height: 4.75rem;
+  height: 6rem;
 
   display: flex;
   border-bottom: 1px solid black;
+  box-shadow: 0px -2px 10px black;
+
+  margin-bottom: 0.5rem;
 }
 
 .Mana {
@@ -23,6 +26,11 @@
   justify-content: center;
   align-items: flex-start;
   padding-left: 1rem;
+}
+
+.Username {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .ProfileIcon {
@@ -38,12 +46,54 @@
   padding: 0.25rem;
 
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 1rem;
+  right: 1rem;
 }
 
 .ProfileIcon > img {
   width: 100%;
+  height: 100%;
+}
+
+.ProfileIconSelector {
+  height: 20rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 5px;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  padding: 0.25rem;
+}
+
+.ProfileIconChoice {
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+
+  position: relative;
+}
+
+.ProfileIconCover {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.75);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+}
+
+.ProfileIconChoice > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
 }
 
 button {
