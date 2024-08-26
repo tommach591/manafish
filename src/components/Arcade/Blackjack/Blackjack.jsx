@@ -48,6 +48,7 @@ function Blackjack({ bet }) {
     return sum;
   };
   const setup = useCallback(() => {
+    // const DECK = Array(52).fill(1.0);
     const DECK = [
       1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 1.1,
       2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, 10.1, 11.1, 12.1, 13.1, 1.2, 2.2,
@@ -197,6 +198,34 @@ function Blackjack({ bet }) {
 
   return (
     <div className="Blackjack">
+      {game.dealer.length > 0 && (
+        <Hand
+          hand={game.dealer}
+          isDealer={true}
+          countHand={countHand}
+          isDone={game.done}
+        />
+      )}
+      <div className="Player">
+        {!game.done && (
+          <img
+            className="Selected"
+            src="https://api.iconify.design/material-symbols:arrow-right-alt.svg?color=%23000000"
+            alt=""
+            style={{ top: `${game.selected * (3.5 + 0.5) + 1.575}rem` }}
+          />
+        )}
+        {game.player.length > 0 &&
+          game.player.map((hand, i) => (
+            <Hand
+              key={i}
+              hand={hand}
+              isDealer={false}
+              countHand={countHand}
+              isDone={game.done}
+            />
+          ))}
+      </div>
       <div className="Controls">
         <Button
           name={"Hit"}
@@ -234,34 +263,6 @@ function Blackjack({ bet }) {
           }
           params={null}
         />
-      </div>
-      {game.dealer.length > 0 && (
-        <Hand
-          hand={game.dealer}
-          isDealer={true}
-          countHand={countHand}
-          isDone={game.done}
-        />
-      )}
-      <div className="Player">
-        {!game.done && (
-          <img
-            className="Selected"
-            src="https://api.iconify.design/material-symbols:arrow-right-alt.svg?color=%23000000"
-            alt=""
-            style={{ top: `${game.selected * (3.5 + 0.5) + 1.575}rem` }}
-          />
-        )}
-        {game.player.length > 0 &&
-          game.player.map((hand, i) => (
-            <Hand
-              key={i}
-              hand={hand}
-              isDealer={false}
-              countHand={countHand}
-              isDone={game.done}
-            />
-          ))}
       </div>
       {!game.done ? (
         <div className="Winnings">
