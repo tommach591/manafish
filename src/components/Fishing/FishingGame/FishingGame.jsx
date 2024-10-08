@@ -6,7 +6,12 @@ import { useMana } from "../../../utils/ManaContext";
 import FishingPlayer from "./FishingPlayer/FishingPlayer";
 import { useFish } from "../../../utils/FishContext";
 
-function FishingGame({ playerList, sendMessage, messagesRecieved }) {
+function FishingGame({
+  playerList,
+  sendMessage,
+  messagesRecieved,
+  setCloseIsDisabled,
+}) {
   const { userID, mana, updateMana } = useMana();
   const { fishCaught, addFish } = useFish();
   const [fishPrize, setFishPrize] = useState("");
@@ -16,6 +21,14 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
   const [messageQueue, setMessageQueue] = useState({});
   const BAITCOST = 15;
   const FISHINGTIME = 1000 * 7;
+
+  const handleIsFishing = useCallback(
+    (value) => {
+      setIsFishing(value);
+      setCloseIsDisabled(value);
+    },
+    [setCloseIsDisabled]
+  );
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
@@ -81,14 +94,14 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
     if (isFishing) {
       const startFishingTimeout = setTimeout(() => {
         handleCatchFish();
-        setIsFishing(false);
+        handleIsFishing(false);
       }, FISHINGTIME);
 
       return () => {
         clearTimeout(startFishingTimeout);
       };
     }
-  }, [FISHINGTIME, isFishing, handleCatchFish]);
+  }, [FISHINGTIME, isFishing, handleCatchFish, handleIsFishing]);
 
   useEffect(() => {
     if (autoFish) {
@@ -96,12 +109,12 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
         if (!isFishing) {
           if (mana >= BAITCOST) {
             updateMana(-BAITCOST);
-            setIsFishing(true);
+            handleIsFishing(true);
             setFishPrize("");
             if (isFishing) {
               const startFishingTimeout = setTimeout(() => {
                 handleCatchFish();
-                setIsFishing(false);
+                handleIsFishing(false);
               }, FISHINGTIME);
 
               return () => {
@@ -118,7 +131,15 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
         clearInterval(autoFishInterval);
       };
     }
-  }, [FISHINGTIME, autoFish, isFishing, mana, updateMana, handleCatchFish]);
+  }, [
+    FISHINGTIME,
+    autoFish,
+    isFishing,
+    mana,
+    updateMana,
+    handleCatchFish,
+    handleIsFishing,
+  ]);
 
   useEffect(() => {
     if (messagesRecieved.length > 0) {
@@ -161,7 +182,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
           if (mana < BAITCOST) alert("Not enough mana!");
           else {
             updateMana(-BAITCOST);
-            setIsFishing(true);
+            handleIsFishing(true);
             setFishPrize("");
           }
         }}
@@ -180,7 +201,7 @@ function FishingGame({ playerList, sendMessage, messagesRecieved }) {
                 else {
                   setAutoFish(true);
                   if (!isFishing) updateMana(-BAITCOST);
-                  setIsFishing(true);
+                  handleIsFishing(true);
                   setFishPrize("");
                 }
               }

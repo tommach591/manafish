@@ -12,6 +12,8 @@ function Arcade() {
   const MINBET = 5;
   const [bet, setBet] = useState(MINBET);
 
+  const [closeIsDisabled, setCloseIsDisabled] = useState(false);
+
   const [isScratchOpen, setIsScratchOpen] = useState(false);
   const [isBJOpen, setIsBJOpen] = useState(false);
   const [isSlotsOpen, setIsSlotsOpen] = useState(false);
@@ -85,14 +87,29 @@ function Arcade() {
         Home
       </button>
 
-      <Modal isOpen={isScratchOpen} onClose={closeScratch} title="Scratch">
-        <Scratch bet={bet} />
+      <Modal
+        isOpen={isScratchOpen}
+        onClose={closeScratch}
+        title="Scratch"
+        isDisabled={closeIsDisabled}
+      >
+        <Scratch bet={bet} setCloseIsDisabled={setCloseIsDisabled} />
       </Modal>
-      <Modal isOpen={isBJOpen} onClose={closeBJ} title="Blackjack">
-        <Blackjack bet={bet} />
+      <Modal
+        isOpen={isBJOpen}
+        onClose={closeBJ}
+        title="Blackjack"
+        isDisabled={closeIsDisabled}
+      >
+        <Blackjack bet={bet} setCloseIsDisabled={setCloseIsDisabled} />
       </Modal>
-      <Modal isOpen={isSlotsOpen} onClose={closeSlots} title="Slots">
-        <Slots bet={bet} />
+      <Modal
+        isOpen={isSlotsOpen}
+        onClose={closeSlots}
+        title="Slots"
+        isDisabled={closeIsDisabled}
+      >
+        <Slots bet={bet} setCloseIsDisabled={setCloseIsDisabled} />
       </Modal>
     </div>
   );

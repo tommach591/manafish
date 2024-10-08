@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import "./Slots.css";
 import { useMana } from "../../../utils/ManaContext";
 
-function Slots({ bet }) {
+function Slots({ bet, setCloseIsDisabled }) {
   const { mana, updateMana } = useMana();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [winnings, setWinnings] = useState(0);
@@ -14,7 +14,8 @@ function Slots({ bet }) {
     setSlots(["", "", "", "", ""]);
     setWinnings(0);
     setSpinning(false);
-  }, []);
+    setCloseIsDisabled(true);
+  }, [setCloseIsDisabled]);
 
   const getRandomSymbol = () => {
     return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
@@ -56,6 +57,7 @@ function Slots({ bet }) {
           if (i === newSlots.length - 1) {
             const newWinnings = calculateWinnings(newSlots, bet);
             setWinnings(newWinnings);
+            setCloseIsDisabled(false);
           }
         }, (i + 1) * 333) // Stops each slot one second apart
       );
@@ -68,6 +70,11 @@ function Slots({ bet }) {
     if (!slots.includes("") && winnings > 0) updateMana(winnings);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots, winnings]);
+
+  useEffect(() => {
+    setCloseIsDisabled(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="SlotsGame">
@@ -144,9 +151,6 @@ function Slots({ bet }) {
           <h1 className="Condition">{`Any 2`}</h1>
           <h1 className="Multiplier">{`0.5x`}</h1>
         </div>
-      </div>
-      <div className="Warning">
-        Closing before finishing will not reward you of your winnings.
       </div>
     </div>
   );

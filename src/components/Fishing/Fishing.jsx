@@ -17,6 +17,7 @@ function Fishing() {
   const [room, setRoom] = useState("");
   const [messagesRecieved, setMessagesRecieved] = useState([]);
   const [playerList, setPlayerList] = useState({});
+  const [closeIsDisabled, setCloseIsDisabled] = useState(false);
 
   function generateLobbyCode() {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -152,11 +153,13 @@ function Fishing() {
         isOpen={isFishingGameOpen}
         onClose={closeFishingGame}
         title={`Fishing - ${room}`}
+        isDisabled={closeIsDisabled}
       >
         <FishingGame
           playerList={playerList}
           sendMessage={sendMessage}
           messagesRecieved={messagesRecieved}
+          setCloseIsDisabled={setCloseIsDisabled}
         />
       </Modal>
 

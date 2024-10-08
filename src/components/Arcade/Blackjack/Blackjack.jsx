@@ -4,7 +4,7 @@ import { useMana } from "../../../utils/ManaContext";
 import Button from "./Button";
 import Hand from "./Hand";
 
-function Blackjack({ bet }) {
+function Blackjack({ bet, setCloseIsDisabled }) {
   const [winnings, setWinnings] = useState(0);
   const { mana, updateMana } = useMana();
 
@@ -75,6 +75,8 @@ function Blackjack({ bet }) {
       done: countHand(playerHand) === BLACKJACK,
       paid: false,
     });
+
+    setCloseIsDisabled(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bet]);
 
@@ -144,6 +146,7 @@ function Blackjack({ bet }) {
         newGame.paid = true;
         setGame(newGame);
         setWinnings(totalEarned);
+        setCloseIsDisabled(false);
         if (totalEarned > 0) updateMana(Number(totalEarned));
       }
     }
@@ -265,15 +268,6 @@ function Blackjack({ bet }) {
         />
       </div>
       {!game.done ? (
-        <div className="Winnings">
-          {`Blackjack! Beat the dealer, but don't go over 21!`}
-        </div>
-      ) : (
-        <div className="Winnings">{`Earned ${Number(
-          winnings
-        )} mana. Net gain ${Number(winnings - game.bet)} mana.`}</div>
-      )}
-      {!game.done ? (
         <div />
       ) : (
         <button
@@ -289,9 +283,15 @@ function Blackjack({ bet }) {
           Reset
         </button>
       )}
-      <div className="Warning">
-        Closing before finishing will not reward you of your winnings.
-      </div>
+      {!game.done ? (
+        <div className="Winnings">
+          {`Blackjack! Beat the dealer, but don't go over 21!`}
+        </div>
+      ) : (
+        <div className="Winnings">{`Earned ${Number(
+          winnings
+        )} mana. Net gain ${Number(winnings - game.bet)} mana.`}</div>
+      )}
     </div>
   );
 }

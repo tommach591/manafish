@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import "./Scratch.css";
 import { useMana } from "../../../utils/ManaContext";
 
-function Scratch({ bet }) {
+function Scratch({ bet, setCloseIsDisabled }) {
   const [range, setRange] = useState([0]);
   const [numbers, setNumbers] = useState(
     Array.from({ length: 9 }, (_, i) => i).fill(0)
@@ -36,7 +36,8 @@ function Scratch({ bet }) {
     setNumbers(Array.from({ length: 9 }, (_, i) => i).fill(0));
     setRange(generateRange(bet));
     setWinnings(0);
-  }, [bet]);
+    setCloseIsDisabled(true);
+  }, [bet, setCloseIsDisabled]);
 
   useEffect(() => {
     setup();
@@ -80,6 +81,7 @@ function Scratch({ bet }) {
                 setNumbers((prevNumbers) => {
                   prevNumbers[i] =
                     range[Math.floor(Math.random() * range.length)];
+                  if (!prevNumbers.includes(0)) setCloseIsDisabled(false);
                   return [...prevNumbers];
                 });
             }}
@@ -122,9 +124,6 @@ function Scratch({ bet }) {
           Reset
         </button>
       )}
-      <div className="Warning">
-        Closing before finishing will not reward you of your winnings.
-      </div>
     </div>
   );
 }
