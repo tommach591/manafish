@@ -1,0 +1,49 @@
+body,
+button {
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  color: rgb(50, 50, 60);
+}
+
+button {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 2rem;
+
+  border: 1px solid rgb(50, 50, 60);
+  border-radius: 5px;
+
+  margin: 0.5rem;
+  padding: 0.5rem;
+
+  background: white;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(50, 50, 60);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(100, 100, 110);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(80, 80, 90);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
