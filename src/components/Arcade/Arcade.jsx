@@ -10,6 +10,7 @@ import Slots from "./Slots";
 function Arcade() {
   const { mana, updateMana } = useMana();
   const MINBET = 5;
+  const MAXBET = 500000;
   const [bet, setBet] = useState(MINBET);
 
   const [closeIsDisabled, setCloseIsDisabled] = useState(false);
@@ -39,15 +40,21 @@ function Arcade() {
           min={MINBET}
           value={bet}
           onChange={(event) => {
-            setBet(event.currentTarget.value);
+            const value = event.currentTarget.value;
+            if (value === "") setBet("");
+            else if (Number(value) > MAXBET) setBet(MAXBET);
+            else if (Number(value) < MINBET) setBet(MINBET);
+            else setBet(Number(value));
+          }}
+          onBlur={() => {
+            if (bet === "") setBet(MINBET);
           }}
         />
       </div>
       <button
         className="ArcadeButton"
         onClick={() => {
-          if (bet < MINBET) alert(`Minimum bet is ${MINBET} mana!`);
-          else if (mana < bet) alert("Not enough mana!");
+          if (mana < bet) alert("Not enough mana!");
           else {
             updateMana(-bet);
             openScratch();
@@ -59,8 +66,7 @@ function Arcade() {
       <button
         className="ArcadeButton"
         onClick={() => {
-          if (bet < MINBET) alert(`Minimum bet is ${MINBET} mana!`);
-          else if (mana < bet) alert("Not enough mana!");
+          if (mana < bet) alert("Not enough mana!");
           else {
             updateMana(-bet);
             openBJ();
@@ -72,8 +78,7 @@ function Arcade() {
       <button
         className="ArcadeButton"
         onClick={() => {
-          if (bet < MINBET) alert(`Minimum bet is ${MINBET} mana!`);
-          else if (mana < bet) alert("Not enough mana!");
+          if (mana < bet) alert("Not enough mana!");
           else {
             updateMana(-bet);
             openSlots();
