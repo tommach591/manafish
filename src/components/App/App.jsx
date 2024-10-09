@@ -39,6 +39,9 @@ function App() {
 
   return (
     <div className="App">
+      <div className="Wave" />
+      <div className="Wave" />
+      <div className="Wave" />
       {userID ? (
         <div className="AppHeader">
           <div className="Mana">
@@ -59,7 +62,7 @@ function App() {
           </div>
         </div>
       ) : (
-        <div />
+        <div className="AppHeader" />
       )}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -68,7 +71,6 @@ function App() {
         <Route path="/fishing" element={<Fishing />} />
         <Route path="/arcade" element={<Arcade />} />
       </Routes>
-
       <Modal
         isOpen={isProfileIconOpen}
         onClose={closeProfileIcon}

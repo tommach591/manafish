@@ -15,6 +15,47 @@
   right: 4px;
 }
 
+.ClaimButton {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 1px solid rgb(255, 255, 255);
+  background: rgba(255, 255, 255, 0.8);
+
+  position: relative;
+  padding: 1.25rem;
+  animation: bubbleFloat 10s ease-in-out infinite;
+
+  font-weight: bold;
+}
+
+.StoredManaPopup {
+  opacity: 0;
+  position: absolute;
+  top: -2rem;
+
+  font-size: 16px;
+}
+
+@keyframes claimStoredMana {
+  0% {
+    margin-top: 4rem;
+    opacity: 0;
+  }
+  10% {
+    margin-top: 0rem;
+    opacity: 0.9;
+  }
+  80% {
+    margin-top: 0rem;
+    opacity: 1;
+  }
+  100% {
+    margin-top: 0rem;
+    opacity: 0;
+  }
+}
+
 .NavigationButtons {
   display: grid;
   grid-template-columns: auto auto;
@@ -31,6 +72,46 @@
   flex-direction: column;
   justify-content: start;
 
+  border-radius: 50%;
+  border: 1px solid rgb(255, 255, 255);
+  background: rgba(255, 255, 255, 0.8);
+
   font-size: 20px;
   font-weight: bold;
+
+  position: relative;
+  padding: 1.25rem;
+  animation: bubbleFloat 10s ease-in-out infinite;
+}
+
+@keyframes bubbleFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-3px, -3px) scale(1.025);
+  }
+  50% {
+    transform: translate(3px, -3px) scale(1.05);
+  }
+  75% {
+    transform: translate(-3px, -3px) scale(1.025);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.BubbleReflection {
+  width: 45%;
+  height: 20%;
+
+  background: white;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%;
+  transform: rotate(35deg) scale(1.2, 1);
+  z-index: -1;
 }
