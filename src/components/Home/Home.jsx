@@ -35,7 +35,7 @@ function Home() {
           style={
             claimedMana !== 0
               ? {
-                  animation: "claimStoredMana 2s forwards ease-in-out 1",
+                  animation: "claimStoredMana 1s forwards ease-in-out 1",
                 }
               : {}
           }
