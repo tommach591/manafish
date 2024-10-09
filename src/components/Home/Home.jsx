@@ -41,7 +41,7 @@ function Home() {
           }
           onAnimationEnd={() => setClaimedMana(0)}
         >
-          {claimedMana}
+          +{claimedMana}
         </h1>
         Claim Mana
       </button>
