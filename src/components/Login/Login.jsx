@@ -28,7 +28,7 @@ function Login() {
           onChange={(event) => setUsername(event.currentTarget.value)}
         />
         <input
-          type="text"
+          type="password"
           value={password}
           placeholder="Password"
           onChange={(event) => setPassword(event.currentTarget.value)}
@@ -52,7 +52,7 @@ function Login() {
         </button>
         <button
           onClick={() => {
-            if (username && password)
+            if (username.length >= 3 && password.length >= 8)
               createAccount(username, password).then((res) => {
                 if (res) {
                   alert("Account created. Please log in.");
@@ -60,7 +60,7 @@ function Login() {
                   alert("Account already exists.");
                 }
               });
-            else alert("Invalid username or password.");
+            else alert("Username minimum 3 length. Password minimum 8 length.");
           }}
         >
           Create Account

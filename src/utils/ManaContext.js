@@ -234,6 +234,8 @@ export function ManaProvider({ children }) {
           setMaxStoredMana(480);
           setLastManaInterval(new Date());
           setNextManaInterval(new Date());
+          setCurrentProfileIcon(0);
+          setProfileIcons([0]);
 
           const updateFields = {
             balance: {

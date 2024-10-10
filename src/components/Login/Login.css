@@ -6,6 +6,7 @@
 
 .LoginTitle {
   font-size: 24px;
+  font-weight: bold;
   margin-top: 1rem;
 }
 
@@ -16,8 +17,19 @@
 }
 
 .LoginInput > input {
-  margin: 0.1rem;
+  margin: 0.5rem;
   padding: 0.5rem;
+
+  text-align: center;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  color: rgb(50, 50, 60);
 }
 
 .LoginButtons {
@@ -25,4 +37,15 @@
   flex-direction: column;
   align-items: center;
   margin-top: 0.5rem;
+}
+
+.LoginButtons > button {
+  width: 10rem;
+  height: 1rem;
+  margin: 0.5rem;
+  font-size: 16px;
+  box-shadow: none;
+  border-radius: 10px;
+  border: 1px solid rgb(50, 50, 60);
+  animation: none;
 }
