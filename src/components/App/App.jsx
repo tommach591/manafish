@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import Login from "../Login";
 import Home from "../Home";
 import Shop from "../Shop";
@@ -70,6 +70,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/fishing" element={<Fishing />} />
         <Route path="/arcade" element={<Arcade />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Modal
         isOpen={isProfileIconOpen}
