@@ -56,11 +56,10 @@ export function FishProvider({ children }) {
     const mergedData = {
       ...existingData,
       fish: {
-        ...existingData.fish,
         ...updateFields.fish,
       },
     };
-    localStorage.setItem(userID, JSON.stringify(mergedData));
+    if (userID) localStorage.setItem(userID, JSON.stringify(mergedData));
     updateServerFish();
   }, [userID, fishCaught, updateServerFish]);
 
@@ -104,7 +103,7 @@ export function FishProvider({ children }) {
           ...updateFields.fish,
         },
       };
-      localStorage.setItem(userID, JSON.stringify(mergedData));
+      if (userID) localStorage.setItem(userID, JSON.stringify(mergedData));
     }, 1000);
 
     return () => clearInterval(saveInterval);
@@ -147,7 +146,8 @@ export function FishProvider({ children }) {
               },
             };
 
-            localStorage.setItem(userID, JSON.stringify(mergedData));
+            if (userID)
+              localStorage.setItem(userID, JSON.stringify(mergedData));
           } else {
             console.log("Using local fish data...");
           }
@@ -170,7 +170,7 @@ export function FishProvider({ children }) {
             },
           };
 
-          localStorage.setItem(userID, JSON.stringify(mergedData));
+          if (userID) localStorage.setItem(userID, JSON.stringify(mergedData));
         }
       });
     }

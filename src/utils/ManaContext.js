@@ -86,6 +86,9 @@ export function ManaProvider({ children }) {
       setNextManaInterval(
         new Date(initializeState(id, "nextManaInterval", new Date()))
       );
+      setCurrentProfileIcon(initializeState(id, "currentProfileIcon", 0));
+      setProfileIcons(initializeState(id, "profileIcons", [0]));
+
       setUserID(id);
       setUsername(username);
       localStorage.setItem("userID", id);
@@ -111,7 +114,6 @@ export function ManaProvider({ children }) {
     const mergedData = {
       ...existingData,
       balance: {
-        ...existingData.balance,
         ...updateFields.balance,
       },
     };

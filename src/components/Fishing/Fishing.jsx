@@ -120,7 +120,7 @@ function Fishing() {
       <div className="LobbyInput">
         <input
           placeholder="Room #"
-          maxlength="6"
+          maxLength="6"
           value={room}
           onChange={(event) => setRoom(event.currentTarget.value.toUpperCase())}
           disabled={playerList[userID] !== undefined}
