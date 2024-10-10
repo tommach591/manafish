@@ -7,7 +7,7 @@ function Button({ name, active, handleOnClick, params }) {
       onClick={() => {
         if (active) handleOnClick(params);
       }}
-      style={active ? { background: "white" } : { background: "gray" }}
+      style={active ? { opacity: 1 } : { opacity: 0.2 }}
     >
       <h1>{name}</h1>
     </div>

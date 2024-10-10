@@ -31,9 +31,23 @@ function Shop() {
 
   return (
     <div className="Shop">
-      <button onClick={openManaLimit}>Raise Mana Limit</button>
-      <button onClick={openIconGacha}>Profile Icon Gacha</button>
-      <button onClick={() => navigate("/")}>Home</button>
+      <div className="ShopButtons">
+        <button onClick={openManaLimit}>
+          <div className="BubbleReflection" />
+          Raise Mana Limit
+        </button>
+        <button onClick={openIconGacha}>
+          <div className="BubbleReflection" />
+          Profile Icon Gacha
+        </button>
+      </div>
+      <button className="HomeButton" onClick={() => navigate("/")}>
+        <div className="BubbleReflection" />
+        <img
+          src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
+          alt=""
+        />
+      </button>
 
       <Modal
         isOpen={isManaLimitOpen}

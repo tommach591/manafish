@@ -36,62 +36,63 @@ function Arcade() {
         <h1>Bet</h1>
         <input
           type="number"
-          step={1}
-          min={MINBET}
           value={bet}
           onChange={(event) => {
-            const value = event.currentTarget.value;
-            if (value === "") setBet("");
-            else if (Number(value) > MAXBET) setBet(MAXBET);
-            else if (Number(value) < MINBET) setBet(MINBET);
-            else setBet(Number(value));
+            setBet(event.currentTarget.value);
           }}
           onBlur={() => {
             if (bet === "") setBet(MINBET);
+            else if (bet > MAXBET) setBet(MAXBET);
+            else if (bet < MINBET) setBet(MINBET);
+            setBet(Math.floor(bet));
           }}
         />
       </div>
-      <button
-        className="ArcadeButton"
-        onClick={() => {
-          if (mana < bet) alert("Not enough mana!");
-          else {
-            updateMana(-bet);
-            openScratch();
-          }
-        }}
-      >
-        Scratch
+      <button className="HomeButton" onClick={() => navigate("/")}>
+        <div className="BubbleReflection" />
+        <img
+          src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
+          alt=""
+        />
       </button>
-      <button
-        className="ArcadeButton"
-        onClick={() => {
-          if (mana < bet) alert("Not enough mana!");
-          else {
-            updateMana(-bet);
-            openBJ();
-          }
-        }}
-      >
-        Blackjack
-      </button>
-      <button
-        className="ArcadeButton"
-        onClick={() => {
-          if (mana < bet) alert("Not enough mana!");
-          else {
-            updateMana(-bet);
-            openSlots();
-          }
-        }}
-      >
-        Slots
-      </button>
-
-      <button className="ArcadeButton" onClick={() => navigate("/")}>
-        Home
-      </button>
-
+      <div className="ArcadeButtons">
+        <button
+          onClick={() => {
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              updateMana(-bet);
+              openScratch();
+            }
+          }}
+        >
+          <div className="BubbleReflection" />
+          Scratch
+        </button>
+        <button
+          onClick={() => {
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              updateMana(-bet);
+              openBJ();
+            }
+          }}
+        >
+          <div className="BubbleReflection" />
+          Blackjack
+        </button>
+        <button
+          onClick={() => {
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              updateMana(-bet);
+              openSlots();
+            }
+          }}
+        >
+          <div className="BubbleReflection" />
+          Slots
+        </button>
+      </div>
       <Modal
         isOpen={isScratchOpen}
         onClose={closeScratch}

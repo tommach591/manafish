@@ -177,38 +177,40 @@ function FishingGame({
           <div />
         )}
       </div>
-      <button
-        onClick={() => {
-          if (mana < BAITCOST) alert("Not enough mana!");
-          else {
-            updateMana(-BAITCOST);
-            handleIsFishing(true);
-            setFishPrize("");
-          }
-        }}
-        disabled={isFishing || autoFish}
-      >
-        Fish ({BAITCOST} Mana)
-      </button>
-      <button
-        onClick={
-          autoFish
-            ? () => {
-                setAutoFish(false);
-              }
-            : () => {
-                if (mana < BAITCOST) alert("Not enough mana!");
-                else {
-                  setAutoFish(true);
-                  if (!isFishing) updateMana(-BAITCOST);
-                  handleIsFishing(true);
-                  setFishPrize("");
+      <div className="FishingButtons">
+        <button
+          onClick={() => {
+            if (mana < BAITCOST) alert("Not enough mana!");
+            else {
+              updateMana(-BAITCOST);
+              handleIsFishing(true);
+              setFishPrize("");
+            }
+          }}
+          disabled={isFishing || autoFish}
+        >
+          Fish ({BAITCOST} Mana)
+        </button>
+        <button
+          onClick={
+            autoFish
+              ? () => {
+                  setAutoFish(false);
                 }
-              }
-        }
-      >
-        {autoFish ? "Stop Autofish" : "Start Autofish"}
-      </button>
+              : () => {
+                  if (mana < BAITCOST) alert("Not enough mana!");
+                  else {
+                    setAutoFish(true);
+                    if (!isFishing) updateMana(-BAITCOST);
+                    handleIsFishing(true);
+                    setFishPrize("");
+                  }
+                }
+          }
+        >
+          {autoFish ? "Stop Autofish" : "Start Autofish"}
+        </button>
+      </div>
       <div className="PlayersFishing">
         {Object.keys(playerList).map((playerID, i) => {
           if (playerID !== userID) {

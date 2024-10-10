@@ -104,51 +104,56 @@ function Fishing() {
 
   return (
     <div className="Fishing">
-      <div className="ButtonHolder">
-        <button
-          onClick={() => {
-            leaveRoom();
-            navigate("/");
-          }}
-        >
-          Home
-        </button>
+      <button
+        className="HomeButton"
+        onClick={() => {
+          leaveRoom();
+          navigate("/");
+        }}
+      >
+        <div className="BubbleReflection" />
+        <img
+          src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
+          alt=""
+        />
+      </button>
+      <div className="LobbyInput">
+        <input
+          placeholder="Room #"
+          maxlength="6"
+          value={room}
+          onChange={(event) => setRoom(event.currentTarget.value.toUpperCase())}
+          disabled={playerList[userID] !== undefined}
+        />
+      </div>
+      <div className="LobbyButtons">
         <button
           onClick={() => {
             openFishionary();
           }}
         >
+          <div className="BubbleReflection" />
           Fishionary
         </button>
+        <button
+          onClick={() => {
+            if (!playerList[userID]) {
+              setRoom(generateLobbyCode());
+            }
+          }}
+        >
+          <div className="BubbleReflection" />
+          Random Room
+        </button>
+        <button
+          onClick={() => {
+            if (!playerList[userID]) openFishingGame();
+          }}
+        >
+          <div className="BubbleReflection" />
+          Join Room
+        </button>
       </div>
-
-      <div className="LobbyInput">
-        <input
-          placeholder="Room #"
-          value={room}
-          onChange={(event) => setRoom(event.currentTarget.value)}
-          disabled={playerList[userID] !== undefined}
-        />
-        <div className="LobbyButtons">
-          <button
-            onClick={() => {
-              if (!playerList[userID]) {
-                setRoom(generateLobbyCode());
-              }
-            }}
-          >
-            Random Room
-          </button>
-          <button
-            onClick={() => {
-              if (!playerList[userID]) openFishingGame();
-            }}
-          >
-            Join Room
-          </button>
-        </div>
-      </div>
-
       <Modal
         isOpen={isFishingGameOpen}
         onClose={closeFishingGame}
@@ -162,7 +167,6 @@ function Fishing() {
           setCloseIsDisabled={setCloseIsDisabled}
         />
       </Modal>
-
       <Modal
         isOpen={isFishionaryOpen}
         onClose={closeFishionary}

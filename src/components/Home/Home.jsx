@@ -19,6 +19,7 @@ function Home() {
           handleBalanceLogout();
         }}
       >
+        <div className="BubbleReflection" />
         Logout
       </button>
       <button
@@ -35,7 +36,7 @@ function Home() {
           style={
             claimedMana !== 0
               ? {
-                  animation: "claimStoredMana 1s forwards ease-in-out 1",
+                  animation: "claimStoredMana 1.5s forwards ease-in-out 1",
                 }
               : {}
           }

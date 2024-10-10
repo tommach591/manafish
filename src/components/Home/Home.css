@@ -6,27 +6,32 @@
   align-items: center;
 }
 
-.LogoutButton {
-  width: 4rem;
-  height: 1.5rem;
-  font-size: 11px;
+.HomeButton {
+  width: 2rem;
+  height: 2rem;
+  font-size: 10px;
 
   position: absolute;
-  right: 4px;
+  left: 10px;
+}
+
+.HomeButton > img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.LogoutButton {
+  width: 2rem;
+  height: 2rem;
+  font-size: 10px;
+
+  position: absolute;
+  right: 10px;
 }
 
 .ClaimButton {
   width: 4rem;
   height: 4rem;
-  border-radius: 50%;
-  border: 1px solid rgb(255, 255, 255);
-  background: rgba(255, 255, 255, 0.8);
-
-  position: relative;
-  padding: 1.25rem;
-  animation: bubbleFloat 10s ease-in-out infinite;
-
-  font-weight: bold;
 }
 
 .StoredManaPopup {
@@ -72,16 +77,9 @@
   flex-direction: column;
   justify-content: start;
 
-  border-radius: 50%;
-  border: 1px solid rgb(255, 255, 255);
-  background: rgba(255, 255, 255, 0.8);
-
   font-size: 20px;
-  font-weight: bold;
 
-  position: relative;
-  padding: 1.25rem;
-  animation: bubbleFloat 10s ease-in-out infinite;
+  margin: 0.5rem;
 }
 
 @keyframes bubbleFloat {
@@ -108,8 +106,8 @@
 
   background: white;
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 15%;
+  right: 10%;
 
   border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%;
   transform: rotate(35deg) scale(1.2, 1);

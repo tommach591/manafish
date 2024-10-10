@@ -6,6 +6,21 @@
   align-items: center;
 }
 
+.ShopButtons {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1rem;
+
+  margin: 1rem;
+}
+
+.ShopButtons > button {
+  width: 5rem;
+  height: 5rem;
+
+  margin: 0.5rem;
+}
+
 .ShopMessage {
   display: flex;
   flex-direction: column;
@@ -15,4 +30,15 @@
 .ShopDecision {
   margin-top: 1rem;
   display: flex;
+}
+
+.ShopDecision > button {
+  width: 8rem;
+  height: 1rem;
+  margin: 0.5rem;
+  font-size: 16px;
+  box-shadow: none;
+  border-radius: 10px;
+  border: 1px solid rgb(50, 50, 60);
+  animation: none;
 }

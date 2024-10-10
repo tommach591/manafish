@@ -33,6 +33,8 @@
   text-align: right;
   font-size: 14px;
   cursor: pointer;
+  box-shadow: none;
+  animation: none;
 }
 
 .ModalBody {
