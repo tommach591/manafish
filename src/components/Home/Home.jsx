@@ -32,11 +32,11 @@ function Home() {
       >
         <div className="BubbleReflection" />
         <h1
-          className="StoredManaPopup"
+          className="TextPopUp"
           style={
             claimedMana !== 0
               ? {
-                  animation: "claimStoredMana 1.5s forwards ease-in-out 1",
+                  animation: "textPopUp 1.5s forwards ease-in-out 1",
                 }
               : {}
           }
