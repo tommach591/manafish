@@ -27,6 +27,11 @@
   align-items: center;
 }
 
+.ShopMessage > h1 {
+  width: 100%;
+  margin: 0.5rem;
+}
+
 .ShopDecision {
   margin-top: 1rem;
   display: flex;

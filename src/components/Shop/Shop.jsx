@@ -25,6 +25,8 @@ function Shop() {
   const openIconGacha = () => setIsIconGachaOpen(true);
   const closeIconGacha = () => setIsIconGachaOpen(false);
 
+  const [confirmedPurchase, setConfirmedPurchase] = useState(false);
+
   const RAISE_MAX_MANA_PRICE = 10000;
   const MAX_MANA_INCREMENT = 120; // 1 hour
   const PROFILE_ICON_GACHA_PRICE = 5000;
@@ -32,11 +34,21 @@ function Shop() {
   return (
     <div className="Shop">
       <div className="ShopButtons">
-        <button onClick={openManaLimit}>
+        <button
+          onClick={() => {
+            setConfirmedPurchase(false);
+            openManaLimit();
+          }}
+        >
           <div className="BubbleReflection" />
           Raise Mana Limit
         </button>
-        <button onClick={openIconGacha}>
+        <button
+          onClick={() => {
+            setConfirmedPurchase(false);
+            openIconGacha();
+          }}
+        >
           <div className="BubbleReflection" />
           Profile Icon Gacha
         </button>
@@ -54,34 +66,38 @@ function Shop() {
         onClose={closeManaLimit}
         title="Raise Mana Limit"
       >
-        <div className="ShopMessage">
-          <h1>{`Spend ${formatNumberWithCommas(
-            RAISE_MAX_MANA_PRICE
-          )} to increase max stored mana by ${MAX_MANA_INCREMENT} mana? (1 Hour)`}</h1>
-          <div className="ShopDecision">
-            <button
-              onClick={() => {
-                if (mana <= RAISE_MAX_MANA_PRICE) {
-                  alert("Not enough mana!");
-                  closeManaLimit();
-                } else if (maxStoredMana >= 20160) {
-                  alert("You have reached max cap!");
-                  closeManaLimit();
-                } else {
-                  updateMana(-RAISE_MAX_MANA_PRICE);
-                  setMaxStoredMana((prev) => prev + MAX_MANA_INCREMENT);
-                  alert(
-                    `You have raised your max stored mana cap by ${MAX_MANA_INCREMENT} mana!`
-                  );
-                  closeManaLimit();
-                }
-              }}
-            >
-              Yes
-            </button>
-            <button onClick={closeManaLimit}>No</button>
+        {!confirmedPurchase ? (
+          <div className="ShopMessage">
+            <h1>{`Spend ${formatNumberWithCommas(
+              RAISE_MAX_MANA_PRICE
+            )} to increase max stored mana by ${MAX_MANA_INCREMENT} mana? (1 Hour)`}</h1>
+            <div className="ShopDecision">
+              <button
+                onClick={() => {
+                  if (mana <= RAISE_MAX_MANA_PRICE) {
+                    alert("Not enough mana!");
+                    closeManaLimit();
+                  } else if (maxStoredMana >= 20160) {
+                    alert("You have reached max cap!");
+                    closeManaLimit();
+                  } else {
+                    setConfirmedPurchase(true);
+                    updateMana(-RAISE_MAX_MANA_PRICE);
+                    setMaxStoredMana((prev) => prev + MAX_MANA_INCREMENT);
+                  }
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={closeManaLimit}>No</button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="ShopMessage">
+            <h1>{`You have raised your max stored mana cap by ${MAX_MANA_INCREMENT} mana!`}</h1>
+            <h1>{`Current max stored mana cap: ${maxStoredMana}`}</h1>
+          </div>
+        )}
       </Modal>
 
       <Modal

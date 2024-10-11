@@ -61,7 +61,10 @@ function Scratch({ bet, setCloseIsDisabled }) {
         }
       });
 
-      if (totalEarned > 0 && !numbers.includes(0)) updateMana(totalEarned);
+      if (!numbers.includes(0)) {
+        updateMana(totalEarned);
+        setCloseIsDisabled(false);
+      }
       setWinnings(totalEarned);
     }
 
@@ -81,7 +84,6 @@ function Scratch({ bet, setCloseIsDisabled }) {
                 setNumbers((prevNumbers) => {
                   prevNumbers[i] =
                     range[Math.floor(Math.random() * range.length)];
-                  if (!prevNumbers.includes(0)) setCloseIsDisabled(false);
                   return [...prevNumbers];
                 });
             }}
