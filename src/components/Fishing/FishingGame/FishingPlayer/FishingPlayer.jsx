@@ -16,7 +16,6 @@ function FishingPlayer({
       setMessage(messageQueue[0]);
       handleMessageQueueShift(playerID);
     }
-    console.log(message);
   }, [playerID, messageQueue, handleMessageQueueShift, message]);
 
   return (
