@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import "./Shop.css";
 import Modal from "../Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMana } from "../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../utils/Helper";
-import { getProfileIconList } from "../../utils/ProfileIcon";
+import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
 
 function Shop() {
   const {
@@ -25,18 +25,112 @@ function Shop() {
   const openIconGacha = () => setIsIconGachaOpen(true);
   const closeIconGacha = () => setIsIconGachaOpen(false);
 
-  const [confirmedPurchase, setConfirmedPurchase] = useState(false);
-
   const RAISE_MAX_MANA_PRICE = 10000;
   const MAX_MANA_INCREMENT = 120; // 1 hour
+  const MAX_MANA_CAP = 20160;
   const PROFILE_ICON_GACHA_PRICE = 5000;
+
+  const [
+    CONFIRM_PURCHASE,
+    NOT_ENOUGH_MANA,
+    MAX_REACHED,
+    INCREASE_MAX,
+    DUPLICATE_ICON,
+    ICON_PURCHASED,
+  ] = [0, 1, 2, 3, 4, 5, 6];
+  const [confirmedPurchase, setConfirmedPurchase] = useState(CONFIRM_PURCHASE);
+  const [price, setPrice] = useState(0);
+  const [purchasedIcon, setPurchasedIcon] = useState(0);
+
+  const getShopMessage = () => {
+    switch (confirmedPurchase) {
+      case NOT_ENOUGH_MANA:
+        return (
+          <div className="ShopMessage">
+            <h1>{`Not enough mana!`}</h1>
+            <h1>{`Price: ${formatNumberWithCommas(price)}`}</h1>
+          </div>
+        );
+      case MAX_REACHED:
+        return (
+          <div className="ShopMessage">
+            <h1>{`You have reached the max stored mana cap: ${MAX_MANA_CAP}!`}</h1>
+          </div>
+        );
+      case INCREASE_MAX:
+        return (
+          <div className="ShopMessage">
+            <h1>{`You have raised your max stored mana cap by ${MAX_MANA_INCREMENT} mana!`}</h1>
+            <h1>{`Current max stored mana cap: ${formatNumberWithCommas(
+              maxStoredMana
+            )}`}</h1>
+          </div>
+        );
+      case DUPLICATE_ICON:
+        return (
+          <div className="ShopMessage">
+            <h1>{`You got a duplicate icon!`}</h1>
+            <img src={getProfileIcon(purchasedIcon)} alt="" />
+            <h1>{`Refunded: ${formatNumberWithCommas(
+              Math.floor(PROFILE_ICON_GACHA_PRICE * 0.2)
+            )}`}</h1>
+            <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
+              Equip
+            </button>
+          </div>
+        );
+      case ICON_PURCHASED:
+        return (
+          <div className="ShopMessage">
+            <h1>{`Obtained new icon!`}</h1>
+            <img src={getProfileIcon(purchasedIcon)} alt="" />
+            <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
+              Equip
+            </button>
+          </div>
+        );
+      default:
+        return <div />;
+    }
+  };
+
+  useEffect(() => {
+    switch (confirmedPurchase) {
+      case INCREASE_MAX: {
+        updateMana(-RAISE_MAX_MANA_PRICE);
+        setMaxStoredMana((prev) => prev + MAX_MANA_INCREMENT);
+        break;
+      }
+      case DUPLICATE_ICON: {
+        updateMana(-Math.floor(PROFILE_ICON_GACHA_PRICE * 0.8));
+        break;
+      }
+      case ICON_PURCHASED: {
+        updateMana(-PROFILE_ICON_GACHA_PRICE);
+        setProfileIcons((prev) => [...prev, purchasedIcon]);
+        break;
+      }
+      default:
+        return;
+    }
+  }, [
+    confirmedPurchase,
+    DUPLICATE_ICON,
+    ICON_PURCHASED,
+    INCREASE_MAX,
+    purchasedIcon,
+    setMaxStoredMana,
+    setProfileIcons,
+    updateMana,
+  ]);
 
   return (
     <div className="Shop">
       <div className="ShopButtons">
         <button
           onClick={() => {
-            setConfirmedPurchase(false);
+            setConfirmedPurchase(CONFIRM_PURCHASE);
+            setPrice(RAISE_MAX_MANA_PRICE);
             openManaLimit();
           }}
         >
@@ -45,7 +139,8 @@ function Shop() {
         </button>
         <button
           onClick={() => {
-            setConfirmedPurchase(false);
+            setConfirmedPurchase(CONFIRM_PURCHASE);
+            setPrice(PROFILE_ICON_GACHA_PRICE);
             openIconGacha();
           }}
         >
@@ -66,7 +161,7 @@ function Shop() {
         onClose={closeManaLimit}
         title="Raise Mana Limit"
       >
-        {!confirmedPurchase ? (
+        {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
             <h1>{`Spend ${formatNumberWithCommas(
               RAISE_MAX_MANA_PRICE
@@ -75,15 +170,11 @@ function Shop() {
               <button
                 onClick={() => {
                   if (mana <= RAISE_MAX_MANA_PRICE) {
-                    alert("Not enough mana!");
-                    closeManaLimit();
-                  } else if (maxStoredMana >= 20160) {
-                    alert("You have reached max cap!");
-                    closeManaLimit();
+                    setConfirmedPurchase(NOT_ENOUGH_MANA);
+                  } else if (maxStoredMana >= MAX_MANA_CAP) {
+                    setConfirmedPurchase(MAX_REACHED);
                   } else {
-                    setConfirmedPurchase(true);
-                    updateMana(-RAISE_MAX_MANA_PRICE);
-                    setMaxStoredMana((prev) => prev + MAX_MANA_INCREMENT);
+                    setConfirmedPurchase(INCREASE_MAX);
                   }
                 }}
               >
@@ -93,10 +184,7 @@ function Shop() {
             </div>
           </div>
         ) : (
-          <div className="ShopMessage">
-            <h1>{`You have raised your max stored mana cap by ${MAX_MANA_INCREMENT} mana!`}</h1>
-            <h1>{`Current max stored mana cap: ${maxStoredMana}`}</h1>
-          </div>
+          getShopMessage()
         )}
       </Modal>
 
@@ -105,43 +193,39 @@ function Shop() {
         onClose={closeIconGacha}
         title="Profile Icon Gacha"
       >
-        <div className="ShopMessage">
-          <h1>{`Spend ${formatNumberWithCommas(
-            PROFILE_ICON_GACHA_PRICE
-          )} to get a random profile icon? Dupes are refunded 20%.`}</h1>
-          <div className="ShopDecision">
-            <button
-              onClick={() => {
-                if (mana <= PROFILE_ICON_GACHA_PRICE) {
-                  alert("Not enough mana!");
-                  closeIconGacha();
-                } else {
-                  const profileIconList = getProfileIconList();
-                  const selectedIcon = Math.floor(
-                    Math.random() * profileIconList.length
-                  );
-                  setCurrentProfileIcon(selectedIcon);
-                  if (profileIcons.includes(selectedIcon)) {
-                    alert(
-                      `You have already obtained this icon! Refunded ${Math.floor(
-                        PROFILE_ICON_GACHA_PRICE * 0.2
-                      )}`
-                    );
-                    updateMana(-Math.floor(PROFILE_ICON_GACHA_PRICE * 0.8));
+        {confirmedPurchase === CONFIRM_PURCHASE ? (
+          <div className="ShopMessage">
+            <h1>{`Spend ${formatNumberWithCommas(
+              PROFILE_ICON_GACHA_PRICE
+            )} to get a random profile icon?`}</h1>
+            <h1>Duplicate icons are refunded 20%.</h1>
+            <div className="ShopDecision">
+              <button
+                onClick={() => {
+                  if (mana <= PROFILE_ICON_GACHA_PRICE) {
+                    setConfirmedPurchase(NOT_ENOUGH_MANA);
                   } else {
-                    alert(`You have purchased a new icon!`);
-                    updateMana(-PROFILE_ICON_GACHA_PRICE);
-                    setProfileIcons((prev) => [...prev, selectedIcon]);
+                    const profileIconList = getProfileIconList();
+                    const selectedIcon = Math.floor(
+                      Math.random() * profileIconList.length
+                    );
+                    setPurchasedIcon(selectedIcon);
+                    if (profileIcons.includes(selectedIcon)) {
+                      setConfirmedPurchase(DUPLICATE_ICON);
+                    } else {
+                      setConfirmedPurchase(ICON_PURCHASED);
+                    }
                   }
-                  closeIconGacha();
-                }
-              }}
-            >
-              Yes
-            </button>
-            <button onClick={closeIconGacha}>No</button>
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={closeIconGacha}>No</button>
+            </div>
           </div>
-        </div>
+        ) : (
+          getShopMessage()
+        )}
       </Modal>
     </div>
   );

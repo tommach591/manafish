@@ -29,7 +29,25 @@
 
 .ShopMessage > h1 {
   width: 100%;
+  line-height: 20px;
   margin: 0.5rem;
+}
+
+.ShopMessage > button {
+  margin-top: 1rem;
+  border: 1px solid rgb(50, 50, 60);
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 5px;
+
+  bottom: 0px;
+  box-shadow: none;
+  animation: none;
+}
+
+.ShopMessage > img {
+  width: 5rem;
 }
 
 .ShopDecision {
