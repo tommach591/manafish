@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import "./Scratch.css";
 import { useMana } from "../../../utils/ManaContext";
+import { formatNumberWithCommas } from "../../../utils/Helper";
 
 function Scratch({ bet, setCloseIsDisabled }) {
   const [range, setRange] = useState([0]);
@@ -106,9 +107,11 @@ function Scratch({ bet, setCloseIsDisabled }) {
           {`Match Three! Each additional number beyond the third gets added to total winnings!`}
         </div>
       ) : (
-        <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
+        <div className="Winnings">{`Earned ${formatNumberWithCommas(
+          winnings
+        )} mana. Net gain ${formatNumberWithCommas(
           winnings - bet
-        } mana.`}</div>
+        )} mana.`}</div>
       )}
       {numbers.includes(0) ? (
         <div />

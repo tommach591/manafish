@@ -1,14 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Slots.css";
 import { useMana } from "../../../utils/ManaContext";
+import { formatNumberWithCommas } from "../../../utils/Helper";
 
 function Slots({ bet, setCloseIsDisabled }) {
   const { mana, updateMana } = useMana();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [winnings, setWinnings] = useState(0);
   const [spinning, setSpinning] = useState(false);
+  const [autoSpin, setAutoSpin] = useState(false);
 
-  const SYMBOLS = ["💩", "🌼", "🌻", "🥀", "🌷", "☂️", "💧"];
+  const SYMBOLS = useMemo(() => ["💩", "🌼", "🌻", "🥀", "🌷", "☂️", "💧"], []);
 
   const setup = useCallback(() => {
     setSlots(["", "", "", "", ""]);
@@ -17,35 +19,38 @@ function Slots({ bet, setCloseIsDisabled }) {
     setCloseIsDisabled(true);
   }, [setCloseIsDisabled]);
 
-  const getRandomSymbol = () => {
+  const getRandomSymbol = useCallback(() => {
     return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-  };
+  }, [SYMBOLS]);
 
-  const calculateWinnings = (slots) => {
-    const counts = {};
-    slots.forEach((symbol) => {
-      counts[symbol] = (counts[symbol] || 0) + 1;
-    });
+  const calculateWinnings = useCallback(
+    (slots) => {
+      const counts = {};
+      slots.forEach((symbol) => {
+        counts[symbol] = (counts[symbol] || 0) + 1;
+      });
 
-    let winnings = 0;
-    Object.keys(counts).forEach((symbol) => {
-      const count = counts[symbol];
-      if (count === 5 && symbol === "💧") winnings += bet * 150;
-      else if (count === 5 && symbol === "☂️") winnings += bet * 100;
-      else if (count === 5) winnings += bet * 50;
-      else if (count === 4 && symbol === "💧") winnings += bet * 20;
-      else if (count === 4 && symbol === "☂️") winnings += bet * 15;
-      else if (count === 4) winnings += bet * 10;
-      else if (count === 3 && symbol === "💧") winnings += bet * 5;
-      else if (count === 3 && symbol === "☂️") winnings += bet * 4;
-      else if (count === 3) winnings += Math.floor(bet * 1.5);
-      else if (count === 2) winnings += Math.floor(bet * 0.5);
-    });
+      let winnings = 0;
+      Object.keys(counts).forEach((symbol) => {
+        const count = counts[symbol];
+        if (count === 5 && symbol === "💧") winnings += bet * 150;
+        else if (count === 5 && symbol === "☂️") winnings += bet * 100;
+        else if (count === 5) winnings += bet * 50;
+        else if (count === 4 && symbol === "💧") winnings += bet * 20;
+        else if (count === 4 && symbol === "☂️") winnings += bet * 15;
+        else if (count === 4) winnings += bet * 10;
+        else if (count === 3 && symbol === "💧") winnings += bet * 5;
+        else if (count === 3 && symbol === "☂️") winnings += bet * 4;
+        else if (count === 3) winnings += Math.floor(bet * 1.5);
+        else if (count === 2) winnings += Math.floor(bet * 0.5);
+      });
 
-    return winnings;
-  };
+      return winnings;
+    },
+    [bet]
+  );
 
-  const handleSpin = () => {
+  const handleSpin = useCallback(() => {
     const newSlots = [...slots];
     setSpinning(true);
     let spinTimeouts = [];
@@ -64,7 +69,7 @@ function Slots({ bet, setCloseIsDisabled }) {
     }
 
     return () => spinTimeouts.forEach(clearTimeout); // Clear timeouts on cleanup
-  };
+  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots]);
 
   useEffect(() => {
     if (!slots.includes("") && winnings > 0) updateMana(winnings);
@@ -75,6 +80,34 @@ function Slots({ bet, setCloseIsDisabled }) {
     setCloseIsDisabled(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (autoSpin) {
+      const autoSpinInterval = setInterval(() => {
+        if (mana >= bet) {
+          if (spinning && !slots.includes("")) {
+            updateMana(-bet);
+            setup();
+          } else if (!spinning) {
+            const startSpinTimeout = setTimeout(() => {
+              handleSpin();
+            }, 1000);
+
+            return () => {
+              clearTimeout(startSpinTimeout);
+            };
+          }
+        } else {
+          setAutoSpin(false);
+          alert("Not enough mana!");
+        }
+      }, 1500);
+
+      return () => {
+        clearInterval(autoSpinInterval);
+      };
+    }
+  }, [slots, autoSpin, bet, handleSpin, mana, setup, spinning, updateMana]);
 
   return (
     <div className="SlotsGame">
@@ -99,7 +132,7 @@ function Slots({ bet, setCloseIsDisabled }) {
           onClick={() => {
             handleSpin();
           }}
-          disabled={spinning}
+          disabled={spinning || autoSpin}
         >
           {slots[0] === "" ? "Stop" : "Reset"}
         </button>
@@ -118,11 +151,32 @@ function Slots({ bet, setCloseIsDisabled }) {
           Reset
         </button>
       )}
+      <button
+        className="SpinButton"
+        onClick={() => {
+          if (autoSpin) setAutoSpin(false);
+          else {
+            if (mana < bet) alert("Not enough mana!");
+            else {
+              setAutoSpin(true);
+              if (spinning && !slots.includes("")) {
+                updateMana(-bet);
+                setup();
+              }
+              if (!spinning) handleSpin();
+            }
+          }
+        }}
+      >
+        {autoSpin ? "Stop Auto Spin" : "Start Auto Spin"}
+      </button>
 
       {spinning && !slots.includes("") ? (
-        <div className="Winnings">{`Earned ${winnings} mana. Net gain ${
+        <div className="Winnings">{`Earned ${formatNumberWithCommas(
+          winnings
+        )} mana. Net gain ${formatNumberWithCommas(
           winnings - bet
-        } mana.`}</div>
+        )} mana.`}</div>
       ) : (
         <div className="Winnings" />
       )}

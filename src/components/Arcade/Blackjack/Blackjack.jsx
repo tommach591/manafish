@@ -3,6 +3,7 @@ import "./Blackjack.css";
 import { useMana } from "../../../utils/ManaContext";
 import Button from "./Button";
 import Hand from "./Hand";
+import { formatNumberWithCommas } from "../../../utils/Helper";
 
 function Blackjack({ bet, setCloseIsDisabled }) {
   const [winnings, setWinnings] = useState(0);
@@ -288,9 +289,11 @@ function Blackjack({ bet, setCloseIsDisabled }) {
           {`Blackjack! Beat the dealer, but don't go over 21!`}
         </div>
       ) : (
-        <div className="Winnings">{`Earned ${Number(
+        <div className="Winnings">{`Earned ${formatNumberWithCommas(
           winnings
-        )} mana. Net gain ${Number(winnings - game.bet)} mana.`}</div>
+        )} mana. Net gain ${formatNumberWithCommas(
+          winnings - bet
+        )} mana.`}</div>
       )}
     </div>
   );

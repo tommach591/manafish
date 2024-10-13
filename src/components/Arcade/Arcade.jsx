@@ -41,10 +41,11 @@ function Arcade() {
             setBet(event.currentTarget.value);
           }}
           onBlur={() => {
-            if (bet === "") setBet(MINBET);
-            else if (bet > MAXBET) setBet(MAXBET);
-            else if (bet < MINBET) setBet(MINBET);
-            setBet(Math.floor(bet));
+            const formatBet = Math.floor(bet);
+            if (formatBet === "") setBet(MINBET);
+            else if (formatBet > MAXBET) setBet(MAXBET);
+            else if (formatBet < MINBET) setBet(MINBET);
+            else setBet(formatBet);
           }}
         />
       </div>
