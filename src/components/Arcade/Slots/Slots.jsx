@@ -41,7 +41,7 @@ function Slots({ bet, setCloseIsDisabled }) {
         else if (count === 4) winnings += bet * 10;
         else if (count === 3 && symbol === "💧") winnings += bet * 5;
         else if (count === 3 && symbol === "☂️") winnings += bet * 4;
-        else if (count === 3) winnings += Math.floor(bet * 1.5);
+        else if (count === 3) winnings += Math.floor(bet * 1.25);
         else if (count === 2) winnings += Math.floor(bet * 0.5);
       });
 
@@ -200,7 +200,7 @@ function Slots({ bet, setCloseIsDisabled }) {
         <h1 className="Condition">{`3 ☂️`}</h1>
         <h1 className="Multiplier">{`4.0x`}</h1>
         <h1 className="Condition">{`Any 3`}</h1>
-        <h1 className="Multiplier">{`1.5x`}</h1>
+        <h1 className="Multiplier">{`1.25x`}</h1>
         <h1 className="Condition">{`Any 2`}</h1>
         <h1 className="Multiplier">{`0.5x`}</h1>
       </div>
