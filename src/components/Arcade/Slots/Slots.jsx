@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Slots.css";
 import { useMana } from "../../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../../utils/Helper";
+import audioMP3 from "../../../assets/audio/slot.mp3";
 
 function Slots({ bet, setCloseIsDisabled }) {
   const { mana, updateMana } = useMana();
@@ -42,7 +43,7 @@ function Slots({ bet, setCloseIsDisabled }) {
         else if (count === 3 && symbol === "💧") winnings += bet * 5;
         else if (count === 3 && symbol === "☂️") winnings += bet * 4;
         else if (count === 3) winnings += Math.floor(bet * 1.25);
-        else if (count === 2) winnings += Math.floor(bet * 0.5);
+        else if (count === 2) winnings += Math.floor(bet * 0.25);
       });
 
       return winnings;
@@ -64,6 +65,13 @@ function Slots({ bet, setCloseIsDisabled }) {
             setWinnings(newWinnings);
             setCloseIsDisabled(false);
           }
+          const slotAudio = new Audio(audioMP3);
+          slotAudio.play();
+
+          return () => {
+            slotAudio.pause();
+            slotAudio.currentTime = 0;
+          };
         }, (i + 1) * 333) // Stops each slot one second apart
       );
     }
@@ -101,7 +109,7 @@ function Slots({ bet, setCloseIsDisabled }) {
           setAutoSpin(false);
           alert("Not enough mana!");
         }
-      }, 1500);
+      }, 1250);
 
       return () => {
         clearInterval(autoSpinInterval);
@@ -202,7 +210,7 @@ function Slots({ bet, setCloseIsDisabled }) {
         <h1 className="Condition">{`Any 3`}</h1>
         <h1 className="Multiplier">{`1.25x`}</h1>
         <h1 className="Condition">{`Any 2`}</h1>
-        <h1 className="Multiplier">{`0.5x`}</h1>
+        <h1 className="Multiplier">{`0.25x`}</h1>
       </div>
     </div>
   );
