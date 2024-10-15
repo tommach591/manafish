@@ -4,7 +4,7 @@ import { useMana } from "../../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import audioMP3 from "../../../assets/audio/slot.mp3";
 
-function Slots({ bet, setCloseIsDisabled }) {
+function Slots({ bet, setCloseIsDisabled, openBroke }) {
   const { mana, updateMana } = useMana();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [winnings, setWinnings] = useState(0);
@@ -37,11 +37,11 @@ function Slots({ bet, setCloseIsDisabled }) {
         if (count === 5 && symbol === "💧") winnings += bet * 150;
         else if (count === 5 && symbol === "☂️") winnings += bet * 100;
         else if (count === 5) winnings += bet * 50;
-        else if (count === 4 && symbol === "💧") winnings += bet * 20;
-        else if (count === 4 && symbol === "☂️") winnings += bet * 15;
-        else if (count === 4) winnings += bet * 10;
-        else if (count === 3 && symbol === "💧") winnings += bet * 5;
-        else if (count === 3 && symbol === "☂️") winnings += bet * 4;
+        else if (count === 4 && symbol === "💧") winnings += bet * 25;
+        else if (count === 4 && symbol === "☂️") winnings += bet * 20;
+        else if (count === 4) winnings += bet * 12;
+        else if (count === 3 && symbol === "💧") winnings += bet * 10;
+        else if (count === 3 && symbol === "☂️") winnings += bet * 8;
         else if (count === 3) winnings += Math.floor(bet * 1.25);
         else if (count === 2) winnings += Math.floor(bet * 0.25);
       });
@@ -107,7 +107,7 @@ function Slots({ bet, setCloseIsDisabled }) {
           }
         } else {
           setAutoSpin(false);
-          alert("Not enough mana!");
+          openBroke();
         }
       }, 1250);
 
@@ -115,7 +115,17 @@ function Slots({ bet, setCloseIsDisabled }) {
         clearInterval(autoSpinInterval);
       };
     }
-  }, [slots, autoSpin, bet, handleSpin, mana, setup, spinning, updateMana]);
+  }, [
+    slots,
+    autoSpin,
+    bet,
+    handleSpin,
+    mana,
+    setup,
+    spinning,
+    updateMana,
+    openBroke,
+  ]);
 
   return (
     <div className="SlotsGame">
@@ -148,7 +158,7 @@ function Slots({ bet, setCloseIsDisabled }) {
         <button
           className="SpinButton"
           onClick={() => {
-            if (mana < bet) alert("Not enough mana!");
+            if (mana < bet) openBroke();
             else {
               updateMana(-bet);
               setup();
@@ -164,7 +174,7 @@ function Slots({ bet, setCloseIsDisabled }) {
         onClick={() => {
           if (autoSpin) setAutoSpin(false);
           else {
-            if (mana < bet) alert("Not enough mana!");
+            if (mana < bet) openBroke();
             else {
               setAutoSpin(true);
               if (spinning && !slots.includes("")) {
@@ -198,15 +208,15 @@ function Slots({ bet, setCloseIsDisabled }) {
         <h1 className="Condition">{`Any 5`}</h1>
         <h1 className="Multiplier">{`50.0x`}</h1>
         <h1 className="Condition">{`4 💧`}</h1>
-        <h1 className="Multiplier">{`20.0x`}</h1>
+        <h1 className="Multiplier">{`25.0x`}</h1>
         <h1 className="Condition">{`4 ☂️`}</h1>
-        <h1 className="Multiplier">{`15.0x`}</h1>
+        <h1 className="Multiplier">{`20.0x`}</h1>
         <h1 className="Condition">{`Any 4`}</h1>
-        <h1 className="Multiplier">{`10.0x`}</h1>
+        <h1 className="Multiplier">{`12.0x`}</h1>
         <h1 className="Condition">{`3 💧`}</h1>
-        <h1 className="Multiplier">{`5.0x`}</h1>
+        <h1 className="Multiplier">{`10.0x`}</h1>
         <h1 className="Condition">{`3 ☂️`}</h1>
-        <h1 className="Multiplier">{`4.0x`}</h1>
+        <h1 className="Multiplier">{`8.0x`}</h1>
         <h1 className="Condition">{`Any 3`}</h1>
         <h1 className="Multiplier">{`1.25x`}</h1>
         <h1 className="Condition">{`Any 2`}</h1>

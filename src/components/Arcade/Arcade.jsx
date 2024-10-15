@@ -18,6 +18,7 @@ function Arcade() {
   const [isScratchOpen, setIsScratchOpen] = useState(false);
   const [isBJOpen, setIsBJOpen] = useState(false);
   const [isSlotsOpen, setIsSlotsOpen] = useState(false);
+  const [isBrokeOpen, setIsBrokeOpen] = useState(false);
 
   const openScratch = () => setIsScratchOpen(true);
   const closeScratch = () => setIsScratchOpen(false);
@@ -27,6 +28,9 @@ function Arcade() {
 
   const openSlots = () => setIsSlotsOpen(true);
   const closeSlots = () => setIsSlotsOpen(false);
+
+  const openBroke = () => setIsBrokeOpen(true);
+  const closeBroke = () => setIsBrokeOpen(false);
 
   const navigate = useNavigate();
 
@@ -59,7 +63,7 @@ function Arcade() {
       <div className="ArcadeButtons">
         <button
           onClick={() => {
-            if (mana < bet) alert("Not enough mana!");
+            if (mana < bet) openBroke();
             else {
               updateMana(-bet);
               openScratch();
@@ -71,7 +75,7 @@ function Arcade() {
         </button>
         <button
           onClick={() => {
-            if (mana < bet) alert("Not enough mana!");
+            if (mana < bet) openBroke();
             else {
               updateMana(-bet);
               openBJ();
@@ -83,7 +87,7 @@ function Arcade() {
         </button>
         <button
           onClick={() => {
-            if (mana < bet) alert("Not enough mana!");
+            if (mana < bet) openBroke();
             else {
               updateMana(-bet);
               openSlots();
@@ -100,7 +104,11 @@ function Arcade() {
         title="Scratch"
         isDisabled={closeIsDisabled}
       >
-        <Scratch bet={bet} setCloseIsDisabled={setCloseIsDisabled} />
+        <Scratch
+          bet={bet}
+          setCloseIsDisabled={setCloseIsDisabled}
+          openBroke={openBroke}
+        />
       </Modal>
       <Modal
         isOpen={isBJOpen}
@@ -108,7 +116,11 @@ function Arcade() {
         title="Blackjack"
         isDisabled={closeIsDisabled}
       >
-        <Blackjack bet={bet} setCloseIsDisabled={setCloseIsDisabled} />
+        <Blackjack
+          bet={bet}
+          setCloseIsDisabled={setCloseIsDisabled}
+          openBroke={openBroke}
+        />
       </Modal>
       <Modal
         isOpen={isSlotsOpen}
@@ -116,7 +128,14 @@ function Arcade() {
         title="Slots"
         isDisabled={closeIsDisabled}
       >
-        <Slots bet={bet} setCloseIsDisabled={setCloseIsDisabled} />
+        <Slots
+          bet={bet}
+          setCloseIsDisabled={setCloseIsDisabled}
+          openBroke={openBroke}
+        />
+      </Modal>
+      <Modal isOpen={isBrokeOpen} onClose={closeBroke} title="Not Enough Mana">
+        Stop gambling. Get some help.
       </Modal>
     </div>
   );

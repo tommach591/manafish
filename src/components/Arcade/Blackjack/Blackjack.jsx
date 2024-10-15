@@ -5,7 +5,7 @@ import Button from "./Button";
 import Hand from "./Hand";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 
-function Blackjack({ bet, setCloseIsDisabled }) {
+function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
   const [winnings, setWinnings] = useState(0);
   const { mana, updateMana } = useMana();
 
@@ -274,7 +274,7 @@ function Blackjack({ bet, setCloseIsDisabled }) {
         <button
           className="ResetGame"
           onClick={() => {
-            if (mana < bet) alert("Not enough mana!");
+            if (mana < bet) openBroke();
             else {
               updateMana(-bet);
               setup();

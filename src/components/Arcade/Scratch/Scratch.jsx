@@ -3,7 +3,7 @@ import "./Scratch.css";
 import { useMana } from "../../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 
-function Scratch({ bet, setCloseIsDisabled }) {
+function Scratch({ bet, setCloseIsDisabled, openBroke }) {
   const [range, setRange] = useState([0]);
   const [numbers, setNumbers] = useState(
     Array.from({ length: 9 }, (_, i) => i).fill(0)
@@ -119,7 +119,7 @@ function Scratch({ bet, setCloseIsDisabled }) {
         <button
           className="ResetGame"
           onClick={() => {
-            if (mana < bet) alert("Not enough mana!");
+            if (mana < bet) openBroke();
             else {
               updateMana(-bet);
               setup();
