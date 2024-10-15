@@ -71,6 +71,14 @@ function Home() {
           <div className="BubbleReflection" />
           Fishing
         </button>
+        <button
+          onClick={() => {
+            navigate("/garden");
+          }}
+        >
+          <div className="BubbleReflection" />
+          Garden
+        </button>
       </div>
     </div>
   );

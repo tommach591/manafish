@@ -5,6 +5,7 @@ import Home from "../Home";
 import Shop from "../Shop";
 import Fishing from "../Fishing";
 import Arcade from "../Arcade";
+import Garden from "../Garden";
 import { useMana } from "../../utils/ManaContext";
 import { useEffect, useState } from "react";
 import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
@@ -70,6 +71,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/fishing" element={<Fishing />} />
         <Route path="/arcade" element={<Arcade />} />
+        <Route path="/garden" element={<Garden />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Modal
