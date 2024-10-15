@@ -5,6 +5,7 @@ import { getFishImage } from "../../../utils/Fishionary";
 import { useMana } from "../../../utils/ManaContext";
 import FishingPlayer from "./FishingPlayer/FishingPlayer";
 import { useFish } from "../../../utils/FishContext";
+import Modal from "../../Modal";
 
 function FishingGame({
   playerList,
@@ -21,6 +22,10 @@ function FishingGame({
   const [messageQueue, setMessageQueue] = useState({});
   const BAITCOST = 15;
   const FISHINGTIME = 1000 * 7;
+
+  const [isBrokeOpen, setIsBrokeOpen] = useState(false);
+  const openBroke = () => setIsBrokeOpen(true);
+  const closeBroke = () => setIsBrokeOpen(false);
 
   const handleIsFishing = useCallback(
     (value) => {
@@ -55,7 +60,7 @@ function FishingGame({
     });
 
     // Define weights for each category (higher index = lower weight)
-    const weights = [600, 300, 75, 25, 5, 1, 0.01];
+    const weights = [600000, 300000, 75000, 25000, 3000, 100, 1];
     const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
 
     const getRandomCategory = () => {
@@ -123,7 +128,7 @@ function FishingGame({
             }
           } else {
             setAutoFish(false);
-            alert("Not enough mana!");
+            openBroke();
           }
         }
       }, 1000 * 4);
@@ -180,7 +185,7 @@ function FishingGame({
       <div className="FishingButtons">
         <button
           onClick={() => {
-            if (mana < BAITCOST) alert("Not enough mana!");
+            if (mana < BAITCOST) openBroke();
             else {
               updateMana(-BAITCOST);
               handleIsFishing(true);
@@ -198,7 +203,7 @@ function FishingGame({
                   setAutoFish(false);
                 }
               : () => {
-                  if (mana < BAITCOST) alert("Not enough mana!");
+                  if (mana < BAITCOST) openBroke();
                   else {
                     setAutoFish(true);
                     if (!isFishing) updateMana(-BAITCOST);
@@ -227,6 +232,9 @@ function FishingGame({
           } else return null;
         })}
       </div>
+      <Modal isOpen={isBrokeOpen} onClose={closeBroke} title="Not Enough Mana">
+        Fishing is for the rich.
+      </Modal>
     </div>
   );
 }
