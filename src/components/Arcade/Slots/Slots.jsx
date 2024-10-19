@@ -115,17 +115,8 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
         clearInterval(autoSpinInterval);
       };
     }
-  }, [
-    slots,
-    autoSpin,
-    bet,
-    handleSpin,
-    mana,
-    setup,
-    spinning,
-    updateMana,
-    openBroke,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slots, autoSpin, bet, handleSpin, mana, setup, spinning, updateMana]);
 
   return (
     <div className="SlotsGame">

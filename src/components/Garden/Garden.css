@@ -1,0 +1,33 @@
+.Garden {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.GardenButtons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.GardenButtons > button {
+  width: 5rem;
+  height: 5rem;
+  margin: 0.5rem;
+}
+
+.GardenPlotGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-sizing: border-box;
+
+  margin: 1rem;
+}
