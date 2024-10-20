@@ -19,14 +19,27 @@
   margin: 0.5rem;
 }
 
+.GardenTools {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.GardenTools > button {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0.5rem;
+}
+
 .GardenPlotGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   place-items: center;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 10px;
   box-sizing: border-box;
 
   margin: 1rem;

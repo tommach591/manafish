@@ -10,7 +10,7 @@ import Slots from "./Slots";
 function Arcade() {
   const { mana, updateMana } = useMana();
   const MINBET = 5;
-  const MAXBET = 500000;
+  const MAXBET = 100000;
   const [bet, setBet] = useState(MINBET);
 
   const [closeIsDisabled, setCloseIsDisabled] = useState(false);
@@ -18,6 +18,7 @@ function Arcade() {
   const [isScratchOpen, setIsScratchOpen] = useState(false);
   const [isBJOpen, setIsBJOpen] = useState(false);
   const [isSlotsOpen, setIsSlotsOpen] = useState(false);
+  const [isDonateOpen, setIsDonateOpen] = useState(false);
   const [isBrokeOpen, setIsBrokeOpen] = useState(false);
 
   const openScratch = () => setIsScratchOpen(true);
@@ -28,6 +29,9 @@ function Arcade() {
 
   const openSlots = () => setIsSlotsOpen(true);
   const closeSlots = () => setIsSlotsOpen(false);
+
+  const openDonate = () => setIsDonateOpen(true);
+  const closeDonate = () => setIsDonateOpen(false);
 
   const openBroke = () => setIsBrokeOpen(true);
   const closeBroke = () => setIsBrokeOpen(false);
@@ -97,6 +101,18 @@ function Arcade() {
           <div className="BubbleReflection" />
           Slots
         </button>
+        <button
+          onClick={() => {
+            if (mana < bet) openBroke();
+            else {
+              updateMana(-bet);
+              openDonate();
+            }
+          }}
+        >
+          <div className="BubbleReflection" />
+          Donate
+        </button>
       </div>
       <Modal
         isOpen={isScratchOpen}
@@ -133,6 +149,21 @@ function Arcade() {
           setCloseIsDisabled={setCloseIsDisabled}
           openBroke={openBroke}
         />
+      </Modal>
+      <Modal
+        isOpen={isSlotsOpen}
+        onClose={closeSlots}
+        title="Slots"
+        isDisabled={closeIsDisabled}
+      >
+        <Slots
+          bet={bet}
+          setCloseIsDisabled={setCloseIsDisabled}
+          openBroke={openBroke}
+        />
+      </Modal>
+      <Modal isOpen={isDonateOpen} onClose={closeDonate} title="Donation">
+        The RNG Gods have blessed you for donating {bet} mana.
       </Modal>
       <Modal isOpen={isBrokeOpen} onClose={closeBroke} title="Not Enough Mana">
         Stop gambling. Get some help.
