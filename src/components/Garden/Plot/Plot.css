@@ -10,24 +10,3 @@
   border-radius: 10px;
   background: rgb(95, 180, 105);
 }
-
-.Plant {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 10px;
-  background: rgb(80, 60, 60);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.PlantStatus {
-  position: absolute;
-  bottom: -2px;
-  right: 0px;
-}
-
-.PlantStatus > img {
-  width: 10px;
-}

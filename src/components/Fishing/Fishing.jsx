@@ -6,7 +6,7 @@ import fishionary from "../../assets/Fishionary.json";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { useMana } from "../../utils/ManaContext";
-import FishingGame from "./FishingGame/FishingGame";
+import FishingGame from "./FishingGame";
 import { useFish } from "../../utils/FishContext";
 
 const SERVERURL = "http://localhost:3001";
@@ -23,6 +23,12 @@ function Fishing() {
   const [closeIsDisabled, setCloseIsDisabled] = useState(false);
   const [activeLobbies, setActiveLobbies] = useState([]);
   const [showPopUp, setShowPopUp] = useState(false);
+
+  const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
+  const openFishionary = () => setIsFishionaryOpen(true);
+  const closeFishionary = () => setIsFishionaryOpen(false);
+
+  const [isFishingGameOpen, setIsFishingGameOpen] = useState(false);
 
   function generateLobbyCode() {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -100,11 +106,6 @@ function Fishing() {
     setIsFishingGameOpen(playerList[userID]);
   }, [playerList, userID]);
 
-  const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
-  const openFishionary = () => setIsFishionaryOpen(true);
-  const closeFishionary = () => setIsFishionaryOpen(false);
-
-  const [isFishingGameOpen, setIsFishingGameOpen] = useState(false);
   const openFishingGame = () => {
     if (validateRoomCode(room) && userID && !playerList[userID]) {
       joinRoom();

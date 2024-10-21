@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./components/App";
 import { ManaProvider } from "./utils/ManaContext";
 import { FishProvider } from "./utils/FishContext";
+import { GardenProvider } from "./utils/GardenContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <BrowserRouter>
       <ManaProvider>
         <FishProvider>
-          <App />
+          <GardenProvider>
+            <App />
+          </GardenProvider>
         </FishProvider>
       </ManaProvider>
     </BrowserRouter>

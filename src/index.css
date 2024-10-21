@@ -16,6 +16,7 @@ button {
 }
 
 button {
+  position: relative;
   width: fit-content;
   display: flex;
   flex-direction: column;
@@ -31,6 +32,24 @@ button {
   animation: bubbleFloat 10s ease-in-out infinite;
 
   font-weight: bold;
+}
+
+@keyframes bubbleFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-1px, -1px) scale(1.025);
+  }
+  50% {
+    transform: translate(1px, -1px) scale(1.05);
+  }
+  75% {
+    transform: translate(-1px, -1px) scale(1.025);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 ::-webkit-scrollbar {

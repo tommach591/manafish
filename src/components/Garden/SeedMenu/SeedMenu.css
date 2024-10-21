@@ -1,0 +1,61 @@
+.SeedMenu {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.CurrentSeason {
+  margin: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.Seed {
+  width: 85%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.5rem;
+  padding: 0.25rem;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.Seed > img {
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem;
+}
+
+.SeedInfo {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  text-wrap: wrap;
+}
+
+.SeedInfo > h1 {
+  margin: 0.1rem;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.SeedInfo > h2 {
+  margin: 0.1rem;
+  font-size: 12px;
+}
+
+.SeedInfo > h3 {
+  margin: 0.1rem;
+  margin-bottom: 0rem;
+  font-size: 10px;
+}

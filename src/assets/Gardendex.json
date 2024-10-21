@@ -3,7 +3,7 @@
     "id": "0",
     "name": "Tum Plant",
     "info": "A legendary plant that can cure cancer (supposedly).",
-    "price": 1000,
+    "value": 100,
     "growth": 3,
     "season": 0
   },
@@ -11,7 +11,7 @@
     "id": "1",
     "name": "Sunflower",
     "info": "The surface temperature of this flower is 294K!",
-    "price": 300,
+    "value": 30,
     "growth": 0.5,
     "season": 1
   },
@@ -19,7 +19,7 @@
     "id": "2",
     "name": "Plant Three",
     "info": "The third (pog no way) plant ever created.",
-    "price": 100,
+    "value": 10,
     "growth": 0.2,
     "season": 1
   },
@@ -27,7 +27,7 @@
     "id": "3",
     "name": "Copium Plant",
     "info": "A new type of drug that helps zoomers cope with loss and failure.",
-    "price": 1000,
+    "value": 100,
     "growth": 3,
     "season": 3
   },
@@ -35,7 +35,7 @@
     "id": "4",
     "name": "Strange Plant",
     "info": "That's a weird looking di-",
-    "price": 500,
+    "value": 50,
     "growth": 1.5,
     "season": 2
   },
@@ -43,7 +43,7 @@
     "id": "5",
     "name": "Pansy?",
     "info": "I think this is a pansy? I don't know. The artist doesn't even know.",
-    "price": 100,
+    "value": 10,
     "growth": 0.2,
     "season": 0
   },
@@ -51,15 +51,15 @@
     "id": "6",
     "name": "Lollipop",
     "info": "Yes, candy is a vegetable.",
-    "price": 100,
-    "growth": 3,
-    "season": 1
+    "value": 70,
+    "growth": 2,
+    "season": 2
   },
   "7": {
     "id": "7",
     "name": "Sarah Ang Hay",
     "info": "Give this hay to someone and they will love you back.",
-    "price": 100,
+    "value": 100,
     "growth": 3,
     "season": 0
   },
@@ -67,95 +67,95 @@
     "id": "8",
     "name": "Deathweed",
     "info": "Someone's corpse became a flower.",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 50,
+    "growth": 1.5,
+    "season": 2
   },
   "9": {
     "id": "9",
     "name": "Aivy",
     "info": "The artist is getting their growth spurt.",
-    "price": 100,
+    "value": 100,
     "growth": 3,
-    "season": 0
+    "season": 3
   },
   "10": {
     "id": "10",
     "name": "Sardine",
     "info": "Yes, you can grow fish too!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 20,
+    "growth": 1,
+    "season": 1
   },
   "11": {
     "id": "11",
     "name": "Peace",
     "info": "You can raise Peace with love and care!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 15,
+    "growth": 0.5,
+    "season": 1
   },
   "12": {
     "id": "12",
     "name": "Heart",
     "info": "You ever cut grass in Legend of Zelda?",
-    "price": 100,
+    "value": 100,
     "growth": 3,
-    "season": 0
+    "season": 1
   },
   "13": {
     "id": "13",
     "name": "Ball",
     "info": "Ah, so that's where schools get their rubber balls!",
-    "price": 100,
-    "growth": 3,
+    "value": 15,
+    "growth": 0.5,
     "season": 0
   },
   "14": {
     "id": "14",
     "name": "Feather",
     "info": "If you let it grow longer, maybe it'll become a bird! (jk you can't)",
-    "price": 100,
-    "growth": 3,
+    "value": 10,
+    "growth": 0.2,
     "season": 0
   },
   "15": {
     "id": "15",
     "name": "Coffee",
     "info": "Grean tea.",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 70,
+    "growth": 2,
+    "season": 3
   },
   "16": {
     "id": "16",
     "name": "Bread",
     "info": "This is just wheat, but we skipped the whole process.",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 70,
+    "growth": 2,
+    "season": 2
   },
   "17": {
     "id": "17",
     "name": "Baby",
     "info": "So this is where babies come from!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 70,
+    "growth": 2,
+    "season": 3
   },
   "18": {
     "id": "18",
     "name": "Chocolate",
     "info": "This is just cocoa, but we skipped the whole process.",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 70,
+    "growth": 2,
+    "season": 2
   },
   "19": {
     "id": "19",
     "name": "1000 TP",
     "info": "Just kidding, you can't grow money!",
-    "price": 100,
+    "value": 100,
     "growth": 3,
     "season": 0
   },
@@ -163,87 +163,87 @@
     "id": "20",
     "name": "100 TP",
     "info": "Wait a minute, a seed costs more than this!",
-    "price": 100,
-    "growth": 3,
+    "value": 10,
+    "growth": 0.2,
     "season": 0
   },
   "21": {
     "id": "21",
     "name": "Pink Balloon",
     "info": "Don't pop it!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 10,
+    "growth": 0.2,
+    "season": 1
   },
   "22": {
     "id": "22",
     "name": "Blue Balloon",
     "info": "Wow! A blue balloon!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 10,
+    "growth": 0.2,
+    "season": 3
   },
   "23": {
     "id": "23",
     "name": "Yellow Balloon",
     "info": "Ew, a yellow balloon!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 10,
+    "growth": 0.2,
+    "season": 2
   },
   "24": {
     "id": "24",
     "name": "Green Balloon",
     "info": "No way! A green balloon!",
-    "price": 100,
-    "growth": 3,
+    "value": 10,
+    "growth": 0.2,
     "season": 0
   },
   "25": {
     "id": "25",
     "name": "Burger Plant",
     "info": "Impossible! A veggie burger?!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 30,
+    "growth": 1.5,
+    "season": 1
   },
   "26": {
     "id": "26",
     "name": "Butterfly Plant",
     "info": "The leaves resemble a butterfly.",
-    "price": 100,
-    "growth": 3,
+    "value": 30,
+    "growth": 0.5,
     "season": 0
   },
   "27": {
     "id": "27",
     "name": "Fertilizer",
     "info": "Its just poop!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 30,
+    "growth": 1,
+    "season": 1
   },
   "28": {
     "id": "28",
     "name": "Fishy Plant",
     "info": "Glub glub.",
-    "price": 100,
-    "growth": 3,
+    "value": 50,
+    "growth": 1.5,
     "season": 0
   },
   "29": {
     "id": "29",
     "name": "French Fry",
     "info": "Comes with ketchup!",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 30,
+    "growth": 1,
+    "season": 1
   },
   "30": {
     "id": "30",
     "name": "Neko Neko Nyan Nyan",
     "info": "Nyan nyan~!",
-    "price": 100,
+    "value": 100,
     "growth": 3,
     "season": 0
   },
@@ -251,47 +251,47 @@
     "id": "31",
     "name": "Pen Pineapple Apple Pen",
     "info": "Based off a cool guy with sunglasses.",
-    "price": 100,
-    "growth": 3,
+    "value": 30,
+    "growth": 1,
     "season": 0
   },
   "32": {
     "id": "32",
     "name": "Strawberry",
     "info": "Fun Fact: The dev thinks all strawberries are sour.",
-    "price": 100,
+    "value": 100,
     "growth": 3,
-    "season": 0
+    "season": 1
   },
   "33": {
     "id": "33",
     "name": "Taco",
     "info": "I like tacos.",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 50,
+    "growth": 1.5,
+    "season": 1
   },
   "34": {
     "id": "34",
     "name": "Tomato",
     "info": "Cause we need another tomato in this server.",
-    "price": 100,
-    "growth": 3,
+    "value": 50,
+    "growth": 1.5,
     "season": 0
   },
   "35": {
     "id": "35",
     "name": "Amethyst",
     "info": "Wow pretty, a purple gem!",
-    "price": 100,
+    "value": 100,
     "growth": 3,
-    "season": 0
+    "season": 2
   },
   "36": {
     "id": "36",
     "name": "Emerald",
     "info": "Strangely, a leaf is growing from it.",
-    "price": 100,
+    "value": 100,
     "growth": 3,
     "season": 0
   },
@@ -299,24 +299,24 @@
     "id": "37",
     "name": "Ruby",
     "info": "Is this the Philosopher's Stone?! Oh it's just a ruby.",
-    "price": 100,
+    "value": 100,
     "growth": 3,
-    "season": 0
+    "season": 1
   },
   "38": {
     "id": "38",
     "name": "Sapphire",
     "info": "Reminds me of a giant blue whale...",
-    "price": 100,
+    "value": 100,
     "growth": 3,
-    "season": 0
+    "season": 3
   },
   "39": {
     "id": "39",
     "name": "Sussy Plant",
     "info": "This plant kinda sus...",
-    "price": 100,
-    "growth": 3,
-    "season": 0
+    "value": 30,
+    "growth": 1,
+    "season": 2
   }
 }

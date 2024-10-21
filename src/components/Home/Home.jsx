@@ -3,11 +3,13 @@ import { useMana } from "../../utils/ManaContext";
 import { useNavigate } from "react-router-dom";
 import { useFish } from "../../utils/FishContext";
 import { useState } from "react";
+import { useGarden } from "../../utils/GardenContext";
 
 function Home() {
   const navigate = useNavigate();
   const { storedMana, handleBalanceLogout, retrieveStoredMana } = useMana();
   const { handleFishLogout } = useFish();
+  const { isAnyPlantFullyGrown } = useGarden();
   const [claimedMana, setClaimedMana] = useState(0);
 
   return (
@@ -77,6 +79,7 @@ function Home() {
           }}
         >
           <div className="BubbleReflection" />
+          {isAnyPlantFullyGrown() ? <div className="Notification" /> : <div />}
           Garden
         </button>
       </div>
