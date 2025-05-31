@@ -227,7 +227,7 @@ function FishingGame({
       </div>
       <div className="PlayersFishing">
         {Object.keys(playerList).map((playerID, i) => {
-          if (playerID !== userID) {
+          if (userID) {
             const playerInfo = playerList[playerID]; // Access the player's information
             return (
               <FishingPlayer

@@ -21,7 +21,7 @@ function FishingPlayer({
   return (
     <div className="FishingPlayer">
       <div className="PlayerContent">
-        <h1>{playerInfo.username}</h1>
+        <h1 className="PlayerName">{playerInfo.username}</h1>
         <img src={getProfileIcon(playerInfo.currentProfileIcon)} alt="" />
         {message ? (
           <div

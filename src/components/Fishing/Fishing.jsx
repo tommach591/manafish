@@ -209,29 +209,15 @@ function Fishing() {
               key={i}
               onClick={() => {
                 setRoom(key);
-                setShowPopUp(true);
               }}
             >
-              <h1
-                className="TextPopUp"
-                style={
-                  showPopUp
-                    ? {
-                        animation: "textPopUp 1.5s forwards ease-in-out 1",
-                      }
-                    : {}
-                }
-                onAnimationEnd={() => setShowPopUp(false)}
-              >
-                Copied!
-              </h1>
               <h1 className="FishingLobbyRoom">{key}</h1>
               <h1 className="FishingLobbyValue">
                 <img
                   src="https://api.iconify.design/material-symbols:person.svg?color=%2332323c"
                   alt=""
                 />
-                {value}/5
+                {value}/8
               </h1>
             </div>
           );

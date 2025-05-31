@@ -74,12 +74,15 @@
 }
 
 .PlayersFishing {
+  height: 18rem;
   width: 15rem;
   display: grid;
+  align-items: flex-start;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   box-sizing: border-box;
 
-  padding-top: 5rem;
-  padding-bottom: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 0rem;
+
 }
