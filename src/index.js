@@ -10,7 +10,6 @@ import { GardenProvider } from "./utils/GardenContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
       <ManaProvider>
         <FishProvider>
@@ -20,6 +19,5 @@ root.render(
         </FishProvider>
       </ManaProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );
 

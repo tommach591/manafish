@@ -8,12 +8,14 @@ import io from "socket.io-client";
 import { useMana } from "../../utils/ManaContext";
 import FishingGame from "./FishingGame";
 import { useFish } from "../../utils/FishContext";
+import { useRef } from "react";
 
 const SERVERURL = "http://localhost:3001";
-const socket = io.connect(SERVERURL);
 
 function Fishing() {
   const navigate = useNavigate();
+  
+  const socket = useRef(null);
 
   const { userID, username, currentProfileIcon } = useMana();
   const { fishCaught } = useFish();
@@ -42,7 +44,7 @@ function Fishing() {
   }
 
   const refreshLobbyList = () => {
-    socket.emit("refreshLobbies", userID);
+    socket.current.emit("refreshLobbies", userID);
   };
 
   const validateRoomCode = (code) => {
@@ -53,7 +55,7 @@ function Fishing() {
   const sendMessage = useCallback(
     (message) => {
       if (room && message)
-        socket.emit("sendMessage", {
+        socket.current.emit("sendMessage", {
           room,
           message,
         });
@@ -63,12 +65,12 @@ function Fishing() {
 
   const joinRoom = useCallback(() => {
     if (validateRoomCode(room) && userID && !playerList[userID]) {
-      socket.emit("joinRoom", { room, userID, username, currentProfileIcon });
+      socket.current.emit("joinRoom", { room, userID, username, currentProfileIcon });
     }
   }, [playerList, room, userID, username, currentProfileIcon]);
 
   const leaveRoom = useCallback(() => {
-    if (room && userID) socket.emit("leaveRoom", { room, userID });
+    if (room && userID) socket.current.emit("leaveRoom", { room, userID });
   }, [room, userID]);
 
   useEffect(() => {
@@ -84,20 +86,32 @@ function Fishing() {
     const handleRefresh = (data) => {
       setActiveLobbies(data);
     };
+    
+    if (!userID || socket.current) return;
 
-    socket.emit("register", userID);
-    socket.on("lobbyPlayers", handleLobbyPlayers);
-    socket.on("recieveMessage", handleReceiveMessage);
-    socket.on("roomFull", handleRoomFull);
-    socket.on("randomActiveLobbies", handleRefresh);
+    socket.current = io.connect(SERVERURL, {
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+      transports: ["websocket"],
+    });
+    socket.current.emit("register", userID);
+    socket.current.on("lobbyPlayers", handleLobbyPlayers);
+    socket.current.on("recieveMessage", handleReceiveMessage);
+    socket.current.on("roomFull", handleRoomFull);
+    socket.current.on("randomActiveLobbies", handleRefresh);
 
-    refreshLobbyList();
+    const timeout = setTimeout(() => {
+      refreshLobbyList();
+    }, 100); 
 
     return () => {
-      socket.off("lobbyPlayers", handleLobbyPlayers);
-      socket.off("recieveMessage", handleReceiveMessage);
-      socket.off("roomFull", handleRoomFull);
-      socket.off("randomActiveLobbies", handleRefresh);
+      socket.current.off("lobbyPlayers", handleLobbyPlayers);
+      socket.current.off("recieveMessage", handleReceiveMessage);
+      socket.current.off("roomFull", handleRoomFull);
+      socket.current.off("randomActiveLobbies", handleRefresh);
+      socket.current.disconnect();
+      clearTimeout(timeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

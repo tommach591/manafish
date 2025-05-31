@@ -20,7 +20,7 @@ function FishingGame({
   const [autoFish, setAutoFish] = useState(false);
 
   const [messageQueue, setMessageQueue] = useState({});
-  const BAITCOST = 15;
+  const BAITCOST = 10;
   const FISHINGTIME = 1000 * 7;
 
   const [isBrokeOpen, setIsBrokeOpen] = useState(false);
@@ -60,7 +60,7 @@ function FishingGame({
     });
 
     // Define weights for each category (higher index = lower weight)
-    const weights = [600000, 300000, 75000, 25000, 3000, 100, 1];
+    const weights = [1100000000, 700000000, 200000000, 20000000, 1000000, 100000, 1000];
     const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
 
     const getRandomCategory = () => {
