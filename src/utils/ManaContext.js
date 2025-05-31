@@ -13,7 +13,6 @@ export function useMana() {
 }
 
 export function ManaProvider({ children }) {
-  // localStorage.clear();
 
   const TICK_RATE = 1000;
   const REGEN_RATE = 30000 - 1000;
@@ -119,10 +118,11 @@ export function ManaProvider({ children }) {
     };
     localStorage.setItem(userID, JSON.stringify(mergedData));
     updateServerMana();
+    
+    localStorage.removeItem("userID");
+    localStorage.removeItem("username");
 
-    localStorage.setItem("userID", "");
     setUserID("");
-    localStorage.setItem("username", "");
     setUsername("");
   }, [
     userID,
