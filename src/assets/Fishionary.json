@@ -2,13 +2,13 @@
   "0": {
     "id": "0",
     "name": "Royal Tum Fish",
-    "value": 500,
+    "value": 50000,
     "info": "The man, the myth, the legend. Nobody believed this was real, but it is."
   },
   "1": {
     "id": "1",
     "name": "Tum Fish",
-    "value": 250,
+    "value": 5000,
     "info": "The fish that started it all."
   },
   "2": {
@@ -86,7 +86,7 @@
   "14": {
     "id": "14",
     "name": "Aivy Fish",
-    "value": 250,
+    "value": 4999,
     "info": "Wow! It's the artist who draws everything!"
   },
   "15": {
@@ -140,13 +140,13 @@
   "23": {
     "id": "23",
     "name": "Booba Fish",
-    "value": 500,
+    "value": 50000,
     "info": "This is actually a pigeon that fell in the water. The breasts of the pigeon developed into floaties."
   },
   "24": {
     "id": "24",
     "name": "Sea Karol",
-    "value": 250,
+    "value": 2500,
     "info": "For some reason, this fish is always depressed."
   },
   "25": {
@@ -404,37 +404,37 @@
   "67": {
     "id": "67",
     "name": "Narutuna",
-    "value": 250,
+    "value": 5000,
     "info": "SASEAKEEEEEEE!"
   },
   "68": {
     "id": "68",
     "name": "Saseake",
-    "value": 250,
+    "value": 5000,
     "info": "NARUTUNAAAAA!"
   },
   "69": {
     "id": "69",
     "name": "Mini Scarlet",
-    "value": 500,
+    "value": 50000,
     "info": "A mini version of Scarlet!"
   },
   "70": {
     "id": "70",
     "name": "Mini Mint",
-    "value": 500,
+    "value": 50000,
     "info": "A mini version of Mint!"
   },
   "71": {
     "id": "71",
     "name": "Pantsu",
-    "value": 250,
+    "value": 3500,
     "info": "Ew, someone lost their pantsu!"
   },
   "72": {
     "id": "72",
     "name": "Koi Fish",
-    "value": 120,
+    "value": 2200,
     "info": "Tis but a kiss I beg, Why art thou koi?"
   },
   "73": {
@@ -452,13 +452,13 @@
   "75": {
     "id": "75",
     "name": "Angel Fish",
-    "value": 150,
+    "value": 2500,
     "info": "Not to be confused with Angle Fish."
   },
   "76": {
     "id": "76",
     "name": "Devil Fish",
-    "value": 150,
+    "value": 2500,
     "info": "#edgy."
   },
   "77": {
@@ -512,13 +512,13 @@
   "85": {
     "id": "85",
     "name": "Pickle",
-    "value": 100,
+    "value": 300,
     "info": "IMA PICKLEEEEE!!!"
   },
   "86": {
     "id": "86",
     "name": "Frag",
-    "value": 100,
+    "value": 300,
     "info": "Look at this top frag!"
   },
   "87": {
@@ -542,127 +542,127 @@
   "90": {
     "id": "90",
     "name": "Sea Panda",
-    "value": 100,
+    "value": 300,
     "info": "KAWAII DESU!"
   },
   "91": {
     "id": "91",
     "name": "Toy Gun",
-    "value": 100,
+    "value": 300,
     "info": "Wait a minute, this is fake!"
   },
   "92": {
     "id": "92",
     "name": "Note in a Bottle",
-    "value": 100,
+    "value": 300,
     "info": "Deeznutz gottem!"
   },
   "93": {
     "id": "93",
     "name": "Key",
-    "value": 100,
+    "value": 300,
     "info": "The key to my heart! uwu"
   },
   "94": {
     "id": "94",
     "name": "French Bread",
-    "value": 100,
+    "value": 300,
     "info": "Bread in French is Pain."
   },
   "95": {
     "id": "95",
     "name": "Renguppy",
-    "value": 100,
+    "value": 300,
     "info": "TASTY!"
   },
   "96": {
     "id": "96",
     "name": "Oyster",
-    "value": 100,
+    "value": 300,
     "info": "What did the Oyster send to the Lobster? A shellfie."
   },
   "97": {
     "id": "97",
     "name": "Unicorn",
-    "value": 100,
+    "value": 300,
     "info": "Its the unicorn of the sea!"
   },
   "98": {
     "id": "98",
     "name": "Cake",
-    "value": 110,
+    "value": 300,
     "info": "The cake is a lie!"
   },
   "99": {
     "id": "99",
     "name": "Penguin",
-    "value": 100,
+    "value": 300,
     "info": "Penguin use Bubble!"
   },
   "100": {
     "id": "100",
     "name": "Tako",
-    "value": 200,
+    "value": 2000,
     "info": "A rare octopus!"
   },
   "101": {
     "id": "101",
     "name": "Real Shark",
-    "value": 100,
+    "value": 300,
     "info": "Oh my god, its a shark!"
   },
   "102": {
     "id": "102",
     "name": "Chicken Nugget",
-    "value": 250,
+    "value": 2500,
     "info": "CHIKMNUGET!!!"
   },
   "103": {
     "id": "103",
     "name": "Fuwush",
-    "value": 250,
+    "value": 2500,
     "info": "UWU"
   },
   "104": {
     "id": "104",
     "name": "Feesh",
-    "value": 250,
+    "value": 2500,
     "info": "FEEEEEEEEEESH!"
   },
   "105": {
     "id": "105",
     "name": "Poof Fish",
-    "value": 275,
+    "value": 3750,
     "info": "Spiky!"
   },
   "106": {
     "id": "106",
     "name": "Squid",
-    "value": 275,
+    "value": 3750,
     "info": "Ooooh, calamari tonight!"
   },
   "107": {
     "id": "107",
     "name": "Tadpole",
-    "value": 275,
+    "value": 3750,
     "info": "Hold so Frogecoin can reach the moon!"
   },
   "108": {
     "id": "108",
     "name": "Ocean Sunfish",
-    "value": 300,
+    "value": 5000,
     "info": "Ah! So that's how seagrass photosynthesize!"
   },
   "109": {
     "id": "109",
     "name": "Moon Fish",
-    "value": 300,
+    "value": 5000,
     "info": "This fish increases the amount of tidal water!"
   },
   "110": {
     "id": "110",
     "name": "Pat Star",
-    "value": 500,
+    "value": 50000,
     "info": "No! This is Pat!"
   }
 }

@@ -37,22 +37,23 @@ function FishingGame({
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
+    const [COMMON, UNCOMMON, RARE, EPIC, UNIQUE, LEGENDARY] = [10, 25, 50, 75, 300, 5000]
 
     Object.keys(fishionary).forEach((key) => {
       const item = fishionary[key];
       const value = item.value;
 
-      if (value <= 10) {
+      if (value <= COMMON) {
         FISHES[0].push({ ...item });
-      } else if (value > 10 && value <= 25) {
+      } else if (value > COMMON && value <= UNCOMMON) {
         FISHES[1].push({ ...item });
-      } else if (value > 25 && value <= 50) {
+      } else if (value > UNCOMMON && value <= RARE) {
         FISHES[2].push({ ...item });
-      } else if (value > 50 && value <= 75) {
+      } else if (value > RARE && value <= EPIC) {
         FISHES[3].push({ ...item });
-      } else if (value > 75 && value <= 100) {
+      } else if (value > EPIC && value <= UNIQUE) {
         FISHES[4].push({ ...item });
-      } else if (value > 100 && value <= 300) {
+      } else if (value > UNIQUE && value <= LEGENDARY) {
         FISHES[5].push({ ...item });
       } else {
         FISHES[6].push({ ...item });
