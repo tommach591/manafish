@@ -61,7 +61,15 @@ function FishingGame({
     });
 
     // Define weights for each category (higher index = lower weight)
-    const weights = [1100000000, 700000000, 200000000, 20000000, 1000000, 100000, 1000];
+    const weights = [
+      550000000,
+      400000000,
+      50000000,
+      10000000,
+      500000,
+      50000,
+      5000
+    ];
     const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
 
     const getRandomCategory = () => {
