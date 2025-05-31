@@ -50,6 +50,10 @@ export function updateBalance(userIDEntered, updatedBody) {
     body.lastManaInterval = updatedBody.lastManaInterval;
   if (updatedBody.nextManaInterval !== undefined)
     body.nextManaInterval = updatedBody.nextManaInterval;
+  if (updatedBody.currentProfileIcon !== undefined)
+    body.currentProfileIcon = updatedBody.currentProfileIcon;
+  if (updatedBody.profileIcons !== undefined)
+    body.profileIcons = updatedBody.profileIcons;
 
   return fetch(`${serverURL}/api/balance/update`, {
     method: "POST",
