@@ -25,7 +25,6 @@ function Fishing() {
   const [playerList, setPlayerList] = useState({});
   const [closeIsDisabled, setCloseIsDisabled] = useState(false);
   const [activeLobbies, setActiveLobbies] = useState([]);
-  const [showPopUp, setShowPopUp] = useState(false);
 
   const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
   const openFishionary = () => setIsFishionaryOpen(true);

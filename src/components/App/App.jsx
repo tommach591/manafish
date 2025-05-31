@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
 import { formatNumberWithCommas } from "../../utils/Helper";
 import Modal from "../Modal";
+import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 
 function App() {
   const {
@@ -47,8 +48,12 @@ function App() {
         <div className="AppHeader">
           <div className="Mana">
             <h1 className="Username">{`${username}`}</h1>
-            <h1>{`Mana: ${formatNumberWithCommas(mana)}`}</h1>
-            <h1>{`Stored Mana: ${storedMana}/${maxStoredMana}`}</h1>
+            <h1>{`Mana: ${formatNumberWithCommas(mana)}`}
+              <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+            </h1>
+            <h1>{`Stored Mana: ${storedMana}/${maxStoredMana}`} 
+              <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+            </h1>
             <h1>
               {`Next Increment:
         ${

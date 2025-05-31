@@ -6,6 +6,9 @@ import { useMana } from "../../../utils/ManaContext";
 import FishingPlayer from "./FishingPlayer/FishingPlayer";
 import { useFish } from "../../../utils/FishContext";
 import Modal from "../../Modal";
+import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
+import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
+import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 
 function FishingGame({
   playerList,
@@ -87,10 +90,22 @@ function FishingGame({
     const category = getRandomCategory();
     const index = Math.floor(Math.random() * FISHES[category].length);
     const fish = FISHES[category][index];
+
     setFishPrize(fish);
     addFish(fish.id);
     sendMessage({ userID, fish });
     updateMana(Number(fish.value));
+
+    if (category >= 3) {
+      const yippeeAudio = new Audio(yippeeMP3);
+      yippeeAudio.volume = 0.20;
+      yippeeAudio.play();
+      
+      return () => {
+        yippeeAudio.pause();
+        yippeeAudio.currentTime = 0;
+      };
+    }
   }, [userID, updateMana, sendMessage, addFish]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
@@ -173,7 +188,7 @@ function FishingGame({
       <div className="FishingDisplay">
         {isFishing ? (
           <img
-            src="https://i.pinimg.com/originals/9f/40/34/9f403475da2a117ff5074c7d661753e2.gif"
+            src={Object.keys(playerList).length === 1 ? soloFishingGif : duoFishingGif}
             alt=""
           />
         ) : fishPrize ? (
