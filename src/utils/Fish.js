@@ -1,5 +1,5 @@
 //const serverURL = "http://localhost:3001";
-const serverURL = "https://manafish-server-47d29a19afc3.herokuapp.com/";
+const serverURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
 
 export function getAllFish() {
   return fetch(`${serverURL}/api/fish/allFish`)

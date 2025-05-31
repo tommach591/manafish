@@ -11,7 +11,7 @@ import { useFish } from "../../utils/FishContext";
 import { useRef } from "react";
 
 //const SERVERURL = "http://localhost:3001";
-const SERVERURL = "https://manafish-server-47d29a19afc3.herokuapp.com/";
+const SERVERURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
 
 function Fishing() {
   const navigate = useNavigate();
