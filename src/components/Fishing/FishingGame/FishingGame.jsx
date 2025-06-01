@@ -227,7 +227,9 @@ function FishingGame({
           }}
           disabled={isFishing || autoFish}
         >
-          Fish
+          <span>
+          Fish - 10 <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+          </span>
         </button>
         <button
           onClick={
