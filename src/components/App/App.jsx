@@ -9,7 +9,7 @@ import Garden from "../Garden";
 import { useMana } from "../../utils/ManaContext";
 import { useEffect, useState } from "react";
 import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
-import { formatNumberWithCommas } from "../../utils/Helper";
+import { formatNumberWithCommas, formatTime } from "../../utils/Helper";
 import Modal from "../Modal";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 import VolumeSlider from "./VolumeSlider/VolumeSlider";
@@ -28,6 +28,7 @@ function App() {
     profileIcons,
   } = useMana();
   const TICK_RATE = 1000;
+  const MANA_RATE = 30;
   const navigate = useNavigate();
 
   const [isProfileIconOpen, setIsProfileIconOpen] = useState(false);
@@ -55,14 +56,18 @@ function App() {
             <h1>{`Stored Mana: ${storedMana}/${maxStoredMana}`} 
               <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
             </h1>
-            <h1>
-              {`Next Increment:
+            <h2>
+              {`Replenishes In:
         ${
-          Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1 < 0
-            ? 15
-            : Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1
-        }s`}
-            </h1>
+          storedMana === maxStoredMana ? "00:00:00" : 
+          Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1 < 0 ? "00:00:00" : 
+          formatTime(Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1)
+        } / ${
+          storedMana === maxStoredMana ? "00:00:00" : 
+          Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1 < 0 ? "00:00:00" :
+           formatTime((maxStoredMana - storedMana - 1) * MANA_RATE + Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1)
+          }`} 
+            </h2>
           </div>
           <div className="ProfileIcon" onClick={openProfileIcon}>
             <img src={getProfileIcon(currentProfileIcon)} alt="" />

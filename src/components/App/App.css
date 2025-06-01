@@ -38,6 +38,15 @@
   justify-content: center;
 }
 
+.Mana > h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  padding-top: 0.25rem;
+}
+
 .Username {
   font-size: 18px;
   font-weight: bold;
