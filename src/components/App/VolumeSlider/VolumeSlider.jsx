@@ -13,33 +13,41 @@ function VolumeSlider() {
     };
 
     useEffect(() => {
-        bgmAudioRef.current = new Audio(bgm);
-        bgmAudioRef.current.volume = volume;
-      
-        // Loop when audio ends
-        const handleEnded = () => {
-          bgmAudioRef.current.currentTime = 0;
-          bgmAudioRef.current.play();
-        };
-        bgmAudioRef.current.addEventListener("ended", handleEnded);
-      
-        // Play on first user interaction
-        const onClick = () => {
-          bgmAudioRef.current.play();
-          window.removeEventListener("click", onClick);
-        };
-        window.addEventListener("click", onClick);
-      
-        return () => {
-          window.removeEventListener("click", onClick);
+      // Clean up existing audio if present
+      if (bgmAudioRef.current) {
+        bgmAudioRef.current.pause();
+        bgmAudioRef.current.currentTime = 0;
+        bgmAudioRef.current.removeAttribute("src"); // optional: unload the audio
+        bgmAudioRef.current.load(); // release the resource
+      }
+    
+      // Create new audio
+      bgmAudioRef.current = new Audio(bgm);
+      bgmAudioRef.current.volume = volume;
+    
+      // Loop when audio ends
+      const handleEnded = () => {
+        bgmAudioRef.current.currentTime = 0;
+        bgmAudioRef.current.play();
+      };
+      bgmAudioRef.current.addEventListener("ended", handleEnded);
+    
+      // Play on first user interaction
+      const onClick = () => {
+        bgmAudioRef.current.play();
+        window.removeEventListener("click", onClick);
+      };
+      window.addEventListener("click", onClick);
+    
+      return () => {
+        window.removeEventListener("click", onClick);
+        if (bgmAudioRef.current) {
+          bgmAudioRef.current.pause();
           bgmAudioRef.current.removeEventListener("ended", handleEnded);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }
+      };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        bgmAudioRef.current.volume = volume || 0;
-    }, [volume]);
 
     return (
     <div className="VolumeSlider">
