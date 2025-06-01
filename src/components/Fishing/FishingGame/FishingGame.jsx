@@ -10,6 +10,8 @@ import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
 import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 import { useUtil } from "../../../utils/UtilContext";
+import { formatNumberWithCommas } from "../../../utils/Helper";
+import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
 
 function FishingGame({
   playerList,
@@ -187,6 +189,11 @@ function FishingGame({
 
   return (
     <div className="FishingGame">
+      <div className="ManaDisplayWhileFishing">
+        <h1>{`Mana: ${formatNumberWithCommas(mana)}`}
+          <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+        </h1>
+      </div>
       <div className="FishingDisplay">
         {isFishing ? (
           <img
@@ -220,7 +227,7 @@ function FishingGame({
           }}
           disabled={isFishing || autoFish}
         >
-          Fish ({BAITCOST} Mana)
+          Fish
         </button>
         <button
           onClick={

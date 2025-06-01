@@ -4,9 +4,21 @@
   align-items: center;
 }
 
+.ManaDisplayWhileFishing {
+  padding: 0.2rem;
+}
+
+.ManaDisplayWhileFishing > h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+}
+
 .FishingDisplay {
-  width: 15rem;
-  height: 15rem;
+  width: 11rem;
+  height: 11rem;
 
   border: 1px solid black;
   border-radius: 5px;
@@ -19,11 +31,18 @@
   border-radius: 5px;
 }
 
+.FishingButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .FishingButtons > button {
-  width: 10rem;
+  width: 7rem;
   height: 1rem;
+  padding: 1rem;
   margin: 0.5rem;
-  font-size: 16px;
+  font-size: 12px;
   box-shadow: none;
   border-radius: 10px;
   border: 1px solid rgb(50, 50, 60);
@@ -47,7 +66,7 @@
 }
 
 .FishCaughtInfo > img {
-  width: 5rem;
+  width: 3rem;
   margin: 0.25rem;
 }
 
@@ -74,15 +93,14 @@
 }
 
 .PlayersFishing {
-  height: 18rem;
+  height: 15rem;
   width: 15rem;
   display: grid;
   align-items: flex-start;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 6rem 10px;
   box-sizing: border-box;
 
-  padding-top: 2rem;
-  padding-bottom: 0rem;
+  padding-top: 5rem;
 
 }
