@@ -9,7 +9,6 @@ import Modal from "../../Modal";
 import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
 import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
-import { useUtil } from "../../../utils/UtilContext";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
 
@@ -19,7 +18,6 @@ function FishingGame({
   messagesRecieved,
   setCloseIsDisabled,
 }) {
-  const { volume } = useUtil();
   const { userID, mana, updateMana } = useMana();
   const { fishCaught, addFish } = useFish();
   const [fishPrize, setFishPrize] = useState("");
@@ -72,7 +70,7 @@ function FishingGame({
       550000000,
       400000000,
       50000000,
-      10000000,
+      100000000000,
       500000,
       50000,
       5000
@@ -102,7 +100,7 @@ function FishingGame({
 
     if (category >= 3) {
       const yippeeAudio = new Audio(yippeeMP3);
-      yippeeAudio.volume = volume > 0 ? volume + 0.15 : 0;
+      yippeeAudio.volume = 0.25;
       yippeeAudio.play();
       
       return () => {
@@ -110,7 +108,7 @@ function FishingGame({
         yippeeAudio.currentTime = 0;
       };
     }
-  }, [userID, updateMana, sendMessage, addFish, volume]);
+  }, [userID, updateMana, sendMessage, addFish]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
     setMessageQueue((prev) => {
