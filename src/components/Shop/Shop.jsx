@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useMana } from "../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../utils/Helper";
 import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
+import aivyGremlinGif from "../../assets/miscImage/aivyGremlin.gif";
+import aivyFishingGif from "../../assets/miscImage/aivyFishing.gif";
 
 function Shop() {
   const {
@@ -126,6 +128,7 @@ function Shop() {
 
   return (
     <div className="Shop">
+      <img className="ShopNPC" src={aivyFishingGif} alt="" style={{animation: "ShopNPCAnimation 0.75s ease-out forwards"}}/>
       <div className="ShopButtons">
         <button
           onClick={() => {
@@ -161,6 +164,9 @@ function Shop() {
         onClose={closeManaLimit}
         title="Raise Mana Limit"
       >
+        <div className="AivyGremlin">
+          <img  src={aivyGremlinGif} alt=""/>
+        </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
             <h1>{`Spend ${formatNumberWithCommas(
@@ -193,6 +199,9 @@ function Shop() {
         onClose={closeIconGacha}
         title="Profile Icon Gacha"
       >
+        <div className="AivyGremlin">
+          <img  src={aivyGremlinGif} alt=""/>
+        </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
             <h1>{`Spend ${formatNumberWithCommas(

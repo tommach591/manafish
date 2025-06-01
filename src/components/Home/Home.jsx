@@ -56,7 +56,7 @@ function Home() {
           }}
         >
           <div className="BubbleReflection" />
-          Shop
+          Aivy's Shop
         </button>
         <button
           onClick={() => {
