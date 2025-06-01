@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./FishingPlayer.css";
 import { getFishImage } from "../../../../utils/Fishionary";
 import { getProfileIcon } from "../../../../utils/ProfileIcon";
+import { useMana } from "../../../../utils/ManaContext";
 
 function FishingPlayer({
   playerID,
@@ -9,6 +10,7 @@ function FishingPlayer({
   messageQueue,
   handleMessageQueueShift,
 }) {
+  const { userID } = useMana();
   const [message, setMessage] = useState();
 
   useEffect(() => {
@@ -21,7 +23,7 @@ function FishingPlayer({
   return (
     <div className="FishingPlayer">
       <div className="PlayerContent">
-        <h1 className="PlayerName">{playerInfo.username}</h1>
+        <h1 className="PlayerName" style={playerID === userID ? {fontWeight: "bold"} : {}}>{playerInfo.username}</h1>
         <img src={getProfileIcon(playerInfo.currentProfileIcon)} alt="" />
         {message ? (
           <div
