@@ -7,10 +7,12 @@ import App from "./components/App";
 import { ManaProvider } from "./utils/ManaContext";
 import { FishProvider } from "./utils/FishContext";
 import { GardenProvider } from "./utils/GardenContext";
+import { UtilProvider } from "./utils/UtilContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
+    <UtilProvider>
       <ManaProvider>
         <FishProvider>
           <GardenProvider>
@@ -18,6 +20,7 @@ root.render(
           </GardenProvider>
         </FishProvider>
       </ManaProvider>
+      </UtilProvider>
     </BrowserRouter>
 );
 

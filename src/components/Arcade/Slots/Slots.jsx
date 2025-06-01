@@ -3,8 +3,10 @@ import "./Slots.css";
 import { useMana } from "../../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import audioMP3 from "../../../assets/audio/slot.mp3";
+import { useUtil } from "../../../utils/UtilContext";
 
 function Slots({ bet, setCloseIsDisabled, openBroke }) {
+  const { volume } = useUtil(); 
   const { mana, updateMana } = useMana();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [winnings, setWinnings] = useState(0);
@@ -66,6 +68,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
             setCloseIsDisabled(false);
           }
           const slotAudio = new Audio(audioMP3);
+          slotAudio.volume = volume > 0 ? volume + 0.5 : 0;
           slotAudio.play();
 
           return () => {
@@ -77,7 +80,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
     }
 
     return () => spinTimeouts.forEach(clearTimeout); // Clear timeouts on cleanup
-  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots]);
+  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots, volume]);
 
   useEffect(() => {
     if (!slots.includes("") && winnings > 0) updateMana(winnings);

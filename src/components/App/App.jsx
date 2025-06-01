@@ -12,6 +12,7 @@ import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
 import { formatNumberWithCommas } from "../../utils/Helper";
 import Modal from "../Modal";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
+import VolumeSlider from "./VolumeSlider/VolumeSlider";
 
 function App() {
   const {
@@ -66,6 +67,7 @@ function App() {
           <div className="ProfileIcon" onClick={openProfileIcon}>
             <img src={getProfileIcon(currentProfileIcon)} alt="" />
           </div>
+          <VolumeSlider/>
         </div>
       ) : (
         <div className="AppHeader" />

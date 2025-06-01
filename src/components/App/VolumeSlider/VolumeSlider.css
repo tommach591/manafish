@@ -1,0 +1,14 @@
+.VolumeSlider {
+    position: absolute;
+    top: 0.5rem;
+    right: 0rem;
+
+    width: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.VolumeSlider > img {
+    width: 1.20rem;
+}
