@@ -13,6 +13,10 @@ function VolumeSlider() {
     };
 
     useEffect(() => {
+      if (bgmAudioRef.current) bgmAudioRef.current.volume = volume;
+    }, [volume])
+
+    useEffect(() => {
       // Clean up existing audio if present
       if (bgmAudioRef.current) {
         bgmAudioRef.current.pause();
@@ -50,19 +54,20 @@ function VolumeSlider() {
     }, []);
 
     return (
-    <div className="VolumeSlider">
+      <div className="VolumeSlider">
         <img src="https://api.iconify.design/material-symbols:volume-up-rounded.svg" alt=""/>
         <input
-            id="volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={handleChange}
-            className="w-32"
+          id="volume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={handleChange}
+          className="w-32"
         />
-    </div>);
+      </div>
+    );
 }
 
 export default VolumeSlider;
