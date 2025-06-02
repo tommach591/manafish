@@ -129,7 +129,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
           setAutoSpin(false);
           openBroke();
         }
-      }, 1250);
+      }, (winnings >= bet * 3) ? 3500 : 1250);
 
       return () => {
         clearInterval(autoSpinInterval);
