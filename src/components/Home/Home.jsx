@@ -3,6 +3,7 @@ import { useMana } from "../../utils/ManaContext";
 import { useNavigate } from "react-router-dom";
 import { useFish } from "../../utils/FishContext";
 import { useState } from "react";
+import Modal from "../Modal";
 // import { useGarden } from "../../utils/GardenContext";
 
 function Home() {
@@ -11,6 +12,10 @@ function Home() {
   const { handleFishLogout } = useFish();
   // const { isAnyPlantFullyGrown } = useGarden();
   const [claimedMana, setClaimedMana] = useState(0);
+
+  const [isCreditsOpen, setIsCreditsOpen] = useState(false);
+  const openCredits = () => setIsCreditsOpen(true);
+  const closeCredits = () => setIsCreditsOpen(false);
 
   return (
     <div className="Home">
@@ -24,6 +29,14 @@ function Home() {
       >
         <div className="BubbleReflection" />
         Logout
+      </button>
+      <button className="CreditsButton" 
+        onClick={() => {
+          openCredits()
+        }}
+      >
+        <div className="BubbleReflection" />
+        Credits
       </button>
       <button
         className="ClaimButton"
@@ -83,6 +96,19 @@ function Home() {
           Mana's Beach
         </button>        
       </div>
+
+      <Modal
+        isOpen={isCreditsOpen}
+        onClose={closeCredits}
+        title={`Credits`}
+        isDisabled={false}
+      >
+        <div className="Credits">
+          <h1>Developer - @tummylol_</h1>
+          <h1>Artist - @aivysu</h1>
+          <h1>BGM - @damahysk</h1>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -29,6 +29,27 @@
   right: 10px;
 }
 
+.CreditsButton {
+  width: 2rem;
+  height: 2rem;
+  font-size: 10px;
+
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.Credits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Credits > h1 {
+  margin: 0.25rem;
+  font-weight: bold;
+}
+
 .ClaimButton {
   width: 4rem;
   height: 4rem;

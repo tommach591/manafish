@@ -48,6 +48,7 @@
 
 .OpenFishingLobbies {
   width: 60%;
+  max-width: 18rem;
   height: 50%;
   position: relative;
 
