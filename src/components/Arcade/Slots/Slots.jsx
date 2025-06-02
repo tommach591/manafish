@@ -11,7 +11,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
   const [spinning, setSpinning] = useState(false);
   const [autoSpin, setAutoSpin] = useState(false);
 
-  const SYMBOLS = useMemo(() => ["💩", "🌼", "🌻", "🥀", "🌷", "☂️", "💧"], []);
+  const SYMBOLS = useMemo(() => ["💩", "🌼", "🌻", "☂️", "💧"], []);
 
   const setup = useCallback(() => {
     setSlots(["", "", "", "", ""]);
@@ -34,16 +34,16 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
       let winnings = 0;
       Object.keys(counts).forEach((symbol) => {
         const count = counts[symbol];
-        if (count === 5 && symbol === "💧") winnings += bet * 150;
-        else if (count === 5 && symbol === "☂️") winnings += bet * 100;
-        else if (count === 5) winnings += bet * 50;
-        else if (count === 4 && symbol === "💧") winnings += bet * 25;
-        else if (count === 4 && symbol === "☂️") winnings += bet * 20;
-        else if (count === 4) winnings += bet * 12;
-        else if (count === 3 && symbol === "💧") winnings += bet * 10;
-        else if (count === 3 && symbol === "☂️") winnings += bet * 8;
-        else if (count === 3) winnings += Math.floor(bet * 1.25);
-        else if (count === 2) winnings += Math.floor(bet * 0.25);
+        if (count === 5 && symbol === "💧") winnings += bet * 300;
+        else if (count === 5 && symbol === "☂️") winnings += bet * 200;
+        else if (count === 5) winnings += bet * 100;
+        else if (count === 4 && symbol === "💧") winnings += bet * 20;
+        else if (count === 4 && symbol === "☂️") winnings += bet * 15;
+        else if (count === 4) winnings += bet * 10;
+        else if (count === 3 && symbol === "💧") winnings += bet * 5;
+        else if (count === 3 && symbol === "☂️") winnings += bet * 4;
+        else if (count === 3) winnings += Math.floor(bet * 2);
+        else if (count === 2) winnings += Math.floor(bet * 0.10);
       });
 
       return winnings;
@@ -193,25 +193,25 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
         <h1 className="Condition">{`Conditions`}</h1>
         <h1 className="Multiplier">{`Bet Multiplier`}</h1>
         <h1 className="Condition">{`5 💧`}</h1>
-        <h1 className="Multiplier">{`150.0x`}</h1>
+        <h1 className="Multiplier">{`300.0x`}</h1>
         <h1 className="Condition">{`5 ☂️`}</h1>
-        <h1 className="Multiplier">{`100.0x`}</h1>
+        <h1 className="Multiplier">{`200.0x`}</h1>
         <h1 className="Condition">{`Any 5`}</h1>
-        <h1 className="Multiplier">{`50.0x`}</h1>
+        <h1 className="Multiplier">{`100.0x`}</h1>
         <h1 className="Condition">{`4 💧`}</h1>
-        <h1 className="Multiplier">{`25.0x`}</h1>
-        <h1 className="Condition">{`4 ☂️`}</h1>
         <h1 className="Multiplier">{`20.0x`}</h1>
+        <h1 className="Condition">{`4 ☂️`}</h1>
+        <h1 className="Multiplier">{`15.0x`}</h1>
         <h1 className="Condition">{`Any 4`}</h1>
-        <h1 className="Multiplier">{`12.0x`}</h1>
-        <h1 className="Condition">{`3 💧`}</h1>
         <h1 className="Multiplier">{`10.0x`}</h1>
+        <h1 className="Condition">{`3 💧`}</h1>
+        <h1 className="Multiplier">{`5.0x`}</h1>
         <h1 className="Condition">{`3 ☂️`}</h1>
-        <h1 className="Multiplier">{`8.0x`}</h1>
+        <h1 className="Multiplier">{`4.0x`}</h1>
         <h1 className="Condition">{`Any 3`}</h1>
-        <h1 className="Multiplier">{`1.25x`}</h1>
+        <h1 className="Multiplier">{`2.0x`}</h1>
         <h1 className="Condition">{`Any 2`}</h1>
-        <h1 className="Multiplier">{`0.25x`}</h1>
+        <h1 className="Multiplier">{`0.10x`}</h1>
       </div>
     </div>
   );
