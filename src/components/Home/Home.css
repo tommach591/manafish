@@ -51,8 +51,12 @@
 }
 
 .ClaimButton {
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.ClaimButton > img {
+  width: 175%;
 }
 
 .NavigationButtons {

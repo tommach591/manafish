@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useFish } from "../../utils/FishContext";
 import { useState } from "react";
 import Modal from "../Modal";
+import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 // import { useGarden } from "../../utils/GardenContext";
 
 function Home() {
@@ -60,7 +61,7 @@ function Home() {
         >
           +{claimedMana}
         </h1>
-        Claim Mana
+        <img src={manaCurrencyImg} alt="" />
       </button>
       <div className="NavigationButtons">
         <button
