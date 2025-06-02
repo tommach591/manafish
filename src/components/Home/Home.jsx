@@ -85,7 +85,7 @@ function Home() {
           }}
         >
           <div className="BubbleReflection" />
-          Arcade
+          Mintlet's Arcade
         </button>
         <button
           onClick={() => {
