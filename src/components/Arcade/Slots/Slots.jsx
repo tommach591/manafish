@@ -89,7 +89,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
   useEffect(() => {
     if (!slots.includes("") && winnings > 0) { 
       updateMana(winnings);
-      if (winnings >= bet * 3) {
+      if (winnings >= bet * 2.5) {
         setMintCheers(Math.random() < 0.5);
         const yippeeAudio = new Audio(yippeeMP3);
         yippeeAudio.volume = 0.25;
@@ -129,7 +129,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
           setAutoSpin(false);
           openBroke();
         }
-      }, (winnings >= bet * 3) ? 3500 : 1250);
+      }, (winnings >= bet * 2.5) ? 2750 : 1200);
 
       return () => {
         clearInterval(autoSpinInterval);
@@ -234,11 +234,11 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
         <h1 className="Multiplier">{`0.25x`}</h1>
       </div>
       <div className="MintArcade" 
-        style={winnings >= bet * 3 && mintCheers ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
+        style={winnings >= bet * 2.5 && mintCheers ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
         <img src={winnings > bet * 20 ? mintArcade2 : mintArcade1} alt=""/>
       </div>
       <div className="ScarletArcade" 
-        style={winnings >= bet * 3 && !mintCheers ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
+        style={winnings >= bet * 2.5 && !mintCheers ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
         <img src={winnings > bet * 20 ? scarletArcade2 : scarletArcade1} alt=""/>
       </div>
     </div>

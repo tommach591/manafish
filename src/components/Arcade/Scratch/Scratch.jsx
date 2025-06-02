@@ -120,7 +120,7 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
       </div>
       {numbers.includes(0) ? (
         <div className="Winnings">
-          {`Match Three! Each additional number beyond the third gets added to total winnings!`}
+          {`Match three and each additional number beyond the third gets added to total winnings!`}
         </div>
       ) : (
         <div className="Winnings">{`Earned ${formatNumberWithCommas(
@@ -130,7 +130,19 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
         )} mana.`}</div>
       )}
       {numbers.includes(0) ? (
-        <div />
+      <button
+        className="ResetGame"
+        onClick={() => {
+          const newNumbers = [...numbers];
+          newNumbers.forEach((value, i) => {
+            if (value === 0) newNumbers[i] = range[Math.floor(Math.random() * range.length)]
+          })
+          setNumbers(newNumbers);
+        }}
+        disabled={!numbers.includes(0)}
+      >
+        Scratch All
+      </button>
       ) : (
         <button
           className="ResetGame"
