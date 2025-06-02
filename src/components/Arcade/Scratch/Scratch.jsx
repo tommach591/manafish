@@ -25,19 +25,27 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
     "#e8feff",
     "#e8eeff",
     "#f4e8ff",
+    "#ffcce0",
   ];
 
   const setup = useCallback(() => {
     function generateRange(median) {
       median = Number(median);
-      const newRange = new Array(7);
-      newRange[3] = median;
-
-      const increment = Math.floor(0.1 * (3 * median));
-      for (let i = 2; i >= 0; i--) newRange[i] = newRange[i + 1] - increment;
-      for (let i = 3; i < newRange.length; i++)
+      const newRange = new Array(8);
+      newRange[4] = median; // center of the 9-element array
+    
+      const increment = Math.floor(0.1 * (2 * median));
+    
+      // Fill left side
+      for (let i = 3; i >= 0; i--) {
+        newRange[i] = newRange[i + 1] - increment;
+      }
+    
+      // Fill right side
+      for (let i = 4; i < 8; i++) {
         newRange[i] = newRange[i - 1] + increment;
-
+      }
+    
       return newRange;
     }
     setNumbers(Array.from({ length: 9 }, (_, i) => i).fill(0));
