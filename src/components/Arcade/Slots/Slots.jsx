@@ -3,10 +3,16 @@ import "./Slots.css";
 import { useMana } from "../../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import audioMP3 from "../../../assets/audio/slot.mp3";
+import mintArcade1 from "../../../assets/miscImage/mintArcade1.png";
+import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
+import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
+import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
+import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 
 function Slots({ bet, setCloseIsDisabled, openBroke }) {
   const { mana, updateMana } = useMana();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
+  const [mintCheers, setMintCheers] = useState(true);
   const [winnings, setWinnings] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [autoSpin, setAutoSpin] = useState(false);
@@ -34,19 +40,19 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
       let winnings = 0;
       Object.keys(counts).forEach((symbol) => {
         const count = counts[symbol];
-        if (count === 5 && symbol === "💧") winnings += bet * 300;
-        else if (count === 5 && symbol === "☂️") winnings += bet * 200;
+        if (count === 5 && symbol === "💧") winnings += bet * 200;
+        else if (count === 5 && symbol === "☂️") winnings += bet * 150;
         else if (count === 5) winnings += bet * 100;
         else if (count === 4 && symbol === "💧") winnings += bet * 20;
         else if (count === 4 && symbol === "☂️") winnings += bet * 15;
         else if (count === 4) winnings += bet * 10;
-        else if (count === 3 && symbol === "💧") winnings += bet * 5;
-        else if (count === 3 && symbol === "☂️") winnings += bet * 4;
-        else if (count === 3) winnings += Math.floor(bet * 2);
-        else if (count === 2) winnings += Math.floor(bet * 0.10);
+        else if (count === 3 && symbol === "💧") winnings += bet * 3;
+        else if (count === 3 && symbol === "☂️") winnings += bet * 2.5;
+        else if (count === 3) winnings += Math.floor(bet * 1.5);
+        else if (count === 2) winnings += Math.floor(bet * 0.25);
       });
 
-      return winnings;
+      return Math.floor(winnings);
     },
     [bet]
   );
@@ -62,6 +68,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
           setSlots([...newSlots]);
           if (i === newSlots.length - 1) {
             const newWinnings = calculateWinnings(newSlots, bet);
+            
             setWinnings(newWinnings);
             setCloseIsDisabled(false);
           }
@@ -80,7 +87,20 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
   }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots]);
 
   useEffect(() => {
-    if (!slots.includes("") && winnings > 0) updateMana(winnings);
+    if (!slots.includes("") && winnings > 0) { 
+      updateMana(winnings);
+      if (winnings >= bet * 3) {
+        setMintCheers(Math.random() < 0.5);
+        const yippeeAudio = new Audio(yippeeMP3);
+        yippeeAudio.volume = 0.25;
+        yippeeAudio.play();
+                      
+        return () => {
+          yippeeAudio.pause();
+          yippeeAudio.currentTime = 0;
+        };
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots, winnings]);
 
@@ -193,25 +213,33 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
         <h1 className="Condition">{`Conditions`}</h1>
         <h1 className="Multiplier">{`Bet Multiplier`}</h1>
         <h1 className="Condition">{`5 💧`}</h1>
-        <h1 className="Multiplier">{`300.0x`}</h1>
+        <h1 className="Multiplier">{`200.00x`}</h1>
         <h1 className="Condition">{`5 ☂️`}</h1>
-        <h1 className="Multiplier">{`200.0x`}</h1>
+        <h1 className="Multiplier">{`150.00x`}</h1>
         <h1 className="Condition">{`Any 5`}</h1>
-        <h1 className="Multiplier">{`100.0x`}</h1>
+        <h1 className="Multiplier">{`100.00x`}</h1>
         <h1 className="Condition">{`4 💧`}</h1>
-        <h1 className="Multiplier">{`20.0x`}</h1>
+        <h1 className="Multiplier">{`20.00x`}</h1>
         <h1 className="Condition">{`4 ☂️`}</h1>
-        <h1 className="Multiplier">{`15.0x`}</h1>
+        <h1 className="Multiplier">{`15.00x`}</h1>
         <h1 className="Condition">{`Any 4`}</h1>
-        <h1 className="Multiplier">{`10.0x`}</h1>
+        <h1 className="Multiplier">{`10.00x`}</h1>
         <h1 className="Condition">{`3 💧`}</h1>
-        <h1 className="Multiplier">{`5.0x`}</h1>
+        <h1 className="Multiplier">{`3.00x`}</h1>
         <h1 className="Condition">{`3 ☂️`}</h1>
-        <h1 className="Multiplier">{`4.0x`}</h1>
+        <h1 className="Multiplier">{`2.50x`}</h1>
         <h1 className="Condition">{`Any 3`}</h1>
-        <h1 className="Multiplier">{`2.0x`}</h1>
+        <h1 className="Multiplier">{`1.50x`}</h1>
         <h1 className="Condition">{`Any 2`}</h1>
-        <h1 className="Multiplier">{`0.10x`}</h1>
+        <h1 className="Multiplier">{`0.25x`}</h1>
+      </div>
+      <div className="MintArcade" 
+        style={winnings >= bet * 3 && mintCheers ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
+        <img src={winnings > bet * 20 ? mintArcade2 : mintArcade1} alt=""/>
+      </div>
+      <div className="ScarletArcade" 
+        style={winnings >= bet * 3 && !mintCheers ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
+        <img src={winnings > bet * 20 ? scarletArcade2 : scarletArcade1} alt=""/>
       </div>
     </div>
   );
