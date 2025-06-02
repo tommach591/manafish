@@ -17,7 +17,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
   const [spinning, setSpinning] = useState(false);
   const [autoSpin, setAutoSpin] = useState(false);
 
-  const SYMBOLS = useMemo(() => ["💩", "🌼", "🌻", "☂️", "💧"], []);
+  const SYMBOLS = useMemo(() => ["💩", "☁️", "🌈", "⭐", "☂️", "💧"], []);
 
   const setup = useCallback(() => {
     setSlots(["", "", "", "", ""]);
