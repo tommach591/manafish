@@ -60,6 +60,14 @@ function Home() {
         </button>
         <button
           onClick={() => {
+            navigate("/leaderboard");
+          }}
+        >
+          <div className="BubbleReflection" />
+          Hall of Legends
+        </button>
+        <button
+          onClick={() => {
             navigate("/arcade");
           }}
         >

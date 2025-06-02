@@ -13,6 +13,7 @@ import { formatNumberWithCommas, formatTime } from "../../utils/Helper";
 import Modal from "../Modal";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 import VolumeSlider from "./VolumeSlider/VolumeSlider";
+import Leaderboard from "../Leaderboard/Leaderboard";
 
 function App() {
   const {
@@ -81,6 +82,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/fishing" element={<Fishing />} />
         <Route path="/arcade" element={<Arcade />} />
         <Route path="/garden" element={<Garden />} />
