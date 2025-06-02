@@ -4,9 +4,16 @@ import { useMana } from "../../../utils/ManaContext";
 import Button from "./Button";
 import Hand from "./Hand";
 import { formatNumberWithCommas } from "../../../utils/Helper";
+import mintArcade1 from "../../../assets/miscImage/mintArcade1.png";
+import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
+import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
+import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
+import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 
 function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
   const [winnings, setWinnings] = useState(0);
+  const [mintCheers, setMintCheers] = useState(true);
+
   const { mana, updateMana } = useMana();
 
   const [BLACKJACK, DEALERMIN] = [21, 16];
@@ -77,6 +84,8 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
       paid: false,
     });
 
+    setWinnings(0);
+
     setCloseIsDisabled(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bet]);
@@ -137,10 +146,10 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
         const push = playerVal <= BLACKJACK && playerVal === dealerVal;
 
         if (blackjack) {
-          totalEarned += Math.round(Number(bet) * 2.5);
+          totalEarned += Math.round(Number(game.bet) * 2.5);
         } else if (higherValue || dealerBust || fiveCards) {
-          totalEarned += Number(bet) * 2;
-        } else if (push) totalEarned += Number(bet);
+          totalEarned += Number(game.bet) * 2;
+        } else if (push) totalEarned += Number(game.bet);
       });
 
       if (!newGame.paid) {
@@ -148,7 +157,19 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
         setGame(newGame);
         setWinnings(totalEarned);
         setCloseIsDisabled(false);
+        setMintCheers(Math.random() < 0.5);
         if (totalEarned > 0) updateMana(Number(totalEarned));
+
+        if (totalEarned >= newGame.bet * 2) {
+          const yippeeAudio = new Audio(yippeeMP3);
+          yippeeAudio.volume = 0.25;
+          yippeeAudio.play();
+                
+          return () => {
+            yippeeAudio.pause();
+            yippeeAudio.currentTime = 0;
+          };
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -175,7 +196,7 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
       newGame.deck.shift(),
     ]);
     newGame.player[newGame.selected].push(newGame.deck.shift());
-    newGame.bet += Number(bet);
+    // newGame.bet += Number(bet);
     setGame(newGame);
 
     updateMana(Number(-bet));
@@ -286,15 +307,23 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
       )}
       {!game.done ? (
         <div className="Winnings">
-          {`Blackjack! Beat the dealer, but don't go over 21!`}
+          {``}
         </div>
       ) : (
         <div className="Winnings">{`Earned ${formatNumberWithCommas(
           winnings
         )} mana. Net gain ${formatNumberWithCommas(
-          winnings - bet
+          winnings - (game.bet * game.player.length)
         )} mana.`}</div>
       )}
+      <div className="MintArcade" 
+        style={winnings >= game.bet * 2 && mintCheers ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
+        <img src={winnings > bet * 2 ? mintArcade2 : mintArcade1} alt=""/>
+      </div>
+      <div className="ScarletArcade" 
+        style={winnings >= game.bet * 2 && !mintCheers ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
+        <img src={winnings > bet * 2 ? scarletArcade2 : scarletArcade1} alt=""/>
+      </div>
     </div>
   );
 }
