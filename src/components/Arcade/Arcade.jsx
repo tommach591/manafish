@@ -9,7 +9,7 @@ import Slots from "./Slots";
 
 function Arcade() {
   const { mana, updateMana } = useMana();
-  const MINBET = 5;
+  const MINBET = 10;
   const MAXBET = 100000;
   const [bet, setBet] = useState(MINBET);
 
