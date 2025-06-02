@@ -80,7 +80,7 @@ function Home() {
           }}
         >
           <div className="BubbleReflection" />
-          Fishing
+          Mana's Beach
         </button>        
       </div>
     </div>
