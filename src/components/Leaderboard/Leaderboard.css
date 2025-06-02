@@ -1,7 +1,6 @@
 .Leaderboard {
     width: 100%;
     height: 100%;
-  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,6 +8,7 @@
 
 .Rankings {
     width: 60%;
+    max-width: 18rem;
     height: 65%;
     position: relative;
   
@@ -33,6 +33,7 @@
 .RankingsTitle {
     font-size: 20px;
     font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 .RankingsDivider {

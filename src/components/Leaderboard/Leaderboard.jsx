@@ -60,9 +60,9 @@ function Leaderboard() {
     <div className="Rankings">
     <h1 className="RankingsTitle">Rankings</h1>
       {playerList.length > 0 ? <div className="PlayerRank"
-          style={playerIndex === 0 ? {background: "rgb(255, 222, 160)"} :
-          playerIndex === 1 ? {background: "rgb(235, 235, 235)"} : 
-          playerIndex === 2 ? {background: "rgb(245, 179, 141)"} : 
+            style={playerIndex === 0 ? {background: "rgb(255, 230, 160)"} :
+            playerIndex === 1 ? {background: "rgb(214, 217, 219)"} : 
+            playerIndex === 2 ? {background: "rgb(197, 166, 157)"} : 
             {background: "none"}
           }>
         <img className="PlayerRankMedal" src={
@@ -78,9 +78,9 @@ function Leaderboard() {
       {
         playerList.slice(0, 10).map((player, i) => {
           return <div className="PlayerRank" key={i} 
-              style={i === 0 ? {background: "rgb(255, 222, 160)"} :
-              i === 1 ? {background: "rgb(235, 235, 235)"} : 
-              i === 2 ? {background: "rgb(245, 179, 141)"} : 
+              style={i === 0 ? {background: "rgb(255, 230, 160)"} :
+              i === 1 ? {background: "rgb(214, 217, 219)"} : 
+              i === 2 ? {background: "rgb(197, 166, 157)"} : 
               {background: "none"}
             }>
             <img className="PlayerRankMedal" src={
