@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./Login.css";
 import { createAccount, loginAccount } from "../../utils/Account";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +13,23 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const passwordRef = useRef(null);
+
   useEffect(() => {
     if (userID) navigate("/");
   }, [userID, navigate]);
+
+  const handleLogin = useCallback(() => {
+    if (username && password)
+      loginAccount(username, password).then((res) => {
+        if (res) {
+          handleBalanceLogin(res._id, username);
+          handleFishLogin(res._id);
+          navigate("/");
+        } else alert("Invalid username or password.");
+      });
+    else alert("Invalid username or password.");
+  }, [username, password, handleBalanceLogin, handleFishLogin, navigate])
 
   return (
     <div className="Login">
@@ -26,27 +40,29 @@ function Login() {
           value={username}
           placeholder="Username"
           onChange={(event) => setUsername(event.currentTarget.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              passwordRef.current?.focus();
+            }
+          }}
         />
         <input
           type="password"
           value={password}
           placeholder="Password"
           onChange={(event) => setPassword(event.currentTarget.value)}
+          ref={passwordRef}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              handleLogin();
+            }
+          }}
         />
       </div>
       <div className="LoginButtons">
         <button
-          onClick={() => {
-            if (username && password)
-              loginAccount(username, password).then((res) => {
-                if (res) {
-                  handleBalanceLogin(res._id, username);
-                  handleFishLogin(res._id);
-                  navigate("/");
-                } else alert("Invalid username or password.");
-              });
-            else alert("Invalid username or password.");
-          }}
+          onClick={handleLogin}
         >
           Sign In
         </button>
