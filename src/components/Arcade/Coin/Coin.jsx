@@ -85,12 +85,16 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
          <h1>Heads or Tails?</h1>}
         <div className="Controls">
             <button className="CoinButton" onClick={() => {
-               setup();
-               setChooseHead(true);
+                if (!isFlipping) {
+                    setup();
+                    setChooseHead(true);
+                }
             }}>Heads</button>
             <button className="CoinButton" onClick={() => {
-               setup();
-               setChooseHead(false);
+                if (!isFlipping) {
+                    setup();
+                    setChooseHead(false);
+                }
             }}>Tails</button>
         </div>
         {!isFlipping && coinsFlipped > 0 ? 

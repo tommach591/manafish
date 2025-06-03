@@ -40,11 +40,11 @@
         animation-timing-function: ease-in-out;
     }
     50% {
-        transform: rotateX(18000deg) scale(2.5);
+        transform: rotateX(3600deg) scale(2.5);
         animation-timing-function: ease-in-out;
     }
     100% {
-        transform: rotateX(36000deg) scale(1);
+        transform: rotateX(7200deg) scale(1);
         animation-timing-function: ease-in-out;
     }
 }
@@ -55,11 +55,11 @@
         animation-timing-function: ease-in-out;
     }
     50% {
-        transform: rotateX(18000deg) scale(2.5);
+        transform: rotateX(3600deg) scale(2.5);
         animation-timing-function: ease-in-out;
     }
     100% {
-        transform: rotateX(36180deg) scale(1);
+        transform: rotateX(7380deg) scale(1);
         animation-timing-function: ease-in-out;
     }
 }
@@ -72,11 +72,11 @@
         animation-timing-function: linear;
     }
     30% {
-        transform: rotateX(7200deg) scale(2.5) translateY(-0.5rem);
+        transform: rotateX(3600deg) scale(2.5) translateY(-0.5rem);
         opacity: 1;
     }
     60% {
-        transform: rotateX(14400deg) scale(5) translateY(-1rem);
+        transform: rotateX(7380deg) scale(5) translateY(-1rem);
         opacity: 1;
     }
     100% {
