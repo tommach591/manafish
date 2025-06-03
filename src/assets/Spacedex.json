@@ -1,0 +1,387 @@
+{
+    "0": {
+      "id": "0",
+      "name": "Space Jelly",
+      "value": 50000,
+      "info": "The man, the myth, the legend. Nobody believed this was real, but it is."
+    },
+    "1": {
+      "id": "1",
+      "name": "Tum Fish",
+      "value": 5000,
+      "info": "The fish that started it all."
+    },
+    "2": {
+      "id": "2",
+      "name": "Pink Fish",
+      "value": 4,
+      "info": "The Pink Fish survives by being cute. This attracts other partners."
+    },
+    "3": {
+      "id": "3",
+      "name": "Yellow Fish",
+      "value": 4,
+      "info": "The Yellow Fish is obnoxious. This bright color pisses off every other fish."
+    },
+    "4": {
+      "id": "4",
+      "name": "Green Fish",
+      "value": 4,
+      "info": "The Green Fish is vegetarian."
+    },
+    "5": {
+      "id": "5",
+      "name": "Teal Fish",
+      "value": 4,
+      "info": "The Teal Fish is cold to the touch. Very useful for making drinks."
+    },
+    "6": {
+      "id": "6",
+      "name": "Indigo Fish",
+      "value": 4,
+      "info": "The Indigo Fish lives near the bottom of the sea."
+    },
+    "7": {
+      "id": "7",
+      "name": "Rock Fish",
+      "value": 12,
+      "info": "Paper!"
+    },
+    "8": {
+      "id": "8",
+      "name": "Paper Fish",
+      "value": 12,
+      "info": "Rock! Wait..."
+    },
+    "9": {
+      "id": "9",
+      "name": "Scissor Fish",
+      "value": 12,
+      "info": "GUN! PEW PEW!"
+    },
+    "10": {
+      "id": "10",
+      "name": "Raccoon (M) Fish",
+      "value": 27,
+      "info": "The male Raccoon Fish spends his time flirting with the female Raccoon Fish."
+    },
+    "11": {
+      "id": "11",
+      "name": "Raccoon (F) Fish",
+      "value": 28,
+      "info": "The female Raccoon Fish spends her time flirting with the male Raccoon Fish."
+    },
+    "12": {
+      "id": "12",
+      "name": "Egg",
+      "value": 16,
+      "info": "Who's egg is this?!"
+    },
+    "13": {
+      "id": "13",
+      "name": "Golden Egg",
+      "value": 50,
+      "info": "Is there a goose that lays golden eggs in the sea?"
+    },
+    "14": {
+      "id": "14",
+      "name": "Aivy Fish",
+      "value": 4999,
+      "info": "Wow! It's the artist who draws everything!"
+    },
+    "15": {
+      "id": "15",
+      "name": "Seaweed",
+      "value": 7,
+      "info": "Now I can make sushi!"
+    },
+    "16": {
+      "id": "16",
+      "name": "Shark Girl",
+      "value": 25,
+      "info": "A"
+    },
+    "17": {
+      "id": "17",
+      "name": "Tomato Fish",
+      "value": 6,
+      "info": "TomAHto."
+    },
+    "18": {
+      "id": "18",
+      "name": "Pink Starfish",
+      "value": 4,
+      "info": "Now where is his pants..."
+    },
+    "19": {
+      "id": "19",
+      "name": "Green Starfish",
+      "value": 4,
+      "info": "It thinks its hiding."
+    },
+    "20": {
+      "id": "20",
+      "name": "Blue Starfish",
+      "value": 4,
+      "info": "Wait a minute, this isn't a Starmee..."
+    },
+    "21": {
+      "id": "21",
+      "name": "Whale",
+      "value": 28,
+      "info": "Yes, that is a whale in my pocket. Wink wonk."
+    },
+    "22": {
+      "id": "22",
+      "name": "Clownfish",
+      "value": 30,
+      "info": "They tend to tell jokes then go 'HONK HONK!'"
+    },
+    "23": {
+      "id": "23",
+      "name": "Booba Fish",
+      "value": 50000,
+      "info": "This is actually a pigeon that fell in the water. The breasts of the pigeon developed into floaties."
+    },
+    "24": {
+      "id": "24",
+      "name": "Sea Karol",
+      "value": 2500,
+      "info": "For some reason, this fish is always depressed."
+    },
+    "25": {
+      "id": "25",
+      "name": "Pink Shrimp",
+      "value": 2,
+      "info": "Everyone's favorite shrimp!"
+    },
+    "26": {
+      "id": "26",
+      "name": "Cyan Shrimp",
+      "value": 2,
+      "info": "This shrimp likes to eat human skin cells."
+    },
+    "27": {
+      "id": "27",
+      "name": "Lime Shrimp",
+      "value": 2,
+      "info": "Basically shrimp ceviche."
+    },
+    "28": {
+      "id": "28",
+      "name": "Violet Shrimp",
+      "value": 2,
+      "info": "The last shrimp of the rainbow."
+    },
+    "29": {
+      "id": "29",
+      "name": "Airplane Fish",
+      "value": 3,
+      "info": "Like a shooting star."
+    },
+    "30": {
+      "id": "30",
+      "name": "Bao",
+      "value": 5,
+      "info": "I wonder what is inside? Egg? Pork? Soup?"
+    },
+    "31": {
+      "id": "31",
+      "name": "Potato Fish",
+      "value": 9,
+      "info": "You can make fish and chips with this one fish!"
+    },
+    "32": {
+      "id": "32",
+      "name": "Fast AF Fish",
+      "value": 9,
+      "info": "This fish FAST AF!"
+    },
+    "33": {
+      "id": "33",
+      "name": "Tumbao Fish",
+      "value": 15,
+      "info": "This is just a Bao Fish with a face!"
+    },
+    "34": {
+      "id": "34",
+      "name": "Strawberry Milk",
+      "value": 42,
+      "info": "Yes, this is a fish."
+    },
+    "35": {
+      "id": "35",
+      "name": "Swordfish",
+      "value": 18,
+      "info": "ENDGARDE!"
+    },
+    "36": {
+      "id": "36",
+      "name": "Melon Fish",
+      "value": 45,
+      "info": "This fish tastes even better during summer seasons!"
+    },
+    "37": {
+      "id": "37",
+      "name": "Sand Dollar",
+      "value": 25,
+      "info": "People are always dropping dollars at the beach!"
+    },
+    "38": {
+      "id": "38",
+      "name": "Wat",
+      "value": 25,
+      "info": "Wat."
+    },
+    "39": {
+      "id": "39",
+      "name": "Candy",
+      "value": 47,
+      "info": "Candeez nutz fit in your mouth? Gottem!"
+    },
+    "40": {
+      "id": "40",
+      "name": "Butterfly Fish",
+      "value": 22,
+      "info": "Shouldn't this be fluttering in the air?"
+    },
+    "41": {
+      "id": "41",
+      "name": "Froge",
+      "value": 24,
+      "info": "Next cryptocurrency is going to be Frogecoin!"
+    },
+    "42": {
+      "id": "42",
+      "name": "Snek",
+      "value": 8,
+      "info": "ARGH SNEK A SNEK! SNEK A SNEEEK OOOO ITS A SNEK!"
+    },
+    "43": {
+      "id": "43",
+      "name": "Bobfish",
+      "value": 10,
+      "info": "Not a blobfish, but a fish named Bob."
+    },
+    "44": {
+      "id": "44",
+      "name": "Rainbow Fish",
+      "value": 25,
+      "info": "A trail of rainbows follow this fish."
+    },
+    "45": {
+      "id": "45",
+      "name": "Sussy Baka (Red)",
+      "value": 10,
+      "info": "Most likely sus."
+    },
+    "46": {
+      "id": "47",
+      "name": "Sussy Baka (Yellow)",
+      "value": 10,
+      "info": "Probably dead."
+    },
+    "47": {
+      "id": "47",
+      "name": "Sussy Baka (Green)",
+      "value": 10,
+      "info": "Probably doing tasks."
+    },
+    "48": {
+      "id": "48",
+      "name": "Sussy Baka (Blue)",
+      "value": 10,
+      "info": "Doing some weird 50000 IQ strat."
+    },
+    "49": {
+      "id": "49",
+      "name": "Sussy Baka (Purple)",
+      "value": 10,
+      "info": "Probably on cams."
+    },
+    "50": {
+      "id": "50",
+      "name": "Apple Fish",
+      "value": 70,
+      "info": "An apple fish a day, keeps the doctors away!"
+    },
+    "51": {
+      "id": "51",
+      "name": "Orange Fish",
+      "value": 70,
+      "info": "Lots of Vitamin Sea."
+    },
+    "52": {
+      "id": "52",
+      "name": "Grape Fish",
+      "value": 70,
+      "info": "Grape to see you!"
+    },
+    "53": {
+      "id": "53",
+      "name": "Eggplant Fish",
+      "value": 65,
+      "info": "Such an enormous girth!"
+    },
+    "54": {
+      "id": "54",
+      "name": "Cat Fish",
+      "value": 65,
+      "info": "Fried cat fish is delicious!"
+    },
+    "55": {
+      "id": "55",
+      "name": "Dog Fish",
+      "value": 65,
+      "info": "Don't eat this."
+    },
+    "56": {
+      "id": "56",
+      "name": "Sea Horse",
+      "value": 55,
+      "info": "Neigh nay?!"
+    },
+    "57": {
+      "id": "57",
+      "name": "Sea Lion",
+      "value": 80,
+      "info": "Nuzzles, pounces on you. UwU, you're so warm."
+    },
+    "58": {
+      "id": "58",
+      "name": "Sea Bear",
+      "value": 90,
+      "info": "First off, don't play the clarinet, never wave your flashlight back and forth really fast. Don't stomp around, they take that as a challenge, don't ever eat cheese. Cubed, sliced is fine, never wear a sombrero..."
+    },
+    "59": {
+      "id": "59",
+      "name": "Zebra Turkey Fish",
+      "value": 90,
+      "info": "What is this thing?!"
+    },
+    "60": {
+      "id": "60",
+      "name": "Tuna",
+      "value": 80,
+      "info": "The chicken of the sea!"
+    },
+    "61": {
+      "id": "61",
+      "name": "Dolphin",
+      "value": 80,
+      "info": "Enjoys eating tuna!"
+    },
+    "62": {
+      "id": "62",
+      "name": "Blow Fish",
+      "value": 75,
+      "info": "I heard this is poisonous! (and tasty!)"
+    },
+    "63": {
+      "id": "63",
+      "name": "Sam Fish",
+      "value": 75,
+      "info": "Comes with ham and lettuce!"
+    }
+  }
+  
