@@ -2,7 +2,7 @@
   "0": {
     "id": "0",
     "name": "Royal Tum Fish",
-    "value": 50000,
+    "value": 25000,
     "info": "The man, the myth, the legend. Nobody believed this was real, but it is."
   },
   "1": {
@@ -140,7 +140,7 @@
   "23": {
     "id": "23",
     "name": "Booba Fish",
-    "value": 50000,
+    "value": 25000,
     "info": "This is actually a pigeon that fell in the water. The breasts of the pigeon developed into floaties."
   },
   "24": {
@@ -416,13 +416,13 @@
   "69": {
     "id": "69",
     "name": "Mini Scarlet",
-    "value": 50000,
+    "value": 25000,
     "info": "A mini version of Scarlet!"
   },
   "70": {
     "id": "70",
     "name": "Mini Mint",
-    "value": 50000,
+    "value": 25000,
     "info": "A mini version of Mint!"
   },
   "71": {
@@ -650,19 +650,19 @@
   "108": {
     "id": "108",
     "name": "Ocean Sunfish",
-    "value": 5000,
+    "value": 3000,
     "info": "Ah! So that's how seagrass photosynthesize!"
   },
   "109": {
     "id": "109",
     "name": "Moon Fish",
-    "value": 5000,
+    "value": 3000,
     "info": "This fish increases the amount of tidal water!"
   },
   "110": {
     "id": "110",
     "name": "Pat Star",
-    "value": 50000,
+    "value": 25000,
     "info": "No! This is Pat!"
   }
 }

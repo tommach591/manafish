@@ -3,85 +3,85 @@
       "id": "0",
       "name": "Jellie Fish",
       "value": 15,
-      "info": "The man, the myth, the legend. Nobody believed this was real, but it is."
+      "info": "The Jellie Fish waits patiently for their leader to stream."
     },
     "1": {
       "id": "1",
       "name": "Mer-tum",
       "value": 5000,
-      "info": "The fish that started it all."
+      "info": "The fish that started it all (but in space!)"
     },
     "2": {
       "id": "2",
       "name": "Red Giant Fish",
       "value": 35,
-      "info": "The Pink Fish survives by being cute. This attracts other partners."
+      "info": "It nears the end of its lifespan and will soon blow up."
     },
     "3": {
       "id": "3",
       "name": "Cosmic Star Fish",
       "value": 15,
-      "info": "The Yellow Fish is obnoxious. This bright color pisses off every other fish."
+      "info": "Touching this will make you invincible."
     },
     "4": {
       "id": "4",
-      "name": "Lost Note",
+      "name": "Space Note",
       "value": 35,
-      "info": "The Green Fish is vegetarian."
+      "info": "It's a picture of a crab laughing."
     },
     "5": {
       "id": "5",
       "name": "Plankfish",
       "value": 45,
-      "info": "The Teal Fish is cold to the touch. Very useful for making drinks."
+      "info": "He's never getting the formula."
     },
     "6": {
       "id": "6",
       "name": "Astro Goldfish",
       "value": 50,
-      "info": "The Indigo Fish lives near the bottom of the sea."
+      "info": ":)"
     },
     "7": {
       "id": "7",
       "name": "Rocket Fish",
       "value": 35,
-      "info": "Paper!"
+      "info": "Prepare for trouble! And make it double!"
     },
     "8": {
       "id": "8",
       "name": "Astro Peng",
       "value": 120,
-      "info": "Rock! Wait..."
+      "info": "Noot noot (from space!)"
     },
     "9": {
       "id": "9",
       "name": "Cosmic Crab",
       "value": 40,
-      "info": "GUN! PEW PEW!"
+      "info": "Caught at a space rave."
     },
     "10": {
       "id": "10",
       "name": "Space Bun",
       "value": 50,
-      "info": "The male Raccoon Fish spends his time flirting with the female Raccoon Fish."
+      "info": "Hoppin through space or swimmin through space?"
     },
     "11": {
       "id": "11",
-      "name": "Space Rock",
+      "name": "Space Pebble",
       "value": 35,
-      "info": "The female Raccoon Fish spends her time flirting with the male Raccoon Fish."
+      "info": "let's go! stickin out ur gyatt for nerizzler, ur so bau bau, ur so biboo tax, i just wanna be your shiori~"
     },
     "12": {
       "id": "12",
       "name": "Welkin",
-      "value": 120,
-      "info": "Who's egg is this?!"
+      "value": 90,
+      "info": "Click to claim your daily Blessing of the Welkin Moon rewards"
     },
     "13": {
       "id": "13",
       "name": "Space Goop",
       "value": 125,
-      "info": "Is there a goose that lays golden eggs in the sea?"
+      "info": "Glorp."
     },
     "14": {
       "id": "14",
@@ -93,295 +93,295 @@
       "id": "15",
       "name": "Astro-naut-a-Fish",
       "value": 40,
-      "info": "Now I can make sushi!"
+      "info": "Sometimes I think this anchor just weighs me down."
     },
     "16": {
       "id": "16",
-      "name": "Portal to the Dark Realm",
+      "name": "Blackhole",
       "value": 50000,
-      "info": "A"
+      "info": "I think this caught you."
     },
     "17": {
       "id": "17",
       "name": "Mercury Fish",
       "value": 300,
-      "info": "TomAHto."
+      "info": "This tiny fish has extreme mood swings."
     },
     "18": {
       "id": "18",
       "name": "Venus Fish",
       "value": 320,
-      "info": "Now where is his pants..."
+      "info": "This fish is very hot."
     },
     "19": {
       "id": "19",
       "name": "Earth Fish",
       "value": 350,
-      "info": "It thinks its hiding."
+      "info": "This fish is infected."
     },
     "20": {
       "id": "20",
       "name": "Mars Fish",
       "value": 350,
-      "info": "Wait a minute, this isn't a Starmee..."
+      "info": "Often called the Red Fish. Its very cold."
     },
     "21": {
       "id": "21",
       "name": "Jupiter Fish",
       "value": 500,
-      "info": "Yes, that is a whale in my pocket. Wink wonk."
+      "info": "This fish is massive!"
     },
     "22": {
       "id": "22",
       "name": "Saturn Fish",
       "value": 450,
-      "info": "They tend to tell jokes then go 'HONK HONK!'"
+      "info": "This fish is taken, please respect the ring."
     },
     "23": {
       "id": "23",
       "name": "Uranus Fish",
       "value": 400,
-      "info": "This is actually a pigeon that fell in the water. The breasts of the pigeon developed into floaties."
+      "info": "Gyatt damn!"
     },
     "24": {
       "id": "24",
       "name": "Neptune Fish",
       "value": 400,
-      "info": "For some reason, this fish is always depressed."
+      "info": "Similar to Uranus Fish, but missing the gyatt."
     },
     "25": {
       "id": "25",
       "name": "Pluto Fish",
       "value": 500,
-      "info": "Everyone's favorite shrimp!"
+      "info": "The unwanted fish, maybe an accident."
     },
     "26": {
       "id": "26",
       "name": "Lost Glasses",
       "value": 35,
-      "info": "This shrimp likes to eat human skin cells."
+      "info": "The nerdy glasses that never sold."
     },
     "27": {
       "id": "27",
       "name": "UFISHOH",
       "value": 35,
-      "info": "Basically shrimp ceviche."
+      "info": "Where's my tinfoil hat?"
     },
     "28": {
       "id": "28",
       "name": "Cosmic Tako",
       "value": 40,
-      "info": "The last shrimp of the rainbow."
+      "info": "Another tako, but in space."
     },
     "29": {
       "id": "29",
       "name": "Pisces Fish",
       "value": 70,
-      "info": "Like a shooting star."
+      "info": "This fish is known for their strong intuition, compassion, and creative spirit."
     },
     "30": {
       "id": "30",
       "name": "Aquarius Fish",
       "value": 70,
-      "info": "I wonder what is inside? Egg? Pork? Soup?"
+      "info": "This fish is known for their unique and progressive traits, including independence, humanitarianism, intellectual curiosity, and a strong sense of individuality."
     },
     "31": {
       "id": "31",
       "name": "Scorpio Fish",
       "value": 70,
-      "info": "You can make fish and chips with this one fish!"
+      "info": "This fish is known for their intensity, loyalty, and a powerful intuition."
     },
     "32": {
       "id": "32",
       "name": "Libra Fish",
       "value": 70,
-      "info": "This fish FAST AF!"
+      "info": "This fish is known for their balanced, diplomatic, and charming nature, often seeking harmony and fairness in their relationships and surroundings."
     },
     "33": {
       "id": "33",
       "name": "Aries Fish",
       "value": 70,
-      "info": "This is just a Bao Fish with a face!"
+      "info": "This fish is known for their bold, energetic, and often impulsive nature."
     },
     "34": {
       "id": "34",
       "name": "Taurus Fish",
       "value": 70,
-      "info": "Yes, this is a fish."
+      "info": "This fish is known for being down-to-earth, reliable, and sensual."
     },
     "35": {
       "id": "35",
       "name": "Geminish",
       "value": 70,
-      "info": "ENDGARDE!"
+      "info": "This fish is known for their quick wit, intellectual curiosity, and adaptable nature."
     },
     "36": {
       "id": "36",
       "name": "Cancer Fish",
       "value": 70,
-      "info": "This fish tastes even better during summer seasons!"
+      "info": "This fish is Cancer."
     },
     "37": {
       "id": "37",
       "name": "Leo Fish",
       "value": 70,
-      "info": "People are always dropping dollars at the beach!"
+      "info": "This fish is known for their confidence, generosity, and natural leadership abilities."
     },
     "38": {
       "id": "38",
       "name": "Virgo Fish",
       "value": 70,
-      "info": "Wat."
+      "info": "This fish is known for their analytical minds, attention to detail, and practical approach to life, often described as perfectionists."
     },
     "39": {
       "id": "39",
       "name": "Sagittarish",
       "value": 70,
-      "info": "Candeez nutz fit in your mouth? Gottem!"
+      "info": "This fish is known for their adventurous spirit, boundless optimism, and love of freedom."
     },
     "40": {
       "id": "40",
       "name": "Capricorn Fish",
       "value": 70,
-      "info": "Shouldn't this be fluttering in the air?"
+      "info": "This fish is known for their strong work ethic, ambition, and practicality."
     },
     "41": {
       "id": "41",
       "name": "Mer-aivy",
       "value": 7500,
-      "info": "Next cryptocurrency is going to be Frogecoin!"
+      "info": "The artist, but in SPACE!"
     },
     "42": {
       "id": "42",
       "name": "Space Cat Fish",
       "value": 125,
-      "info": "ARGH SNEK A SNEK! SNEK A SNEEEK OOOO ITS A SNEK!"
+      "info": "Just WAIT! After I repair this body, you're REALLY going to suffer!!!"
     },
     "43": {
       "id": "43",
       "name": "Red Starling",
       "value": 15,
-      "info": "Not a blobfish, but a fish named Bob."
+      "info": "Wow a red star!"
     },
     "44": {
       "id": "44",
       "name": "Orange Starling",
       "value": 15,
-      "info": "A trail of rainbows follow this fish."
+      "info": "Wow an orange star!"
     },
     "45": {
       "id": "45",
       "name": "Yellow Starling",
       "value": 15,
-      "info": "Most likely sus."
+      "info": "Wow a yellow star!"
     },
     "46": {
       "id": "47",
       "name": "Green Starling",
       "value": 15,
-      "info": "Probably dead."
+      "info": "Wow a green star!"
     },
     "47": {
       "id": "47",
       "name": "Blue Starling",
       "value": 15,
-      "info": "Probably doing tasks."
+      "info": "Wow a blue star!"
     },
     "48": {
       "id": "48",
       "name": "Sir Mer-tum",
       "value": 7500,
-      "info": "Doing some weird 50000 IQ strat."
+      "info": "The fish that started it all (but in space!) AND A MUSTACHE!!!"
     },
     "49": {
       "id": "49",
       "name": "4 Leaf Cosmic Clover",
       "value": 70,
-      "info": "Probably on cams."
+      "info": "Woah, I'm feeling lucky! Time to gamble!"
     },
     "50": {
       "id": "50",
       "name": "Space Worm",
       "value": 70,
-      "info": "An apple fish a day, keeps the doctors away!"
+      "info": "It flies in the ozone layer, way up high in the sky. Until recently, no one had ever seen it."
     },
     "51": {
       "id": "51",
       "name": "Purple Starling",
       "value": 15,
-      "info": "Lots of Vitamin Sea."
+      "info": "Wow a purple star!"
     },
     "52": {
       "id": "52",
       "name": "Gen Fish",
       "value": 150,
-      "info": "Grape to see you!"
+      "info": "To steal the life of its target, it slips into the prey's shadow and silently waits for an opportunity."
     },
     "53": {
       "id": "53",
       "name": "Lunafish",
       "value": 150,
-      "info": "Such an enormous girth!"
+      "info": "It becomes active on nights with a full moon, so it is said to have some link to the lunar phases."
     },
     "54": {
       "id": "54",
       "name": "Manfish",
       "value": 30,
-      "info": "Fried cat fish is delicious!"
+      "info": "Manly chad chad."
     },
     "55": {
       "id": "55",
       "name": "Mermint",
       "value": 5000,
-      "info": "Don't eat this."
+      "info": "A mermaid turned Mint swimming through the galaxy!"
     },
     "56": {
       "id": "56",
       "name": "Golden Mer-tum",
       "value": 50000,
-      "info": "Neigh nay?!"
+      "info": "The fish that started it all (but in space!) AND GOLD!!!"
     },
     "57": {
       "id": "57",
       "name": "5 Leaf Cosmic Clover",
       "value": 555,
-      "info": "Nuzzles, pounces on you. UwU, you're so warm."
+      "info": "All-in on blackjack right now."
     },
     "58": {
       "id": "58",
       "name": "Angle Fish",
       "value": 150,
-      "info": "First off, don't play the clarinet, never wave your flashlight back and forth really fast. Don't stomp around, they take that as a challenge, don't ever eat cheese. Cubed, sliced is fine, never wear a sombrero..."
+      "info": "This is a nice Jellie."
     },
     "59": {
       "id": "59",
       "name": "Debil Fish",
       "value": 150,
-      "info": "What is this thing?!"
+      "info": "This is a evil Jellie."
     },
     "60": {
       "id": "60",
       "name": "Sun Key",
       "value": 35,
-      "info": "The chicken of the sea!"
+      "info": "This key unlocks the sun!"
     },
     "61": {
       "id": "61",
       "name": "Moon Key",
       "value": 35,
-      "info": "Enjoys eating tuna!"
+      "info": "This key unlocks the moon!"
     },
     "62": {
       "id": "62",
       "name": "Galaxy Lock",
       "value": 35,
-      "info": "I heard this is poisonous! (and tasty!)"
+      "info": "This lock locks the galaxy!"
     },
     "63": {
       "id": "63",
-      "name": "Merletmaid",
+      "name": "Merlet",
       "value": 5000,
-      "info": "Comes with ham and lettuce!"
+      "info": "A mermaid turned Scarlet swimming through the galaxy!"
     }
   }
   
