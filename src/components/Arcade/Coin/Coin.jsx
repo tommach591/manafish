@@ -32,7 +32,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
         setWinnings(0);
         setCoinsFlipped(prev => prev + 1);
         setCloseIsDisabled(true);
-    }, [OTHER, setCloseIsDisabled, bet, mana, openBroke]);
+    }, [OTHER, setCloseIsDisabled, bet, mana, openBroke, updateMana]);
 
     const coinLanded = useCallback(() => {
         setIsFlipping(false);
@@ -52,7 +52,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
                 yippeeAudio.currentTime = 0;
             };
         }
-    }, [coinChoice, chooseHead, HEADS, TAILS, bet, setCloseIsDisabled, openBroke, updateMana]);
+    }, [coinChoice, chooseHead, HEADS, TAILS, bet, setCloseIsDisabled, updateMana]);
 
     const getAnimation = useCallback(() => {
         if (isFlipping) {
