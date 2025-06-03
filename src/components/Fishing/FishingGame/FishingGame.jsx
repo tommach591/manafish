@@ -67,13 +67,13 @@ function FishingGame({
 
     // Define weights for each category (higher index = lower weight)
     const weights = [
-      550000000,
-      400000000,
-      50000000,
-      10000000,
-      500000,
-      50000,
-      5000
+      550000,  // Common
+      350000,  // Uncommon
+      100000,  // Rare
+      10000,   // Epic
+      2500,    // Unique
+      500,     // Legendary
+      10       // Mythic
     ];
     const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
 
