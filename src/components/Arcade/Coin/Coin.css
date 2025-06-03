@@ -1,0 +1,119 @@
+.Coin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.CoinDisplay {
+    width: 15rem;
+    height: 15rem;
+    position: relative;
+    perspective: 1000px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CoinDisplay > img {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    backface-visibility: hidden;
+    border-radius: 50%;
+}
+
+.Heads {
+    transform: rotateY(0deg);
+}
+
+.Tails {
+    transform: rotateY(180deg);
+}
+
+@keyframes flipHeads {
+    0% {
+        transform: rotateX(0deg) scale(1);
+        animation-timing-function: ease-in-out;
+    }
+    50% {
+        transform: rotateX(18000deg) scale(2.5);
+        animation-timing-function: ease-in-out;
+    }
+    100% {
+        transform: rotateX(36000deg) scale(1);
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes flipTails {
+    0% {
+        transform: rotateX(0deg) scale(1);
+        animation-timing-function: ease-in-out;
+    }
+    50% {
+        transform: rotateX(18000deg) scale(2.5);
+        animation-timing-function: ease-in-out;
+    }
+    100% {
+        transform: rotateX(36180deg) scale(1);
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes flipGone {
+    0% {
+        transform: rotateX(0deg) scale(1) translateY(0);
+        opacity: 1;
+        filter: none;
+        animation-timing-function: linear;
+    }
+    30% {
+        transform: rotateX(7200deg) scale(2.5) translateY(-0.5rem);
+        opacity: 1;
+    }
+    60% {
+        transform: rotateX(14400deg) scale(5) translateY(-1rem);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(5) translateY(10rem);
+        opacity: 0;
+        filter: brightness(1.8) blur(5px);
+    }
+}
+
+.CoinDisplay {
+    transform-style: preserve-3d;
+}
+
+.Controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+    font-weight: bold;
+}
+
+.CoinButton {
+    width: 6rem;
+    border: 1px solid rgb(50, 50, 60);
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 5px;
+
+    margin: 0.5rem;
+  
+    bottom: 0px;
+    box-shadow: none;
+    animation: none;
+}
+  
+.Winnings {
+    height: 2rem;
+}

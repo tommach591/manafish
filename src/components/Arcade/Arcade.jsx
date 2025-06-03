@@ -6,6 +6,7 @@ import Scratch from "./Scratch";
 import Blackjack from "./Blackjack";
 import { useNavigate } from "react-router-dom";
 import Slots from "./Slots";
+import Coin from "./Coin";
 
 function Arcade() {
   const { mana, updateMana } = useMana();
@@ -18,6 +19,7 @@ function Arcade() {
   const [isScratchOpen, setIsScratchOpen] = useState(false);
   const [isBJOpen, setIsBJOpen] = useState(false);
   const [isSlotsOpen, setIsSlotsOpen] = useState(false);
+  const [isCoinOpen, setIsCoinOpen] = useState(false);
   const [isDonateOpen, setIsDonateOpen] = useState(false);
   const [isBrokeOpen, setIsBrokeOpen] = useState(false);
 
@@ -29,6 +31,9 @@ function Arcade() {
 
   const openSlots = () => setIsSlotsOpen(true);
   const closeSlots = () => setIsSlotsOpen(false);
+
+  const openCoin = () => setIsCoinOpen(true);
+  const closeCoin = () => setIsCoinOpen(false);
 
   const openDonate = () => setIsDonateOpen(true);
   const closeDonate = () => setIsDonateOpen(false);
@@ -103,6 +108,14 @@ function Arcade() {
         </button>
         <button
           onClick={() => {
+            openCoin();
+          }}
+        >
+          <div className="BubbleReflection" />
+          Coin
+        </button>
+        <button
+          onClick={() => {
             if (mana < bet) openBroke();
             else {
               updateMana(-bet);
@@ -151,12 +164,12 @@ function Arcade() {
         />
       </Modal>
       <Modal
-        isOpen={isSlotsOpen}
-        onClose={closeSlots}
-        title="Slots"
+        isOpen={isCoinOpen}
+        onClose={closeCoin}
+        title="Coin Flip"
         isDisabled={closeIsDisabled}
       >
-        <Slots
+        <Coin
           bet={bet}
           setCloseIsDisabled={setCloseIsDisabled}
           openBroke={openBroke}
