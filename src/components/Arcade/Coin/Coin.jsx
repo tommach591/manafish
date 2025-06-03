@@ -28,7 +28,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
         }
         updateMana(-bet);
         setIsFlipping(true);
-        setCoinChoice(Math.random() * OTHER);
+        setCoinChoice(Math.floor(Math.random() * OTHER));
         setWinnings(0);
         setCoinsFlipped(prev => prev + 1);
         setCloseIsDisabled(true);
