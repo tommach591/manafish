@@ -201,6 +201,7 @@ function Fishing() {
           />
         </button>
         <h1>Lobbies</h1>
+        <div className="FishingLobbies">
         {activeLobbies.map(([key, value], i) => {
           return (
             <div
@@ -221,6 +222,7 @@ function Fishing() {
             </div>
           );
         })}
+        </div>
       </div>
 
       <Modal

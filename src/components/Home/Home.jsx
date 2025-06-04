@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useFish } from "../../utils/FishContext";
 import { useState } from "react";
 import Modal from "../Modal";
+import Patches from "../../assets/PatchNotes.json"
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 // import { useGarden } from "../../utils/GardenContext";
 
@@ -17,6 +18,10 @@ function Home() {
   const [isCreditsOpen, setIsCreditsOpen] = useState(false);
   const openCredits = () => setIsCreditsOpen(true);
   const closeCredits = () => setIsCreditsOpen(false);
+
+  const [isPatchNotesOpen, setIsPatchNotesOpen] = useState(false);
+  const openPatchNotes = () => setIsPatchNotesOpen(true);
+  const closePatchNotes = () => setIsPatchNotesOpen(false);
 
   return (
     <div className="Home">
@@ -38,6 +43,14 @@ function Home() {
       >
         <div className="BubbleReflection" />
         Credits
+      </button>
+      <button className="PatchButton" 
+        onClick={() => {
+          openPatchNotes()
+        }}
+      >
+        <div className="BubbleReflection" />
+        Patch Notes
       </button>
       <button
         className="ClaimButton"
@@ -108,6 +121,23 @@ function Home() {
           <h1>Developer - @tummylol_</h1>
           <h1>Artist - @aivysu</h1>
           <h1>BGM - @damahysk</h1>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isPatchNotesOpen}
+        onClose={closePatchNotes}
+        title={`Patch Notes`}
+        isDisabled={false}
+      >
+        <div className="PatchNotes">
+          {
+            Object.entries(Patches).map(([version, notes], i) => {
+              return <div key={i} className="Patches"> 
+                <h1 className="PatchVersion">{version}</h1>
+                <h1>{notes}</h1>
+              </div>
+            })
+          }
         </div>
       </Modal>
     </div>
