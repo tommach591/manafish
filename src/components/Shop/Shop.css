@@ -7,10 +7,10 @@
 }
 
 .ShopNPC {
-  width: 7rem;
+  width: 5rem;
   position: absolute;
-  top: 1.5rem;
-  right: 3.5rem;
+  top: 2.5rem;
+  right: 30%;
 }
 
 @keyframes ShopNPCAnimation {
