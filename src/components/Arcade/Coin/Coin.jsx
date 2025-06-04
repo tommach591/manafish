@@ -18,7 +18,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
     const [coinChoice, setCoinChoice] = useState(0);
     const [HEADS, TAILS, OTHER] = [18, 36, 38];
 
-    const [coinsFlipped, setCoinsFlipped] = useState(0);
+    const [coinHistory, setCoinHistory] = useState([]);
     const [winnings, setWinnings] = useState(0);
     const { mana, updateMana } = useMana();
     const [mintCheers, setMintCheers] = useState(true);
@@ -32,13 +32,18 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
         setIsFlipping(true);
         setCoinChoice(Math.floor(Math.random() * OTHER));
         setWinnings(0);
-        setCoinsFlipped(prev => prev + 1);
         setCloseIsDisabled(true);
     }, [OTHER, setCloseIsDisabled, bet, mana, openBroke, updateMana]);
 
     const coinLanded = useCallback(() => {
         setIsFlipping(false);
         setCloseIsDisabled(false);
+        setCoinHistory(prev => {
+            const landed = coinChoice < HEADS ? 0 : coinChoice < TAILS ? 1 : 2;
+            prev.unshift(landed);
+            if (prev.length > 10) prev.pop();
+            return prev;
+        })
         if ((coinChoice < HEADS && chooseHead === 0) ||
          (coinChoice < TAILS && coinChoice >= HEADS && chooseHead === 1)) 
          {
@@ -95,6 +100,17 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
     }, [coinChoice, HEADS, TAILS]);
 
     return <div className="Coin">
+        <div className="CoinHistory">
+            {
+                coinHistory.map((coin, i) => {
+                    return <h1 key={i} 
+                    style={coin === 0 ? {color: "black"} :
+                    coin === 1 ? {color: "red"} : {color: "green"}}>
+                        {coin === 0 ? "H" : coin === 1 ? "T" : "N"}
+                    </h1>
+                })
+            }
+        </div>
         <div className="CoinDisplay" 
             style={getAnimation()}
             onAnimationEnd={() => {coinLanded()}}
@@ -102,7 +118,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
             <img src={Heads} alt="" className="Heads" />
             <img src={Tails} alt="" className="Tails" />
         </div>
-        {coinsFlipped > 0 ? <h1>{isFlipping ? 
+        {coinHistory.length > 0 ? <h1>{isFlipping ? 
             `You chose ${chooseHead === 0 ? "Heads" : 
                 chooseHead === 1 ? "Tails" : "Neither"}.` : getText()}</h1> :
          <h1>Heads or Tails?</h1>}
@@ -126,7 +142,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
                 }
             }}>Neither</button>
         </div>
-        {!isFlipping && coinsFlipped > 0 ? 
+        {!isFlipping && coinHistory.length > 0 ? 
         <div className="Winnings">{`Earned ${formatNumberWithCommas(winnings)} mana. 
             Net gain ${formatNumberWithCommas(winnings - bet)} mana.`}</div> : <div className="Winnings"/>}
         <div className="MintArcade" 

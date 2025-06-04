@@ -1,4 +1,5 @@
 {
-    "0.02": "Added weather to fishing. \nNight time = Increase Rates \nDay time = Decrease Rates",
+    "0.03" : "Added coin history for the last 10 flips for coin flip.",
+    "0.02" : "Added weather to fishing. \nNight time = Increase Rates \nDay time = Decrease Rates",
     "0.01" : "Starting patch notes!"
 }
