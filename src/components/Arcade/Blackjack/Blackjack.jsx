@@ -9,12 +9,14 @@ import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
+import { useUtil } from "../../../utils/UtilContext";
 
 function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
   const [winnings, setWinnings] = useState(0);
   const [mintCheers, setMintCheers] = useState(true);
 
   const { mana, updateMana } = useMana();
+  const { notif } = useUtil();
 
   const [BLACKJACK, DEALERMIN] = [21, 16];
 
@@ -160,7 +162,7 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
         setMintCheers(Math.random() < 0.5);
         if (totalEarned > 0) updateMana(Number(totalEarned));
 
-        if (totalEarned >= newGame.bet * 2) {
+        if (totalEarned >= newGame.bet * 2 && notif) {
           const yippeeAudio = new Audio(yippeeMP3);
           yippeeAudio.volume = 0.25;
           yippeeAudio.play();
@@ -173,7 +175,7 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [game, dealDealer]);
+  }, [game, dealDealer, notif]);
 
   const hit = useCallback(() => {
     const newGame = JSON.parse(JSON.stringify(game));

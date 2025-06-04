@@ -9,8 +9,10 @@ import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 import "./Coin.css";
+import { useUtil } from "../../../utils/UtilContext";
 
 function Coin({ bet, setCloseIsDisabled, openBroke }) {
+    const { notif } = useUtil();
     const [chooseHead, setChooseHead] = useState(0);
     const [isFlipping, setIsFlipping] = useState(false);
     const [coinChoice, setCoinChoice] = useState(0);
@@ -43,29 +45,35 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
             setWinnings(bet * 2);
             updateMana(bet * 2);
             setMintCheers(Math.random() < 0.5);
-            const yippeeAudio = new Audio(yippeeMP3);
-            yippeeAudio.volume = 0.25;
-            yippeeAudio.play();
-                        
-            return () => {
-                yippeeAudio.pause();
-                yippeeAudio.currentTime = 0;
-            };
+
+            if (notif) {
+                const yippeeAudio = new Audio(yippeeMP3);
+                yippeeAudio.volume = 0.25;
+                yippeeAudio.play();
+                            
+                return () => {
+                    yippeeAudio.pause();
+                    yippeeAudio.currentTime = 0;
+                };
+            }
         }
         else if (coinChoice >= TAILS && chooseHead === 2) {
             setWinnings(bet * 35);
             updateMana(bet * 35);
             setMintCheers(Math.random() < 0.5);
-            const yippeeAudio = new Audio(yippeeMP3);
-            yippeeAudio.volume = 0.25;
-            yippeeAudio.play();
-                        
-            return () => {
-                yippeeAudio.pause();
-                yippeeAudio.currentTime = 0;
-            }; 
+
+            if (notif) {
+                const yippeeAudio = new Audio(yippeeMP3);
+                yippeeAudio.volume = 0.25;
+                yippeeAudio.play();
+                            
+                return () => {
+                    yippeeAudio.pause();
+                    yippeeAudio.currentTime = 0;
+                };
+            }
         }
-    }, [coinChoice, chooseHead, HEADS, TAILS, bet, setCloseIsDisabled, updateMana]);
+    }, [coinChoice, chooseHead, HEADS, TAILS, bet, setCloseIsDisabled, updateMana, notif]);
 
     const getAnimation = useCallback(() => {
         if (isFlipping) {

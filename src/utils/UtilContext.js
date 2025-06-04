@@ -12,13 +12,16 @@ export function useUtil() {
 }
 
 export function UtilProvider({ children }) {
-  const [volume, setVolume] = useState(0.05);
+  const [volume, setVolume] = useState(0.1);
+  const [notif, setNotif] = useState(true);
 
   return (
     <UtilContext.Provider
       value={{
         volume,
-        setVolume
+        setVolume,
+        notif, 
+        setNotif,
       }}
     >
       {children}

@@ -11,6 +11,7 @@ import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
+import { useUtil } from "../../../utils/UtilContext";
 
 function FishingGame({
   playerList,
@@ -20,6 +21,7 @@ function FishingGame({
 }) {
   const { userID, mana, updateMana } = useMana();
   const { fishCaught, addFish } = useFish();
+  const { notif } = useUtil();
   const [fishPrize, setFishPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
@@ -98,7 +100,7 @@ function FishingGame({
     sendMessage({ userID, fish });
     updateMana(Number(fish.value));
 
-    if (category >= 3) {
+    if (category >= 3 & notif) {
       const yippeeAudio = new Audio(yippeeMP3);
       yippeeAudio.volume = 0.25;
       yippeeAudio.play();
@@ -108,7 +110,7 @@ function FishingGame({
         yippeeAudio.currentTime = 0;
       };
     }
-  }, [userID, updateMana, sendMessage, addFish]);
+  }, [userID, updateMana, sendMessage, addFish, notif]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
     setMessageQueue((prev) => {

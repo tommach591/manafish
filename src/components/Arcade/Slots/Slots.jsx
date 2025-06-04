@@ -8,9 +8,11 @@ import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
+import { useUtil } from "../../../utils/UtilContext";
 
 function Slots({ bet, setCloseIsDisabled, openBroke }) {
   const { mana, updateMana } = useMana();
+  const { notif } = useUtil();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [mintCheers, setMintCheers] = useState(true);
   const [winnings, setWinnings] = useState(0);
@@ -72,37 +74,43 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
             setWinnings(newWinnings);
             setCloseIsDisabled(false);
           }
-          const slotAudio = new Audio(audioMP3);
-          slotAudio.play();
 
-          return () => {
-            slotAudio.pause();
-            slotAudio.currentTime = 0;
-          };
+          if (notif) {
+            const slotAudio = new Audio(audioMP3);
+            slotAudio.play();
+
+            return () => {
+              slotAudio.pause();
+              slotAudio.currentTime = 0;
+            };
+          }
         }, (i + 1) * 333) // Stops each slot one second apart
       );
     }
 
     return () => spinTimeouts.forEach(clearTimeout); // Clear timeouts on cleanup
-  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots]);
+  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots, notif]);
 
   useEffect(() => {
     if (!slots.includes("") && winnings > 0) { 
       updateMana(winnings);
       if (winnings >= bet * 2.5) {
         setMintCheers(Math.random() < 0.5);
-        const yippeeAudio = new Audio(yippeeMP3);
-        yippeeAudio.volume = 0.25;
-        yippeeAudio.play();
-                      
-        return () => {
-          yippeeAudio.pause();
-          yippeeAudio.currentTime = 0;
-        };
+
+        if (notif) {
+          const yippeeAudio = new Audio(yippeeMP3);
+          yippeeAudio.volume = 0.25;
+          yippeeAudio.play();
+                        
+          return () => {
+            yippeeAudio.pause();
+            yippeeAudio.currentTime = 0;
+          };
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slots, winnings]);
+  }, [slots, winnings, notif]);
 
   useEffect(() => {
     setCloseIsDisabled(true);

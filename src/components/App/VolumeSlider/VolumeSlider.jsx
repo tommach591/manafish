@@ -4,7 +4,7 @@ import "./VolumeSlider.css";
 import bgm from "../../../assets/audio/aivyWanderOST.mp3";
 
 function VolumeSlider() {
-    const {volume, setVolume} = useUtil();
+    const {volume, setVolume, notif, setNotif} = useUtil();
     const bgmAudioRef = useRef(null);
 
     const handleChange = (event) => {
@@ -13,7 +13,11 @@ function VolumeSlider() {
     };
 
     useEffect(() => {
-      if (bgmAudioRef.current) bgmAudioRef.current.volume = volume;
+      if (bgmAudioRef.current) {
+        bgmAudioRef.current.volume = volume;
+        bgmAudioRef.current.muted = volume === 0;
+      }
+
     }, [volume])
 
     useEffect(() => {
@@ -55,13 +59,21 @@ function VolumeSlider() {
 
     return (
       <div className="VolumeSlider">
-        <img src="https://api.iconify.design/material-symbols:volume-up-rounded.svg" alt=""/>
+        <img src={notif ? 
+            "https://api.iconify.design/material-symbols:notifications-active-rounded.svg" :
+           "https://api.iconify.design/material-symbols:notifications-off-rounded.svg"} alt=""
+           className="NotificationsIcon"
+           onClick={() => setNotif(prev => !prev)}
+        />
+        <img src={bgmAudioRef.current?.muted ? 
+            "https://api.iconify.design/fluent:music-note-off-2-20-filled.svg" :
+           "https://api.iconify.design/ion:musical-notes.svg"} alt=""
+           className="BGMIcon"/>
         <input
-          id="volume"
           type="range"
           min="0"
-          max="1"
-          step="0.01"
+          max="0.2"
+          step="0.001"
           value={volume}
           onChange={handleChange}
           className="w-32"

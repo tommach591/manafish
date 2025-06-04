@@ -7,6 +7,7 @@ import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
+import { useUtil } from "../../../utils/UtilContext";
 
 function Scratch({ bet, setCloseIsDisabled, openBroke }) {
   const [range, setRange] = useState([0]);
@@ -15,6 +16,7 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
   );
   const [winnings, setWinnings] = useState(0);
   const { mana, updateMana } = useMana();
+  const { notif } = useUtil();
   const [mintCheers, setMintCheers] = useState(true);
 
   const COLORS = [
@@ -82,20 +84,22 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
 
       if (totalEarned >= bet * 1.5) {
         setMintCheers(Math.random() < 0.5);
-        const yippeeAudio = new Audio(yippeeMP3);
-        yippeeAudio.volume = 0.25;
-        yippeeAudio.play();
-                      
-        return () => {
-          yippeeAudio.pause();
-          yippeeAudio.currentTime = 0;
-        };
+        if (notif) {
+          const yippeeAudio = new Audio(yippeeMP3);
+          yippeeAudio.volume = 0.25;
+          yippeeAudio.play();
+                        
+          return () => {
+            yippeeAudio.pause();
+            yippeeAudio.currentTime = 0;
+          };
+        }
       }
     }
 
     if (!numbers.includes(0)) calculateWinnings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numbers]);
+  }, [numbers, notif]);
 
   return (
     <div className="Scratch">
