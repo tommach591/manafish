@@ -11,7 +11,7 @@ import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 import "./Coin.css";
 
 function Coin({ bet, setCloseIsDisabled, openBroke }) {
-    const [chooseHead, setChooseHead] = useState(true);
+    const [chooseHead, setChooseHead] = useState(0);
     const [isFlipping, setIsFlipping] = useState(false);
     const [coinChoice, setCoinChoice] = useState(0);
     const [HEADS, TAILS, OTHER] = [18, 36, 38];
@@ -37,8 +37,8 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
     const coinLanded = useCallback(() => {
         setIsFlipping(false);
         setCloseIsDisabled(false);
-        if ((coinChoice < HEADS && chooseHead) ||
-         (coinChoice < TAILS && coinChoice >= HEADS && !chooseHead)) 
+        if ((coinChoice < HEADS && chooseHead === 0) ||
+         (coinChoice < TAILS && coinChoice >= HEADS && chooseHead === 1)) 
          {
             setWinnings(bet * 2);
             updateMana(bet * 2);
@@ -51,6 +51,19 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
                 yippeeAudio.pause();
                 yippeeAudio.currentTime = 0;
             };
+        }
+        else if (coinChoice >= TAILS && chooseHead === 2) {
+            setWinnings(bet * 35);
+            updateMana(bet * 35);
+            setMintCheers(Math.random() < 0.5);
+            const yippeeAudio = new Audio(yippeeMP3);
+            yippeeAudio.volume = 0.25;
+            yippeeAudio.play();
+                        
+            return () => {
+                yippeeAudio.pause();
+                yippeeAudio.currentTime = 0;
+            }; 
         }
     }, [coinChoice, chooseHead, HEADS, TAILS, bet, setCloseIsDisabled, updateMana]);
 
@@ -81,32 +94,40 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
             <img src={Heads} alt="" className="Heads" />
             <img src={Tails} alt="" className="Tails" />
         </div>
-        {coinsFlipped > 0 ? <h1>{isFlipping ? `You chose ${chooseHead ? "Heads" : "Tails"}.` : getText()}</h1> :
+        {coinsFlipped > 0 ? <h1>{isFlipping ? 
+            `You chose ${chooseHead === 0 ? "Heads" : 
+                chooseHead === 1 ? "Tails" : "Neither"}.` : getText()}</h1> :
          <h1>Heads or Tails?</h1>}
         <div className="Controls">
             <button className="CoinButton" onClick={() => {
                 if (!isFlipping) {
                     setup();
-                    setChooseHead(true);
+                    setChooseHead(0);
                 }
             }}>Heads</button>
             <button className="CoinButton" onClick={() => {
                 if (!isFlipping) {
                     setup();
-                    setChooseHead(false);
+                    setChooseHead(1);
                 }
             }}>Tails</button>
+            <button className="CoinButton" onClick={() => {
+                if (!isFlipping) {
+                    setup();
+                    setChooseHead(2);
+                }
+            }}>Neither</button>
         </div>
         {!isFlipping && coinsFlipped > 0 ? 
         <div className="Winnings">{`Earned ${formatNumberWithCommas(winnings)} mana. 
             Net gain ${formatNumberWithCommas(winnings - bet)} mana.`}</div> : <div className="Winnings"/>}
         <div className="MintArcade" 
-            style={winnings >= bet * 1.5 && mintCheers && !isFlipping ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
-            <img src={winnings > bet * 20 ? mintArcade2 : mintArcade1} alt=""/>
+            style={winnings >= bet * 2 && mintCheers && !isFlipping ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
+            <img src={winnings >= bet * 35 ? mintArcade2 : mintArcade1} alt=""/>
         </div>
             <div className="ScarletArcade" 
-            style={winnings >= bet * 1.5 && !mintCheers && !isFlipping ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
-            <img src={winnings > bet * 20 ? scarletArcade2 : scarletArcade1} alt=""/>
+            style={winnings >= bet * 2 && !mintCheers && !isFlipping ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
+            <img src={winnings >= bet * 35 ? scarletArcade2 : scarletArcade1} alt=""/>
         </div>
     </div>
 }

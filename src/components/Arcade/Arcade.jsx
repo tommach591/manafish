@@ -61,6 +61,12 @@ function Arcade() {
             else setBet(formatBet);
           }}
         />
+        <button
+          className="BetAll"
+          onClick={() => {
+            mana > MAXBET ? setBet(MAXBET) : setBet(mana)
+          }}
+        >ALL IN</button>
       </div>
       <button className="HomeButton" onClick={() => navigate("/")}>
         <div className="BubbleReflection" />
