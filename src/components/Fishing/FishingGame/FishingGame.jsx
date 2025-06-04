@@ -35,9 +35,9 @@ function FishingGame({
   const handleIsFishing = useCallback(
     (value) => {
       setIsFishing(value);
-      setCloseIsDisabled(value);
+      setCloseIsDisabled(value || autoFish);
     },
-    [setCloseIsDisabled]
+    [setCloseIsDisabled, autoFish]
   );
 
   const handleCatchFish = useCallback(() => {
@@ -234,6 +234,7 @@ function FishingGame({
             autoFish
               ? () => {
                   setAutoFish(false);
+                  setCloseIsDisabled(isFishing);
                 }
               : () => {
                   if (mana < BAITCOST) openBroke();
