@@ -1,4 +1,5 @@
 {
+    "0.11" : "06/05/2025 04:10 PM \nAdded teaser to shop. Fixed scary bug with logout button.",
     "0.10" : "06/05/2025 08:17 AM \nAdded renamed Logout to Save & Logout and placed it everywhere.",
     "0.09" : "06/04/2025 10:33 PM \nAdded animation and pointer cursor when hovering over buttons.",
     "0.08" : "06/04/2025 09:17 PM \nUpdated coin flip to look cooler and have cool sounds to be cooler. Also added PST because I was yelled at.",

@@ -27,13 +27,13 @@ function Home() {
     <div className="Home">
       <button
         className="LogoutButton"
-        onClick={() => {
-          handleFishLogout();
-          handleBalanceLogout();
+        onClick={async () => {
+          await handleFishLogout();
+          await handleBalanceLogout();
           localStorage.removeItem(userID);
           const timeout = setTimeout(() => {
             window.location.reload(true); 
-          }, 100);
+          }, 300);
           return () => {
             clearTimeout(timeout);
           }
@@ -44,7 +44,7 @@ function Home() {
       </button>
       <button className="CreditsButton" 
         onClick={() => {
-          openCredits()
+          openCredits();
         }}
       >
         <div className="BubbleReflection" />
@@ -52,7 +52,7 @@ function Home() {
       </button>
       <button className="PatchButton" 
         onClick={() => {
-          openPatchNotes()
+          openPatchNotes();
         }}
       >
         <div className="BubbleReflection" />

@@ -1,4 +1,4 @@
-.Fishionary {
+.Spacedex {
   width: 100%;
   height: 60vh;
   display: flex;
@@ -51,10 +51,4 @@
   margin: 0.25rem;
   margin-bottom: 0rem;
   font-size: 10px;
-}
-
-.FishInfo > h4 {
-  position: absolute;
-  font-size: 10px;
-  left: 12px;
 }

@@ -95,7 +95,7 @@ export function ManaProvider({ children }) {
     [initializeState]
   );
 
-  const handleBalanceLogout = useCallback(() => {
+  const handleBalanceLogout = useCallback(async () => {
     const updateFields = {
       balance: {
         mana: mana,

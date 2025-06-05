@@ -1,0 +1,123 @@
+.FishingGame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ManaDisplayWhileFishing {
+  padding: 0.2rem;
+}
+
+.ManaDisplayWhileFishing > h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+}
+
+.FishingDisplay {
+  position: relative;
+  width: 11rem;
+  height: 11rem;
+
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.FishingAnimation {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 5px;
+}
+
+.FishingRateIndicator {
+  position: absolute;
+  width: 2rem;
+  top: 0.25rem;
+  right: 0.25rem;
+}
+
+.FishingButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FishingButtons > button {
+  width: 7rem;
+  height: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: none;
+  border-radius: 10px;
+  border: 1px solid rgb(50, 50, 60);
+  animation: none;
+}
+
+.FishingButtons > button > span { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FishCaughtInfo {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.NewFishCaught {
+  color: red;
+}
+
+.FishCaughtInfo > img {
+  width: 3rem;
+  margin: 0.25rem;
+}
+
+.FishCaughtInfo > h1 {
+  font-size: 14px;
+  width: 90%;
+  text-align: center;
+  margin: 0.1rem;
+}
+
+.FishCaughtInfo > h2 {
+  font-size: 12px;
+  width: 90%;
+  text-align: center;
+  margin: 0.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.FishCaughtInfo > h3 {
+  font-size: 10px;
+  width: 90%;
+  text-align: center;
+  margin: 0.1rem;
+}
+
+.PlayersFishing {
+  height: 15rem;
+  width: 15rem;
+  display: grid;
+  align-items: flex-start;
+  justify-content: flex-start;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 6rem 10px;
+  box-sizing: border-box;
+
+  padding-top: 5rem;
+
+}

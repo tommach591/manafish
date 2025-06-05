@@ -33,6 +33,10 @@ export function FishProvider({ children }) {
     initializeState(userID, "fishCaught", {})
   );
 
+  const [aliensCaught, setAliensCaught] = useState(() =>
+    initializeState(userID, "aliensCaught", null)
+  );
+
   const updateServerFish = useCallback(() => {
     const updateFields = JSON.parse(localStorage.getItem(userID));
     if (userID) updateFish(userID, updateFields.fish);
@@ -41,14 +45,16 @@ export function FishProvider({ children }) {
   const handleFishLogin = useCallback(
     (id) => {
       setFishCaught(initializeState(id, "fishCaught", {}));
+      setAliensCaught(initializeState(id, "aliensCaught", null));
     },
     [initializeState]
   );
 
-  const handleFishLogout = useCallback(() => {
+  const handleFishLogout = useCallback(async () => {
     const updateFields = {
       fish: {
         fishCaught: fishCaught,
+        aliensCaught: aliensCaught,
       },
     };
     const existingData = JSON.parse(localStorage.getItem(userID)) || {};
@@ -61,7 +67,7 @@ export function FishProvider({ children }) {
     };
     if (userID) localStorage.setItem(userID, JSON.stringify(mergedData));
     updateServerFish();
-  }, [userID, fishCaught, updateServerFish]);
+  }, [userID, fishCaught, aliensCaught, updateServerFish]);
 
   const addFish = useCallback(
     (fishID) => {
@@ -86,12 +92,41 @@ export function FishProvider({ children }) {
     [fishCaught]
   );
 
+  const unlockAliens = useCallback(() => {
+    setAliensCaught({});
+  }, [])
+
+  const addAlien = useCallback(
+    (alienID) => {
+      const newAlienCaught = { ...aliensCaught };
+
+      if (newAlienCaught[alienID]) {
+        newAlienCaught[alienID] += 1;
+        setAliensCaught(newAlienCaught);
+      } else {
+        newAlienCaught[alienID] = 1;
+
+        const sortedAlienCaught = {};
+        Object.keys(newAlienCaught)
+          .sort()
+          .forEach((key) => {
+            sortedAlienCaught[key] = newAlienCaught[key];
+          });
+
+        setAliensCaught(sortedAlienCaught);
+      }
+    },
+    [aliensCaught]
+  );
+
   // Save Locally.
   useEffect(() => {
+    if (!userID) return;
     const saveInterval = setInterval(() => {
       const updateFields = {
         fish: {
           fishCaught: fishCaught,
+          aliensCaught: aliensCaught,
         },
       };
       const existingData = JSON.parse(localStorage.getItem(userID)) || {};
@@ -107,10 +142,11 @@ export function FishProvider({ children }) {
     }, 1000);
 
     return () => clearInterval(saveInterval);
-  }, [userID, fishCaught]);
+  }, [userID, fishCaught, aliensCaught]);
 
   // Save to Server
   useEffect(() => {
+    if (!userID) return;
     const saveInterval = setInterval(() => {
       updateServerFish();
     }, 1000 * 60 * 5);
@@ -118,7 +154,7 @@ export function FishProvider({ children }) {
     return () => {
       clearInterval(saveInterval);
     };
-  }, [updateServerFish]);
+  }, [updateServerFish, userID]);
 
   useEffect(() => {
     if (!userID) return;
@@ -135,6 +171,7 @@ export function FishProvider({ children }) {
             const updateFields = {
               fish: {
                 fishCaught: res.fishCaught,
+                aliensCaught: res.aliensCaught
               },
             };
             const existingData = JSON.parse(localStorage.getItem(userID)) || {};
@@ -154,6 +191,7 @@ export function FishProvider({ children }) {
         } else {
           createFish(userID);
           setFishCaught({});
+          setAliensCaught(null);
 
           const updateFields = {
             fish: {
@@ -183,6 +221,9 @@ export function FishProvider({ children }) {
         handleFishLogin,
         handleFishLogout,
         addFish,
+        unlockAliens,
+        aliensCaught,
+        addAlien
       }}
     >
       {children}

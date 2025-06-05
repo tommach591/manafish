@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import "./Fishing.css";
+import "./Space.css";
 import Modal from "../Modal";
-import Fishionary from "./Fishionary";
+import Fishionary from "./Spacedex";
 import fishionary from "../../assets/Fishionary.json";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { useMana } from "../../utils/ManaContext";
-import FishingGame from "./FishingGame";
+import FishingGame from "./SpaceGame";
 import { useFish } from "../../utils/FishContext";
 import { useRef } from "react";
 
@@ -40,7 +40,6 @@ function Fishing() {
       const randomIndex = Math.floor(Math.random() * characters.length);
       code += characters[randomIndex];
     }
-
     return code;
   }
 
@@ -152,13 +151,13 @@ function Fishing() {
       </button>
       <button
         className="LogoutButton"
-        onClick={async () => {
-          await handleFishLogout();
-          await handleBalanceLogout();
+        onClick={() => {
+          handleFishLogout();
+          handleBalanceLogout();
           localStorage.removeItem(userID);
           const timeout = setTimeout(() => {
             window.location.reload(true); 
-          }, 300);
+          }, 100);
           return () => {
             clearTimeout(timeout);
           }

@@ -21,7 +21,7 @@ function Shop() {
     setProfileIcons,
     handleBalanceLogout
   } = useMana();
-  const { handleFishLogout } = useFish();
+  const { fishCaught, aliensCaught, unlockAliens, handleFishLogout } = useFish();
   const navigate = useNavigate();
   const [isManaLimitOpen, setIsManaLimitOpen] = useState(false);
   const openManaLimit = () => setIsManaLimitOpen(true);
@@ -35,11 +35,16 @@ function Shop() {
   const openPremiumIconGacha = () => setIsPremiumIconGachaOpen(true);
   const closePremiumIconGacha = () => setIsPremiumIconGachaOpen(false);
 
+  const [isSpaceshipOpen, setIsSpaceshipOpen] = useState(false);
+  const openSpaceship = () => setIsSpaceshipOpen(true);
+  const closeSpaceship = () => setIsSpaceshipOpen(false);
+
   const RAISE_MAX_MANA_PRICE = 10000;
   const MAX_MANA_INCREMENT = 120; // 1 hour
   const MAX_MANA_CAP = 20160;
   const PROFILE_ICON_GACHA_PRICE = 5000;
   const PREMIUM_PROFILE_ICON_GACHA_PRICE = 25000;
+  const SPACESHIP_PRICE = 200000;
 
   const [
     CONFIRM_PURCHASE,
@@ -49,7 +54,11 @@ function Shop() {
     DUPLICATE_ICON,
     ICON_PURCHASED,
     PREMIUM_ICON_PURCHASED,
-  ] = [0, 1, 2, 3, 4, 5, 6, 7];
+    NOT_ENOUGH_FISH,
+    SPACESHIP_ALREADY_UNLOCKED,
+    SPACESHIP_PURCHASED,
+    COMING_SOON,
+  ] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   const [confirmedPurchase, setConfirmedPurchase] = useState(CONFIRM_PURCHASE);
   const [price, setPrice] = useState(0);
   const [purchasedIcon, setPurchasedIcon] = useState(0);
@@ -118,6 +127,31 @@ function Shop() {
             </button>
           </div>
         );
+      case NOT_ENOUGH_FISH:
+        return (
+          <div className="ShopMessage">
+            <h1>{`You have not caught 107 fish from Mana's Beach`}</h1>
+            <h1>{`Fish Caught: ${Object.keys(fishCaught).length}`}</h1>
+          </div>
+        );
+      case SPACESHIP_ALREADY_UNLOCKED: 
+        return (
+          <div className="ShopMessage">
+            <h1>{`You already own a spaceship!`}</h1>
+          </div>
+        );
+      case SPACESHIP_PURCHASED:
+        return (
+          <div className="ShopMessage">
+            <h1>{`You have bought a Spaceship! Yippee!`}</h1>
+          </div>
+        );
+      case COMING_SOON:
+        return (
+          <div className="ShopMessage">
+            <h1>{`Coming soon!`}</h1>
+          </div>
+        );
       default:
         return <div />;
     }
@@ -144,6 +178,11 @@ function Shop() {
         setProfileIcons((prev) => [...prev, purchasedIcon]);
         break;
       }
+      case SPACESHIP_PURCHASED: {
+        updateMana(-price);
+        unlockAliens();
+        break;
+      }
       default:
         return;
     }
@@ -153,11 +192,13 @@ function Shop() {
     ICON_PURCHASED,
     INCREASE_MAX,
     PREMIUM_ICON_PURCHASED,
+    SPACESHIP_PURCHASED,
     purchasedIcon,
     setMaxStoredMana,
     setProfileIcons,
     updateMana,
     price,
+    unlockAliens,
   ]);
 
   return (
@@ -195,6 +236,16 @@ function Shop() {
           <div className="BubbleReflection" />
           Premium Gacha
         </button>
+        <button
+          onClick={() => {
+            setConfirmedPurchase(COMING_SOON);
+            // setPrice(SPACESHIP_PRICE);
+            openSpaceship();
+          }}
+        >
+          <div className="BubbleReflection" />
+          Spaceship
+        </button>
       </div>
       <button className="HomeButton" onClick={() => navigate("/")}>
         <div className="BubbleReflection" />
@@ -205,13 +256,13 @@ function Shop() {
       </button>
       <button
         className="LogoutButton"
-        onClick={() => {
-          handleFishLogout();
-          handleBalanceLogout();
+        onClick={async () => {
+          await handleFishLogout();
+          await handleBalanceLogout();
           localStorage.removeItem(userID);
           const timeout = setTimeout(() => {
             window.location.reload(true); 
-          }, 100);
+          }, 300);
           return () => {
             clearTimeout(timeout);
           }
@@ -331,6 +382,47 @@ function Shop() {
                 Yes
               </button>
               <button onClick={closePremiumIconGacha}>No</button>
+            </div>
+          </div>
+        ) : (
+          getShopMessage()
+        )}
+      </Modal>
+
+      <Modal
+        isOpen={isSpaceshipOpen}
+        onClose={closeSpaceship}
+        title="Purchase Spaceship"
+      >
+        <div className="AivyGremlin">
+          <img src={aivyGremlinGif} alt=""/>
+        </div>
+        {confirmedPurchase === CONFIRM_PURCHASE ? (
+          <div className="ShopMessage">
+            <h1>{`Spend ${formatNumberWithCommas(
+              price
+            )} to unlock Spaceship?`}</h1>
+            <h1>Must have caught 107 fishes from Mana's Beach.</h1>
+            <div className="ShopDecision">
+              <button
+                onClick={() => {
+                  if (aliensCaught !== null) {
+                    setConfirmedPurchase(SPACESHIP_ALREADY_UNLOCKED);
+                  } 
+                  else if (mana <= price) {
+                    setConfirmedPurchase(NOT_ENOUGH_MANA);
+                  }
+                  else if (Object.entries(fishCaught).length < 107) {
+                    setConfirmedPurchase(NOT_ENOUGH_FISH);
+                  }
+                  else {
+                    setConfirmedPurchase(SPACESHIP_PURCHASED);
+                  }
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={closeSpaceship}>No</button>
             </div>
           </div>
         ) : (

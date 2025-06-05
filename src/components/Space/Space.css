@@ -1,0 +1,130 @@
+.Fishing {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LobbyInput {
+  width: 100%;
+  max-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.LobbyInput > input {
+  width: 8rem;
+  height: 2.5rem;
+
+  text-align: center;
+  border: none;
+  outline: none;
+  margin: 1rem;
+  padding: 0.25rem;
+  border-radius: 10px;
+
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  color: rgb(50, 50, 60);
+}
+
+.LobbyButtons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.LobbyButtons > button {
+  width: 5rem;
+  height: 5rem;
+  margin: 0.5rem;
+}
+
+.OpenFishingLobbies {
+  width: 60%;
+  max-width: 18rem;
+  height: 50%;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 20px;
+  border: 1px solid rgb(255, 255, 255);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+
+  padding: 1.25rem;
+  font-weight: bold;
+  margin: 1rem;
+}
+
+.OpenFishingLobbies > h1 {
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+.FishingLobbyRefreshButton {
+  width: 2rem;
+  height: 2rem;
+  font-size: 10px;
+
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+
+  animation: none;
+}
+
+.FishingLobbyRefreshButton > img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.FishingLobbies {
+  width: 100%;
+  height: 70%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.FishingLobby {
+  height: 0.5rem;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(50, 50, 60);
+
+  margin: 0.5rem;
+  padding: 1rem;
+
+  font-size: 18px;
+
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.5);
+
+  position: relative;
+}
+
+.FishingLobbyRoom {
+  flex: 1;
+}
+
+.FishingLobbyValue {
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FishingLobbyValue > img {
+  width: 1.5rem;
+}

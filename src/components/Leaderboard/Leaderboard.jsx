@@ -61,13 +61,13 @@ function Leaderboard() {
     </button>
     <button
         className="LogoutButton"
-        onClick={() => {
-          handleFishLogout();
-          handleBalanceLogout();
+        onClick={async () => {
+          await handleFishLogout();
+          await handleBalanceLogout();
           localStorage.removeItem(userID);
           const timeout = setTimeout(() => {
             window.location.reload(true); 
-          }, 100);
+          }, 300);
           return () => {
             clearTimeout(timeout);
           }
