@@ -196,6 +196,7 @@ function FishingGame({
             }
           } else {
             setAutoFish(false);
+            setCloseIsDisabled(false);
             openBroke();
           }
         }
@@ -212,6 +213,7 @@ function FishingGame({
     updateMana,
     handleCatchFish,
     handleIsFishing,
+    setCloseIsDisabled,
   ]);
 
   useEffect(() => {
