@@ -27,10 +27,15 @@ function Shop() {
   const openIconGacha = () => setIsIconGachaOpen(true);
   const closeIconGacha = () => setIsIconGachaOpen(false);
 
+  const [isPremiumIconGachaOpen, setIsPremiumIconGachaOpen] = useState(false);
+  const openPremiumIconGacha = () => setIsPremiumIconGachaOpen(true);
+  const closePremiumIconGacha = () => setIsPremiumIconGachaOpen(false);
+
   const RAISE_MAX_MANA_PRICE = 10000;
   const MAX_MANA_INCREMENT = 120; // 1 hour
   const MAX_MANA_CAP = 20160;
   const PROFILE_ICON_GACHA_PRICE = 5000;
+  const PREMIUM_PROFILE_ICON_GACHA_PRICE = 25000;
 
   const [
     CONFIRM_PURCHASE,
@@ -39,10 +44,18 @@ function Shop() {
     INCREASE_MAX,
     DUPLICATE_ICON,
     ICON_PURCHASED,
-  ] = [0, 1, 2, 3, 4, 5, 6];
+    PREMIUM_ICON_PURCHASED,
+  ] = [0, 1, 2, 3, 4, 5, 6, 7];
   const [confirmedPurchase, setConfirmedPurchase] = useState(CONFIRM_PURCHASE);
   const [price, setPrice] = useState(0);
   const [purchasedIcon, setPurchasedIcon] = useState(0);
+
+  const premiumIcons = [
+                        55, 56, 57, 58, 59, 
+                        60, 61, 62, 63, 64, 
+                        65, 66, 67, 68, 69, 
+                        70, 71, 72
+                      ]
 
   const getShopMessage = () => {
     switch (confirmedPurchase) {
@@ -74,7 +87,7 @@ function Shop() {
             <h1>{`You got a duplicate icon!`}</h1>
             <img src={getProfileIcon(purchasedIcon)} alt="" />
             <h1>{`Refunded: ${formatNumberWithCommas(
-              Math.floor(PROFILE_ICON_GACHA_PRICE * 0.2)
+              Math.floor(price * 0.2)
             )}`}</h1>
             <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
               Equip
@@ -82,6 +95,16 @@ function Shop() {
           </div>
         );
       case ICON_PURCHASED:
+        return (
+          <div className="ShopMessage">
+            <h1>{`Obtained new icon!`}</h1>
+            <img src={getProfileIcon(purchasedIcon)} alt="" />
+            <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
+              Equip
+            </button>
+          </div>
+        );
+      case PREMIUM_ICON_PURCHASED:
         return (
           <div className="ShopMessage">
             <h1>{`Obtained new icon!`}</h1>
@@ -99,16 +122,21 @@ function Shop() {
   useEffect(() => {
     switch (confirmedPurchase) {
       case INCREASE_MAX: {
-        updateMana(-RAISE_MAX_MANA_PRICE);
+        updateMana(-price);
         setMaxStoredMana((prev) => prev + MAX_MANA_INCREMENT);
         break;
       }
       case DUPLICATE_ICON: {
-        updateMana(-Math.floor(PROFILE_ICON_GACHA_PRICE * 0.8));
+        updateMana(-Math.floor(price * 0.8));
         break;
       }
       case ICON_PURCHASED: {
-        updateMana(-PROFILE_ICON_GACHA_PRICE);
+        updateMana(-price);
+        setProfileIcons((prev) => [...prev, purchasedIcon]);
+        break;
+      }
+      case PREMIUM_ICON_PURCHASED: {
+        updateMana(-price);
         setProfileIcons((prev) => [...prev, purchasedIcon]);
         break;
       }
@@ -120,10 +148,12 @@ function Shop() {
     DUPLICATE_ICON,
     ICON_PURCHASED,
     INCREASE_MAX,
+    PREMIUM_ICON_PURCHASED,
     purchasedIcon,
     setMaxStoredMana,
     setProfileIcons,
     updateMana,
+    price,
   ]);
 
   return (
@@ -148,7 +178,18 @@ function Shop() {
           }}
         >
           <div className="BubbleReflection" />
-          Profile Icon Gacha
+          Icon Gacha
+        </button>
+        <button
+          onClick={() => {
+            setConfirmedPurchase(CONFIRM_PURCHASE);
+            setPrice(PREMIUM_PROFILE_ICON_GACHA_PRICE + 
+              (2000 * premiumIcons.filter(item => profileIcons.includes(item)).length));
+            openPremiumIconGacha();
+          }}
+        >
+          <div className="BubbleReflection" />
+          Premium Gacha
         </button>
       </div>
       <button className="HomeButton" onClick={() => navigate("/")}>
@@ -165,17 +206,17 @@ function Shop() {
         title="Raise Mana Limit"
       >
         <div className="AivyGremlin">
-          <img  src={aivyGremlinGif} alt=""/>
+          <img src={aivyGremlinGif} alt=""/>
         </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
             <h1>{`Spend ${formatNumberWithCommas(
-              RAISE_MAX_MANA_PRICE
+              price
             )} to increase max stored mana by ${MAX_MANA_INCREMENT} mana? (1 Hour)`}</h1>
             <div className="ShopDecision">
               <button
                 onClick={() => {
-                  if (mana <= RAISE_MAX_MANA_PRICE) {
+                  if (mana <= price) {
                     setConfirmedPurchase(NOT_ENOUGH_MANA);
                   } else if (maxStoredMana >= MAX_MANA_CAP) {
                     setConfirmedPurchase(MAX_REACHED);
@@ -200,24 +241,24 @@ function Shop() {
         title="Profile Icon Gacha"
       >
         <div className="AivyGremlin">
-          <img  src={aivyGremlinGif} alt=""/>
+          <img src={aivyGremlinGif} alt=""/>
         </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
             <h1>{`Spend ${formatNumberWithCommas(
-              PROFILE_ICON_GACHA_PRICE
+              price
             )} to get a random profile icon?`}</h1>
             <h1>Duplicate icons are refunded 20%.</h1>
             <div className="ShopDecision">
               <button
                 onClick={() => {
-                  if (mana <= PROFILE_ICON_GACHA_PRICE) {
+                  if (mana <= price) {
                     setConfirmedPurchase(NOT_ENOUGH_MANA);
                   } else {
                     const profileIconList = getProfileIconList();
-                    const selectedIcon = Math.floor(
-                      Math.random() * profileIconList.length
-                    );
+                    let selectedIcon = Math.floor(Math.random() * profileIconList.length);
+                    while (premiumIcons.includes(selectedIcon)) 
+                      selectedIcon = Math.floor(Math.random() * profileIconList.length);
                     setPurchasedIcon(selectedIcon);
                     if (profileIcons.includes(selectedIcon)) {
                       setConfirmedPurchase(DUPLICATE_ICON);
@@ -230,6 +271,46 @@ function Shop() {
                 Yes
               </button>
               <button onClick={closeIconGacha}>No</button>
+            </div>
+          </div>
+        ) : (
+          getShopMessage()
+        )}
+      </Modal>
+
+      <Modal
+        isOpen={isPremiumIconGachaOpen}
+        onClose={closePremiumIconGacha}
+        title="Premium Profile Icon Gacha"
+      >
+        <div className="AivyGremlin">
+          <img src={aivyGremlinGif} alt=""/>
+        </div>
+        {confirmedPurchase === CONFIRM_PURCHASE ? (
+          <div className="ShopMessage">
+            <h1>{`Spend ${formatNumberWithCommas(
+              price
+            )} to get a random PREMIUM profile icon?`}</h1>
+            <h1>Duplicate icons are refunded 20%.</h1>
+            <div className="ShopDecision">
+              <button
+                onClick={() => {
+                  if (mana <= price) {
+                    setConfirmedPurchase(NOT_ENOUGH_MANA);
+                  } else {
+                    let selectedIcon = premiumIcons[Math.floor(Math.random() * premiumIcons.length)];
+                    setPurchasedIcon(selectedIcon);
+                    if (profileIcons.includes(selectedIcon)) {
+                      setConfirmedPurchase(DUPLICATE_ICON);
+                    } else {
+                      setConfirmedPurchase(PREMIUM_ICON_PURCHASED);
+                    }
+                  }
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={closePremiumIconGacha}>No</button>
             </div>
           </div>
         ) : (
