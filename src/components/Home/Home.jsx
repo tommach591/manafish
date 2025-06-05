@@ -31,10 +31,16 @@ function Home() {
           handleFishLogout();
           handleBalanceLogout();
           localStorage.removeItem(userID);
+          const timeout = setTimeout(() => {
+            window.location.reload(true); 
+          }, 100);
+          return () => {
+            clearTimeout(timeout);
+          }
         }}
       >
         <div className="BubbleReflection" />
-        Logout
+        Save & Logout
       </button>
       <button className="CreditsButton" 
         onClick={() => {

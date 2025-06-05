@@ -113,7 +113,7 @@ export function FishProvider({ children }) {
   useEffect(() => {
     const saveInterval = setInterval(() => {
       updateServerFish();
-    }, 1000 * 60 * 30);
+    }, 1000 * 60 * 5);
 
     return () => {
       clearInterval(saveInterval);

@@ -7,9 +7,11 @@ import { formatNumberWithCommas } from "../../utils/Helper";
 import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
 import aivyGremlinGif from "../../assets/miscImage/aivyGremlin.gif";
 import aivyFishingGif from "../../assets/miscImage/aivyFishing.gif";
+import { useFish } from "../../utils/FishContext";
 
 function Shop() {
   const {
+    userID,
     mana,
     updateMana,
     maxStoredMana,
@@ -17,7 +19,9 @@ function Shop() {
     setCurrentProfileIcon,
     profileIcons,
     setProfileIcons,
+    handleBalanceLogout
   } = useMana();
+  const { handleFishLogout } = useFish();
   const navigate = useNavigate();
   const [isManaLimitOpen, setIsManaLimitOpen] = useState(false);
   const openManaLimit = () => setIsManaLimitOpen(true);
@@ -199,7 +203,23 @@ function Shop() {
           alt=""
         />
       </button>
-
+      <button
+        className="LogoutButton"
+        onClick={() => {
+          handleFishLogout();
+          handleBalanceLogout();
+          localStorage.removeItem(userID);
+          const timeout = setTimeout(() => {
+            window.location.reload(true); 
+          }, 100);
+          return () => {
+            clearTimeout(timeout);
+          }
+        }}
+      >
+        <div className="BubbleReflection" />
+        Save & Logout
+      </button>
       <Modal
         isOpen={isManaLimitOpen}
         onClose={closeManaLimit}

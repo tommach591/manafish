@@ -7,9 +7,11 @@ import Blackjack from "./Blackjack";
 import { useNavigate } from "react-router-dom";
 import Slots from "./Slots";
 import Coin from "./Coin";
+import { useFish } from "../../utils/FishContext";
 
 function Arcade() {
-  const { mana, updateMana } = useMana();
+  const { userID, mana, updateMana, handleBalanceLogout } = useMana();
+  const { handleFishLogout } = useFish();
   const MINBET = 10;
   const MAXBET = 100000;
   const [bet, setBet] = useState(MINBET);
@@ -76,6 +78,23 @@ function Arcade() {
           src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
           alt=""
         />
+      </button>
+      <button
+        className="LogoutButton"
+        onClick={() => {
+          handleFishLogout();
+          handleBalanceLogout();
+          localStorage.removeItem(userID);
+          const timeout = setTimeout(() => {
+            window.location.reload(true); 
+          }, 100);
+          return () => {
+            clearTimeout(timeout);
+          }
+        }}
+      >
+        <div className="BubbleReflection" />
+        Save & Logout
       </button>
       <div className="ArcadeButtons">
         <button

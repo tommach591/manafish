@@ -6,10 +6,12 @@ import { getAllBalance } from "../../utils/Balance";
 import { formatCompactNumber } from "../../utils/Helper";
 import { useMana } from "../../utils/ManaContext";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
+import { useFish } from "../../utils/FishContext";
 
 function Leaderboard() {
   const navigate = useNavigate();
-  const { userID } = useMana();
+  const { userID, handleBalanceLogout } = useMana();
+  const { handleFishLogout } = useFish();
   const [playerList, setPlayerList] = useState([]);
   const [playerIndex, setPlayerIndex] = useState(0);
 
@@ -57,6 +59,23 @@ function Leaderboard() {
         alt=""
       />
     </button>
+    <button
+        className="LogoutButton"
+        onClick={() => {
+          handleFishLogout();
+          handleBalanceLogout();
+          localStorage.removeItem(userID);
+          const timeout = setTimeout(() => {
+            window.location.reload(true); 
+          }, 100);
+          return () => {
+            clearTimeout(timeout);
+          }
+        }}
+      >
+        <div className="BubbleReflection" />
+        Save & Logout
+      </button>
     <div className="Rankings">
     <h1 className="RankingsTitle">Rankings</h1>
       {playerList.length > 0 ? <div className="PlayerRank"

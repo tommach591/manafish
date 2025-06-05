@@ -18,8 +18,8 @@ function Fishing() {
   
   const socket = useRef(null);
 
-  const { userID, username, currentProfileIcon } = useMana();
-  const { fishCaught } = useFish();
+  const { userID, username, currentProfileIcon, handleBalanceLogout } = useMana();
+  const { fishCaught, handleFishLogout } = useFish();
   const [room, setRoom] = useState("");
   const [messagesRecieved, setMessagesRecieved] = useState([]);
   const [playerList, setPlayerList] = useState({});
@@ -148,6 +148,23 @@ function Fishing() {
           src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
           alt=""
         />
+      </button>
+      <button
+        className="LogoutButton"
+        onClick={() => {
+          handleFishLogout();
+          handleBalanceLogout();
+          localStorage.removeItem(userID);
+          const timeout = setTimeout(() => {
+            window.location.reload(true); 
+          }, 100);
+          return () => {
+            clearTimeout(timeout);
+          }
+        }}
+      >
+        <div className="BubbleReflection" />
+        Save & Logout
       </button>
       <div className="LobbyInput">
         <input

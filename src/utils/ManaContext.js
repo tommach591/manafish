@@ -180,7 +180,7 @@ export function ManaProvider({ children }) {
     if (!userID) return;
     const saveInterval = setInterval(() => {
       updateServerMana();
-    }, 1000 * 60 * 15);
+    }, 1000 * 60 * 5);
 
     return () => {
       clearInterval(saveInterval);
