@@ -10,7 +10,7 @@ import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 
 function Home() {
   const navigate = useNavigate();
-  const { storedMana, handleBalanceLogout, retrieveStoredMana } = useMana();
+  const { userID, storedMana, handleBalanceLogout, retrieveStoredMana } = useMana();
   const { handleFishLogout } = useFish();
   // const { isAnyPlantFullyGrown } = useGarden();
   const [claimedMana, setClaimedMana] = useState(0);
@@ -30,7 +30,7 @@ function Home() {
         onClick={() => {
           handleFishLogout();
           handleBalanceLogout();
-          localStorage.clear();
+          localStorage.removeItem(userID);
         }}
       >
         <div className="BubbleReflection" />

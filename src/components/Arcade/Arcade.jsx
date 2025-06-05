@@ -64,7 +64,9 @@ function Arcade() {
         <button
           className="BetAll"
           onClick={() => {
-            mana > MAXBET ? setBet(MAXBET) : setBet(mana)
+            mana > MAXBET ? setBet(MAXBET) :
+            mana < MINBET ? setBet(MINBET) :
+            setBet(mana)
           }}
         >ALL IN</button>
       </div>

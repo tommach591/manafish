@@ -13,7 +13,6 @@ export function useMana() {
 }
 
 export function ManaProvider({ children }) {
-
   const TICK_RATE = 1000;
   const REGEN_RATE = 30000 - 1000;
 
@@ -122,8 +121,8 @@ export function ManaProvider({ children }) {
     localStorage.removeItem("userID");
     localStorage.removeItem("username");
 
-    setUserID("");
     setUsername("");
+    setUserID("");
   }, [
     userID,
     mana,
@@ -138,6 +137,7 @@ export function ManaProvider({ children }) {
 
   // Save Locally.
   useEffect(() => {
+    if (!userID) return; 
     const saveInterval = setInterval(() => {
       const updateFields = {
         balance: {
@@ -177,14 +177,15 @@ export function ManaProvider({ children }) {
 
   // Save to Server
   useEffect(() => {
+    if (!userID) return;
     const saveInterval = setInterval(() => {
       updateServerMana();
-    }, 1000 * 60 * 30);
+    }, 1000 * 60 * 15);
 
     return () => {
       clearInterval(saveInterval);
     };
-  }, [updateServerMana]);
+  }, [updateServerMana, userID]);
 
   useEffect(() => {
     if (!userID) return;
@@ -299,6 +300,11 @@ export function ManaProvider({ children }) {
     nextManaInterval,
     storedMana,
   ]);
+
+  useEffect(() => {
+    localStorage.clear();
+    console.log(localStorage);
+  }, [])
 
   return (
     <ManaContext.Provider
