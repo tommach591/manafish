@@ -301,11 +301,6 @@ export function ManaProvider({ children }) {
     storedMana,
   ]);
 
-  useEffect(() => {
-    localStorage.clear();
-    console.log(localStorage);
-  }, [])
-
   return (
     <ManaContext.Provider
       value={{
