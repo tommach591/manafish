@@ -126,7 +126,7 @@ function Home() {
       <Modal
         isOpen={isPatchNotesOpen}
         onClose={closePatchNotes}
-        title={`Patch Notes`}
+        title={`Patch Notes (PST)`}
         isDisabled={false}
       >
         <div className="PatchNotes">

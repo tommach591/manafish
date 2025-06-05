@@ -1,11 +1,11 @@
 {
-    "0.09" : "06/04/2025 10:33 PM PST - Added animation and pointer cursor when hovering over buttons.",
-    "0.08" : "06/04/2025 09:17 PM PST - Updated coin flip to look cooler and have cool sounds to be cooler. Also added PST because I was yelled at.",
-    "0.07" : "06/04/2025 08:39 PM PST - Now stores audio controls from last session. Fixed Bet All when below minimum bet. Added 2 more premium icons.", 
-    "0.06" : "06/04/2025 07:10 PM PST - Added PREMIUM icons. Check shop.",
-    "0.05" : "06/04/2025 04:25 PM PST - she wanted the time too.",
-    "0.04" : "06/04/2025 04:23 PM PST - iv forced me to add date to my patch notes.",
-    "0.03" : "06/04/2025 03:30 PM PST - Added coin history for the last 10 flips for coin flip.",
-    "0.02" : "06/04/2025 03:15 PM PST - Added weather to fishing. \nNight time = Increase Rates \nDay time = Decrease Rates",
-    "0.01" : "06/04/2025 03:15 PM PST - Starting patch notes!"
+    "0.09" : "06/04/2025 10:33 PM \nAdded animation and pointer cursor when hovering over buttons.",
+    "0.08" : "06/04/2025 09:17 PM \nUpdated coin flip to look cooler and have cool sounds to be cooler. Also added PST because I was yelled at.",
+    "0.07" : "06/04/2025 08:39 PM \nNow stores audio controls from last session. Fixed Bet All when below minimum bet. Added 2 more premium icons.", 
+    "0.06" : "06/04/2025 07:10 PM \nAdded PREMIUM icons. Check shop.",
+    "0.05" : "06/04/2025 04:25 PM \nshe wanted the time too.",
+    "0.04" : "06/04/2025 04:23 PM \niv forced me to add date to my patch notes.",
+    "0.03" : "06/04/2025 03:30 PM \nAdded coin history for the last 10 flips for coin flip.",
+    "0.02" : "06/04/2025 03:15 PM \nAdded weather to fishing. \nNight time = Increase Rates \nDay time = Decrease Rates",
+    "0.01" : "06/04/2025 03:15 PM \nStarting patch notes!"
 }
