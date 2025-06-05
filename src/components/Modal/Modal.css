@@ -47,3 +47,8 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.ModalOverlay button:hover {
+  cursor: pointer;
+  animation: none !important; 
+}
