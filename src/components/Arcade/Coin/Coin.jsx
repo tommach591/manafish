@@ -8,6 +8,7 @@ import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
 import yippeeMP3 from "../../../assets/audio/yippee.mp3";
+import coinMP3 from "../../../assets/audio/coin.mp3";
 import "./Coin.css";
 import { useUtil } from "../../../utils/UtilContext";
 
@@ -18,6 +19,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
     const [coinChoice, setCoinChoice] = useState(0);
     const [HEADS, TAILS, OTHER] = [18, 36, 38];
 
+    const [coinsFlipped, setCoinsFlipped] = useState(0);
     const [coinHistory, setCoinHistory] = useState([]);
     const [winnings, setWinnings] = useState(0);
     const { mana, updateMana } = useMana();
@@ -33,7 +35,19 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
         setCoinChoice(Math.floor(Math.random() * OTHER));
         setWinnings(0);
         setCloseIsDisabled(true);
-    }, [OTHER, setCloseIsDisabled, bet, mana, openBroke, updateMana]);
+        setCoinsFlipped(prev => prev + 1);
+
+        if (notif) {
+            const coinAudio = new Audio(coinMP3);
+            coinAudio.volume = 0.25;
+            coinAudio.play();
+                        
+            return () => {
+                coinAudio.pause();
+                coinAudio.currentTime = 0;
+            };
+        }
+    }, [OTHER, setCloseIsDisabled, bet, mana, openBroke, updateMana, notif]);
 
     const coinLanded = useCallback(() => {
         setIsFlipping(false);
@@ -118,7 +132,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
             <img src={Heads} alt="" className="Heads" />
             <img src={Tails} alt="" className="Tails" />
         </div>
-        {coinHistory.length > 0 ? <h1>{isFlipping ? 
+        {coinsFlipped > 0 ? <h1>{isFlipping ? 
             `You chose ${chooseHead === 0 ? "Heads" : 
                 chooseHead === 1 ? "Tails" : "Neither"}.` : getText()}</h1> :
          <h1>Heads or Tails?</h1>}
