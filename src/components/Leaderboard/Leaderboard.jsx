@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import "./Leaderboard.css";
 import { useEffect, useState } from "react";
 import { getAllAccount } from "../../utils/Account";
@@ -6,12 +5,11 @@ import { getAllBalance } from "../../utils/Balance";
 import { formatCompactNumber } from "../../utils/Helper";
 import { useMana } from "../../utils/ManaContext";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
-import { useFish } from "../../utils/FishContext";
+import HomeButton from "../HomeButton";
+import LogoutButton from "../LogoutButton";
 
 function Leaderboard() {
-  const navigate = useNavigate();
-  const { userID, handleBalanceLogout } = useMana();
-  const { handleFishLogout } = useFish();
+  const { userID } = useMana();
   const [playerList, setPlayerList] = useState([]);
   const [playerIndex, setPlayerIndex] = useState(0);
 
@@ -47,35 +45,8 @@ function Leaderboard() {
   }, [userID]);
 
   return <div className="Leaderboard">
-    <button
-      className="HomeButton"
-      onClick={() => {
-        navigate("/");
-      }}
-    >
-      <div className="BubbleReflection" />
-      <img
-        src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
-        alt=""
-      />
-    </button>
-    <button
-        className="LogoutButton"
-        onClick={async () => {
-          await handleFishLogout();
-          await handleBalanceLogout();
-          localStorage.removeItem(userID);
-          const timeout = setTimeout(() => {
-            window.location.reload(true); 
-          }, 300);
-          return () => {
-            clearTimeout(timeout);
-          }
-        }}
-      >
-        <div className="BubbleReflection" />
-        Save & Logout
-      </button>
+    <HomeButton />
+    <LogoutButton />
     <div className="Rankings">
     <h1 className="RankingsTitle">Rankings</h1>
       {playerList.length > 0 ? <div className="PlayerRank"

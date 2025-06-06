@@ -3,23 +3,22 @@ import "./Fishing.css";
 import Modal from "../Modal";
 import Fishionary from "./Fishionary";
 import fishionary from "../../assets/Fishionary.json";
-import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { useMana } from "../../utils/ManaContext";
 import FishingGame from "./FishingGame";
 import { useFish } from "../../utils/FishContext";
 import { useRef } from "react";
+import HomeButton from "../HomeButton";
+import LogoutButton from "../LogoutButton";
 
 //const SERVERURL = "http://localhost:3001";
 const SERVERURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
 
 function Fishing() {
-  const navigate = useNavigate();
-  
   const socket = useRef(null);
 
-  const { userID, username, currentProfileIcon, handleBalanceLogout } = useMana();
-  const { fishCaught, handleFishLogout } = useFish();
+  const { userID, username, currentProfileIcon } = useMana();
+  const { fishCaught } = useFish();
   const [room, setRoom] = useState("");
   const [messagesRecieved, setMessagesRecieved] = useState([]);
   const [playerList, setPlayerList] = useState({});
@@ -85,7 +84,7 @@ function Fishing() {
       alert("Uh oh. Room is full, try another code.");
     };
     const handleRefresh = (data) => {
-      setActiveLobbies(data);
+      setActiveLobbies(data.filter(([str]) => str.startsWith("F")));
     };
     
     if (!userID || socket.current) return;
@@ -137,36 +136,8 @@ function Fishing() {
 
   return (
     <div className="Fishing">
-      <button
-        className="HomeButton"
-        onClick={() => {
-          leaveRoom();
-          navigate("/");
-        }}
-      >
-        <div className="BubbleReflection" />
-        <img
-          src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
-          alt=""
-        />
-      </button>
-      <button
-        className="LogoutButton"
-        onClick={async () => {
-          await handleFishLogout();
-          await handleBalanceLogout();
-          localStorage.removeItem(userID);
-          const timeout = setTimeout(() => {
-            window.location.reload(true); 
-          }, 300);
-          return () => {
-            clearTimeout(timeout);
-          }
-        }}
-      >
-        <div className="BubbleReflection" />
-        Save & Logout
-      </button>
+      <HomeButton />
+      <LogoutButton />
       <div className="LobbyInput">
         <input
           placeholder="Room #"
@@ -184,8 +155,8 @@ function Fishing() {
         >
           <div className="BubbleReflection" />
           Fishionary
-          <h1>
-            {Object.keys(fishCaught).length}/{Object.keys(fishionary).length}
+          <h1 className="FishionaryCount">
+            {Object.keys(fishCaught).length} / {Object.keys(fishionary).length}
           </h1>
         </button>
         <button

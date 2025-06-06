@@ -11,7 +11,7 @@
   border-radius: 5px;
 }
 
-.Fish {
+.Alien {
   width: 85%;
   position: relative;
   display: flex;
@@ -23,31 +23,31 @@
   border-radius: 10px;
 }
 
-.Fish > img {
+.Alien > img {
   width: 3rem;
   height: 3rem;
   margin: 1rem;
 }
 
-.FishInfo {
+.AlienInfo {
   width: 20rem;
   display: flex;
   flex-direction: column;
   text-wrap: wrap;
 }
 
-.FishInfo > h1 {
+.AlienInfo > h1 {
   margin: 0.25rem;
   font-size: 14px;
   font-weight: bold;
 }
 
-.FishInfo > h2 {
+.AlienInfo > h2 {
   margin: 0.25rem;
   font-size: 12px;
 }
 
-.FishInfo > h3 {
+.AlienInfo > h3 {
   margin: 0.25rem;
   margin-bottom: 0rem;
   font-size: 10px;

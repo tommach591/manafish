@@ -4,11 +4,11 @@ import "./Spacedex.css";
 import { useFish } from "../../../utils/FishContext";
 
 function Spacedex() {
-  const { fishCaught } = useFish();
+  const { aliensCaught } = useFish();
 
-  const sortedFish = Object.entries(spacedex).sort((a, b) => {
-    const aCaught = !!fishCaught[a[1].id];
-    const bCaught = !!fishCaught[b[1].id];
+  const sortedAliens = Object.entries(spacedex).sort((a, b) => {
+    const aCaught = !!aliensCaught[a[1].id];
+    const bCaught = !!aliensCaught[b[1].id];
 
     // Uncaught fish always go to the end
     if (!aCaught && bCaught) return 1;
@@ -21,21 +21,21 @@ function Spacedex() {
 
   return (
     <div className="Spacedex">
-      {sortedFish.map(([key, value]) => (
-        <div className="Fish" key={key}>
+      {sortedAliens.map(([key, value]) => (
+        <div className="Alien" key={key}>
           <img
             src={
-              fishCaught[value.id]
+              aliensCaught[value.id]
                 ? getSpaceImage(key)
                 : "https://api.iconify.design/mdi:help.svg?color=%23000000"
             }
             alt=""
           />
-          <div className="FishInfo">
-            <h1>{fishCaught[value.id] ? value.name : "???"}</h1>
-            <h2>{fishCaught[value.id] ? value.info : "???"}</h2>
-            <h3>Value: {fishCaught[value.id] ? value.value : "???"}</h3>
-            <h3>Caught: {fishCaught[value.id] ? fishCaught[value.id] : 0}</h3>
+          <div className="AlienInfo">
+            <h1>{aliensCaught[value.id] ? value.name : "???"}</h1>
+            <h2>{aliensCaught[value.id] ? value.info : "???"}</h2>
+            <h3>Value: {aliensCaught[value.id] ? value.value : "???"}</h3>
+            <h3>Caught: {aliensCaught[value.id] ? aliensCaught[value.id] : 0}</h3>
           </div>
         </div>
       ))}

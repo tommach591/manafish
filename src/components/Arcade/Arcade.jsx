@@ -4,14 +4,13 @@ import "./Arcade.css";
 import Modal from "../Modal";
 import Scratch from "./Scratch";
 import Blackjack from "./Blackjack";
-import { useNavigate } from "react-router-dom";
 import Slots from "./Slots";
 import Coin from "./Coin";
-import { useFish } from "../../utils/FishContext";
+import HomeButton from "../HomeButton";
+import LogoutButton from "../LogoutButton";
 
 function Arcade() {
-  const { userID, mana, updateMana, handleBalanceLogout } = useMana();
-  const { handleFishLogout } = useFish();
+  const { mana, updateMana } = useMana();
   const MINBET = 10;
   const MAXBET = 100000;
   const [bet, setBet] = useState(MINBET);
@@ -43,8 +42,6 @@ function Arcade() {
   const openBroke = () => setIsBrokeOpen(true);
   const closeBroke = () => setIsBrokeOpen(false);
 
-  const navigate = useNavigate();
-
   return (
     <div className="Arcade">
       <div className="Bet">
@@ -72,30 +69,8 @@ function Arcade() {
           }}
         >ALL IN</button>
       </div>
-      <button className="HomeButton" onClick={() => navigate("/")}>
-        <div className="BubbleReflection" />
-        <img
-          src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
-          alt=""
-        />
-      </button>
-      <button
-        className="LogoutButton"
-        onClick={async () => {
-          await handleFishLogout();
-          await handleBalanceLogout();
-          localStorage.removeItem(userID);
-          const timeout = setTimeout(() => {
-            window.location.reload(true); 
-          }, 300);
-          return () => {
-            clearTimeout(timeout);
-          }
-        }}
-      >
-        <div className="BubbleReflection" />
-        Save & Logout
-      </button>
+      <HomeButton />
+      <LogoutButton />
       <div className="ArcadeButtons">
         <button
           onClick={() => {

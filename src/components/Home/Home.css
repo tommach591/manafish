@@ -129,3 +129,10 @@
   transform: rotate(35deg) scale(1.2, 1);
   z-index: -1;
 }
+
+.MenuButtonIcon {
+  position: absolute;
+  width: 80%;
+  bottom: 1rem;
+  z-index: -1;
+}

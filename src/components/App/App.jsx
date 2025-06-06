@@ -4,16 +4,17 @@ import Login from "../Login";
 import Home from "../Home";
 import Shop from "../Shop";
 import Fishing from "../Fishing";
+import Space from "../Space";
 import Arcade from "../Arcade";
 import Garden from "../Garden";
+import Leaderboard from "../Leaderboard";
 import { useMana } from "../../utils/ManaContext";
 import { useEffect, useState } from "react";
 import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
 import { formatNumberWithCommas, formatTime } from "../../utils/Helper";
 import Modal from "../Modal";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
-import VolumeSlider from "./VolumeSlider/VolumeSlider";
-import Leaderboard from "../Leaderboard/Leaderboard";
+import VolumeSlider from "./VolumeSlider";
 
 function App() {
   const {
@@ -84,6 +85,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/fishing" element={<Fishing />} />
+        <Route path="/space" element={<Space />} />
         <Route path="/arcade" element={<Arcade />} />
         <Route path="/garden" element={<Garden />} />
         <Route path="*" element={<Navigate to="/" />} />

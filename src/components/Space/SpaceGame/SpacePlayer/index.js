@@ -1,2 +1,2 @@
-import FishingPlayer from "./SpacePlayer";
-export default FishingPlayer;
+import SpacePlayer from "./SpacePlayer";
+export default SpacePlayer;

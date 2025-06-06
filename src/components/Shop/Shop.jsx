@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import "./Shop.css";
 import Modal from "../Modal";
 import { useEffect, useState } from "react";
@@ -8,10 +7,11 @@ import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
 import aivyGremlinGif from "../../assets/miscImage/aivyGremlin.gif";
 import aivyFishingGif from "../../assets/miscImage/aivyFishing.gif";
 import { useFish } from "../../utils/FishContext";
+import HomeButton from "../HomeButton";
+import LogoutButton from "../LogoutButton";
 
 function Shop() {
   const {
-    userID,
     mana,
     updateMana,
     maxStoredMana,
@@ -19,10 +19,8 @@ function Shop() {
     setCurrentProfileIcon,
     profileIcons,
     setProfileIcons,
-    handleBalanceLogout
   } = useMana();
-  const { fishCaught, aliensCaught, unlockAliens, handleFishLogout } = useFish();
-  const navigate = useNavigate();
+  const { fishCaught, aliensCaught, unlockAliens } = useFish();
   const [isManaLimitOpen, setIsManaLimitOpen] = useState(false);
   const openManaLimit = () => setIsManaLimitOpen(true);
   const closeManaLimit = () => setIsManaLimitOpen(false);
@@ -67,7 +65,8 @@ function Shop() {
                         55, 56, 57, 58, 59, 
                         60, 61, 62, 63, 64, 
                         65, 66, 67, 68, 69, 
-                        70, 71, 72, 73, 74
+                        70, 71, 72, 73, 74,
+                        75
                       ]
 
   const getShopMessage = () => {
@@ -239,38 +238,21 @@ function Shop() {
         <button
           onClick={() => {
             setConfirmedPurchase(COMING_SOON);
-            // setPrice(SPACESHIP_PRICE);
+            setPrice(0);
             openSpaceship();
+            /*
+            setConfirmedPurchase(CONFIRM_PURCHASE);
+            setPrice(SPACESHIP_PRICE);
+            openSpaceship();
+            */
           }}
         >
           <div className="BubbleReflection" />
           Spaceship
         </button>
       </div>
-      <button className="HomeButton" onClick={() => navigate("/")}>
-        <div className="BubbleReflection" />
-        <img
-          src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
-          alt=""
-        />
-      </button>
-      <button
-        className="LogoutButton"
-        onClick={async () => {
-          await handleFishLogout();
-          await handleBalanceLogout();
-          localStorage.removeItem(userID);
-          const timeout = setTimeout(() => {
-            window.location.reload(true); 
-          }, 300);
-          return () => {
-            clearTimeout(timeout);
-          }
-        }}
-      >
-        <div className="BubbleReflection" />
-        Save & Logout
-      </button>
+      <HomeButton />
+      <LogoutButton />
       <Modal
         isOpen={isManaLimitOpen}
         onClose={closeManaLimit}

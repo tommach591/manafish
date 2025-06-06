@@ -1,40 +1,39 @@
 import { useCallback, useEffect, useState } from "react";
 import "./Space.css";
 import Modal from "../Modal";
-import Fishionary from "./Spacedex";
-import fishionary from "../../assets/Fishionary.json";
-import { useNavigate } from "react-router-dom";
+import Spacedex from "./Spacedex";
+import spacedex from "../../assets/Spacedex.json";
 import io from "socket.io-client";
 import { useMana } from "../../utils/ManaContext";
-import FishingGame from "./SpaceGame";
+import SpaceGame from "./SpaceGame";
 import { useFish } from "../../utils/FishContext";
 import { useRef } from "react";
+import LogoutButton from "../LogoutButton";
+import HomeButton from "../HomeButton";
 
 //const SERVERURL = "http://localhost:3001";
 const SERVERURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
 
-function Fishing() {
-  const navigate = useNavigate();
-  
+function Space() {
   const socket = useRef(null);
 
-  const { userID, username, currentProfileIcon, handleBalanceLogout } = useMana();
-  const { fishCaught, handleFishLogout } = useFish();
+  const { userID, username, currentProfileIcon } = useMana();
+  const { aliensCaught } = useFish();
   const [room, setRoom] = useState("");
   const [messagesRecieved, setMessagesRecieved] = useState([]);
   const [playerList, setPlayerList] = useState({});
   const [closeIsDisabled, setCloseIsDisabled] = useState(false);
   const [activeLobbies, setActiveLobbies] = useState([]);
 
-  const [isFishionaryOpen, setIsFishionaryOpen] = useState(false);
-  const openFishionary = () => setIsFishionaryOpen(true);
-  const closeFishionary = () => setIsFishionaryOpen(false);
+  const [isSpacedexOpen, setIsSpacedexOpen] = useState(false);
+  const openSpacedex = () => setIsSpacedexOpen(true);
+  const closeSpacedex = () => setIsSpacedexOpen(false);
 
-  const [isFishingGameOpen, setIsFishingGameOpen] = useState(false);
+  const [isSpaceGameOpen, setIsSpaceGameOpen] = useState(false);
 
   function generateLobbyCode() {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let code = "F"; // Start with F
+    let code = "S"; // Start with S
 
     for (let i = 0; i < 5; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
@@ -48,7 +47,7 @@ function Fishing() {
   };
 
   const validateRoomCode = (code) => {
-    const regex = /^F[A-Z]{5}$/;
+    const regex = /^S[A-Z]{5}$/;
     return regex.test(code);
   };
 
@@ -84,7 +83,7 @@ function Fishing() {
       alert("Uh oh. Room is full, try another code.");
     };
     const handleRefresh = (data) => {
-      setActiveLobbies(data);
+      setActiveLobbies(data.filter(([str]) => !str.startsWith("F")));
     };
     
     if (!userID || socket.current) return;
@@ -117,55 +116,27 @@ function Fishing() {
   }, []);
 
   useEffect(() => {
-    setIsFishingGameOpen(playerList[userID]);
+    setIsSpaceGameOpen(playerList[userID]);
   }, [playerList, userID]);
 
-  const openFishingGame = () => {
+  const openSpaceGame = () => {
     if (validateRoomCode(room) && userID && !playerList[userID]) {
       joinRoom();
     } else {
       alert(
-        "Invalid room code. It must start with 'F' and contain 6 total uppercase letters."
+        "Invalid room code. It must start with 'S' and contain 6 total uppercase letters."
       );
     }
   };
-  const closeFishingGame = () => {
-    setIsFishingGameOpen(false);
+  const closeSpaceGame = () => {
+    setIsSpaceGameOpen(false);
     leaveRoom();
   };
 
   return (
-    <div className="Fishing">
-      <button
-        className="HomeButton"
-        onClick={() => {
-          leaveRoom();
-          navigate("/");
-        }}
-      >
-        <div className="BubbleReflection" />
-        <img
-          src="https://api.iconify.design/ic:round-home.svg?color=%2332323c"
-          alt=""
-        />
-      </button>
-      <button
-        className="LogoutButton"
-        onClick={() => {
-          handleFishLogout();
-          handleBalanceLogout();
-          localStorage.removeItem(userID);
-          const timeout = setTimeout(() => {
-            window.location.reload(true); 
-          }, 100);
-          return () => {
-            clearTimeout(timeout);
-          }
-        }}
-      >
-        <div className="BubbleReflection" />
-        Save & Logout
-      </button>
+    <div className="Space">
+      <HomeButton />
+      <LogoutButton/>
       <div className="LobbyInput">
         <input
           placeholder="Room #"
@@ -178,13 +149,13 @@ function Fishing() {
       <div className="LobbyButtons">
         <button
           onClick={() => {
-            openFishionary();
+            openSpacedex();
           }}
         >
           <div className="BubbleReflection" />
-          Fishionary
-          <h1>
-            {Object.keys(fishCaught).length}/{Object.keys(fishionary).length}
+          Spacedex
+          <h1 className="SpacedexCount">
+            {Object.keys(aliensCaught).length} / {Object.keys(spacedex).length}
           </h1>
         </button>
         <button
@@ -199,7 +170,7 @@ function Fishing() {
         </button>
         <button
           onClick={() => {
-            if (!playerList[userID]) openFishingGame();
+            if (!playerList[userID]) openSpaceGame();
           }}
         >
           <div className="BubbleReflection" />
@@ -243,12 +214,12 @@ function Fishing() {
       </div>
 
       <Modal
-        isOpen={isFishingGameOpen}
-        onClose={closeFishingGame}
-        title={`Fishing - ${room}`}
+        isOpen={isSpaceGameOpen}
+        onClose={closeSpaceGame}
+        title={`Space - ${room}`}
         isDisabled={closeIsDisabled}
       >
-        <FishingGame
+        <SpaceGame
           playerList={playerList}
           sendMessage={sendMessage}
           messagesRecieved={messagesRecieved}
@@ -256,14 +227,14 @@ function Fishing() {
         />
       </Modal>
       <Modal
-        isOpen={isFishionaryOpen}
-        onClose={closeFishionary}
-        title="Fishionary"
+        isOpen={isSpacedexOpen}
+        onClose={closeSpacedex}
+        title="Spacedex"
       >
-        <Fishionary />
+        <Spacedex />
       </Modal>
     </div>
   );
 }
 
-export default Fishing;
+export default Space;

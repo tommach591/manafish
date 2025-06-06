@@ -46,6 +46,10 @@
   margin: 0.5rem;
 }
 
+.FishionaryCount {
+  font-size: 11px;
+}
+
 .OpenFishingLobbies {
   width: 60%;
   max-width: 18rem;

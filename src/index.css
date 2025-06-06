@@ -32,6 +32,11 @@ button {
   animation: bubbleFloat 10s ease-in-out infinite;
 
   font-weight: bold;
+  text-shadow:
+    -2px -2px 0 rgba(255, 255, 255, 0.7),
+     2px -2px 0 rgba(255, 255, 255, 0.7),
+    -2px  2px 0 rgba(255, 255, 255, 0.7),
+     2px  2px 0 rgba(255, 255, 255, 0.7);
 }
 
 button:hover {

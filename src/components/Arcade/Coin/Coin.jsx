@@ -96,8 +96,8 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
 
     const getAnimation = useCallback(() => {
         if (isFlipping) {
-            if (coinChoice < HEADS) return {animation: "flipHeads 7s forwards"};
-            else if (coinChoice < TAILS) return {animation: "flipTails 7s forwards"};
+            if (coinChoice < HEADS) return {animation: "flipHeads 5s forwards"};
+            else if (coinChoice < TAILS) return {animation: "flipTails 5s forwards"};
             else return {animation: "flipGone 5s forwards"};
         }
         else {

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import "./FishingGame.css";
-import fishionary from "../../../assets/Fishionary.json";
-import { getFishImage } from "../../../utils/Fishionary";
+import "./SpaceGame.css";
+import spacedex from "../../../assets/Spacedex.json";
+import { getSpaceImage } from "../../../utils/Spacedex";
 import { useMana } from "../../../utils/ManaContext";
-import FishingPlayer from "./SpacePlayer/SpacePlayer";
+import SpacePlayer from "./SpacePlayer";
 import { useFish } from "../../../utils/FishContext";
 import Modal from "../../Modal";
 import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
@@ -13,21 +13,21 @@ import { formatNumberWithCommas } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
 import { useUtil } from "../../../utils/UtilContext";
 
-function FishingGame({
+function SpaceGame({
   playerList,
   sendMessage,
   messagesRecieved,
   setCloseIsDisabled,
 }) {
   const { userID, mana, updateMana } = useMana();
-  const { fishCaught, addFish } = useFish();
+  const { aliensCaught, addAlien } = useFish();
   const { notif } = useUtil();
-  const [fishPrize, setFishPrize] = useState("");
+  const [alienPrize, setAlienPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
 
   const [messageQueue, setMessageQueue] = useState({});
-  const BAITCOST = 10;
+  const BAITCOST = 18;
   const FISHINGTIME = 1000 * 7;
 
   const [fishRates, setFishRates] = useState(1);
@@ -56,10 +56,10 @@ function FishingGame({
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
-    const [COMMON, UNCOMMON, RARE, EPIC, UNIQUE, LEGENDARY] = [10, 25, 50, 75, 300, 5000]
+    const [COMMON, UNCOMMON, RARE, EPIC, UNIQUE, LEGENDARY] = [25, 50, 70, 150, 500, 5000]
 
-    Object.keys(fishionary).forEach((key) => {
-      const item = fishionary[key];
+    Object.keys(spacedex).forEach((key) => {
+      const item = spacedex[key];
       const value = item.value;
 
       if (value <= COMMON) {
@@ -97,8 +97,8 @@ function FishingGame({
     const index = Math.floor(Math.random() * FISHES[category].length);
     const fish = FISHES[category][index];
 
-    setFishPrize(fish);
-    addFish(fish.id);
+    setAlienPrize(fish);
+    addAlien(fish.id);
     sendMessage({ userID, fish });
     updateMana(Number(fish.value));
 
@@ -112,7 +112,7 @@ function FishingGame({
         yippeeAudio.currentTime = 0;
       };
     }
-  }, [userID, updateMana, sendMessage, addFish, weights, notif]);
+  }, [userID, updateMana, sendMessage, addAlien, weights, notif]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
     setMessageQueue((prev) => {
@@ -183,7 +183,7 @@ function FishingGame({
           if (mana >= BAITCOST) {
             updateMana(-BAITCOST);
             handleIsFishing(true);
-            setFishPrize("");
+            setAlienPrize("");
             if (isFishing) {
               const startFishingTimeout = setTimeout(() => {
                 handleCatchFish();
@@ -252,7 +252,7 @@ function FishingGame({
   }, [fishRates]);
 
   return (
-    <div className="FishingGame">
+    <div className="SpaceGame">
       <div className="ManaDisplayWhileFishing">
         <h1>{`Mana: ${formatNumberWithCommas(mana)}`}
           <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
@@ -271,16 +271,16 @@ function FishingGame({
               : fishRates < 0.95 ? "https://api.iconify.design/line-md:sunny-filled-loop-to-moon-filled-alt-loop-transition.svg?color=%23c4d0e3" 
               : ""} alt=""  className="FishingRateIndicator"/>
           </div>
-        ) : fishPrize ? (
-          <div className="FishCaughtInfo">
-            <img src={getFishImage(fishPrize.id)} alt="" />
-            <h1 className="NewFishCaught">
-              {fishCaught[fishPrize.id] === 1 ? "NEW!!!" : ""}
+        ) : alienPrize ? (
+          <div className="AlienCaughtInfo">
+            <img src={getSpaceImage(alienPrize.id)} alt="" />
+            <h1 className="NewAlienCaught">
+              {aliensCaught[alienPrize.id] === 1 ? "NEW!!!" : ""}
             </h1>
-            <h1>{fishPrize.name}</h1>
-            <h2>{fishPrize.info}</h2>
-            <h3>Value: {fishPrize.value}</h3>
-            <h3>Caught: {fishCaught[fishPrize.id]}</h3>
+            <h1>{alienPrize.name}</h1>
+            <h2>{alienPrize.info}</h2>
+            <h3>Value: {alienPrize.value}</h3>
+            <h3>Caught: {aliensCaught[alienPrize.id]}</h3>
           </div>
         ) : (
           <div />
@@ -293,13 +293,13 @@ function FishingGame({
             else {
               updateMana(-BAITCOST);
               handleIsFishing(true);
-              setFishPrize("");
+              setAlienPrize("");
             }
           }}
           disabled={isFishing || autoFish}
         >
           <span>
-          Fish - 10 <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+          Fish - {BAITCOST} <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
           </span>
         </button>
         <button
@@ -315,7 +315,7 @@ function FishingGame({
                     setAutoFish(true);
                     if (!isFishing) updateMana(-BAITCOST);
                     handleIsFishing(true);
-                    setFishPrize("");
+                    setAlienPrize("");
                   }
                 }
           }
@@ -328,7 +328,7 @@ function FishingGame({
           if (userID) {
             const playerInfo = playerList[playerID]; // Access the player's information
             return (
-              <FishingPlayer
+              <SpacePlayer
                 key={i}
                 playerID={playerID}
                 playerInfo={playerInfo}
@@ -346,4 +346,4 @@ function FishingGame({
   );
 }
 
-export default FishingGame;
+export default SpaceGame;

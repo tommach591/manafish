@@ -1,17 +1,20 @@
 import "./Home.css";
 import { useMana } from "../../utils/ManaContext";
 import { useNavigate } from "react-router-dom";
-import { useFish } from "../../utils/FishContext";
 import { useState } from "react";
 import Modal from "../Modal";
 import Patches from "../../assets/PatchNotes.json"
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
+import aivyShopImage from "../../assets/miscImage/aivyShop.png";
+import mintletArcadeImage from "../../assets/miscImage/mintletArcade.png";
+import leaderboardImage from "../../assets/miscImage/leaderboard.png";
+import manaBeachImage from "../../assets/miscImage/manaBeach.png";
+import LogoutButton from "../LogoutButton";
 // import { useGarden } from "../../utils/GardenContext";
 
 function Home() {
   const navigate = useNavigate();
-  const { userID, storedMana, handleBalanceLogout, retrieveStoredMana } = useMana();
-  const { handleFishLogout } = useFish();
+  const { storedMana, retrieveStoredMana } = useMana();
   // const { isAnyPlantFullyGrown } = useGarden();
   const [claimedMana, setClaimedMana] = useState(0);
 
@@ -25,23 +28,7 @@ function Home() {
 
   return (
     <div className="Home">
-      <button
-        className="LogoutButton"
-        onClick={async () => {
-          await handleFishLogout();
-          await handleBalanceLogout();
-          localStorage.removeItem(userID);
-          const timeout = setTimeout(() => {
-            window.location.reload(true); 
-          }, 300);
-          return () => {
-            clearTimeout(timeout);
-          }
-        }}
-      >
-        <div className="BubbleReflection" />
-        Save & Logout
-      </button>
+      <LogoutButton />
       <button className="CreditsButton" 
         onClick={() => {
           openCredits();
@@ -90,6 +77,7 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Aivy's Shop
+          <img src={aivyShopImage} alt="" className="MenuButtonIcon"/>
         </button>
         <button
           onClick={() => {
@@ -98,6 +86,7 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Hall of Legends
+          <img src={leaderboardImage} alt="" className="MenuButtonIcon"/>
         </button>
         <button
           onClick={() => {
@@ -106,6 +95,7 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Mintlet's Arcade
+          <img src={mintletArcadeImage} alt="" className="MenuButtonIcon"/>
         </button>
         <button
           onClick={() => {
@@ -114,7 +104,18 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Mana's Beach
-        </button>        
+          <img src={manaBeachImage} alt="" className="MenuButtonIcon"/>
+        </button>
+        {/* <button
+          onClick={() => {
+            if (aliensCaught) navigate("/space");
+            else alert("How are you going to go to space without a spaceship?")
+          }}
+        >
+          <div className="BubbleReflection" />
+          Space
+          <img src={manaBeachImage} alt="" className="MenuButtonIcon"/>
+        </button> */}
       </div>
 
       <Modal

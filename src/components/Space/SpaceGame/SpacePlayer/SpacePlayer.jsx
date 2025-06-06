@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "./FishingPlayer.css";
-import { getFishImage } from "../../../../utils/Fishionary";
+import "./SpacePlayer.css";
 import { getProfileIcon } from "../../../../utils/ProfileIcon";
 import { useMana } from "../../../../utils/ManaContext";
+import { getSpaceImage } from "../../../../utils/Spacedex";
 
-function FishingPlayer({
+function SpacePlayer({
   playerID,
   playerInfo,
   messageQueue,
@@ -21,20 +21,20 @@ function FishingPlayer({
   }, [playerID, messageQueue, handleMessageQueueShift, message]);
 
   return (
-    <div className="FishingPlayer">
+    <div className="SpacePlayer">
       <div className="PlayerContent">
         <h1 className="PlayerName" style={playerID === userID ? {fontWeight: "bold"} : {}}>{playerInfo.username}</h1>
         <img src={getProfileIcon(playerInfo.currentProfileIcon)} alt="" />
         {message ? (
           <div
-            className="FishMessage"
+            className="SpaceMessage"
             style={{
               animation: "messageAndFade 4s forwards ease-in-out 1",
             }}
             onAnimationEnd={() => setMessage("")}
           >
             <img
-              src={message ? getFishImage(message?.message.fish.id) : ""}
+              src={message ? getSpaceImage(message?.message.fish.id) : ""}
               alt=""
             />
           </div>
@@ -46,4 +46,4 @@ function FishingPlayer({
   );
 }
 
-export default FishingPlayer;
+export default SpacePlayer;

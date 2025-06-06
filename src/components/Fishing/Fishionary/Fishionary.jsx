@@ -36,7 +36,6 @@ function Fishionary() {
             <h2>{fishCaught[value.id] ? value.info : "???"}</h2>
             <h3>Value: {fishCaught[value.id] ? value.value : "???"}</h3>
             <h3>Caught: {fishCaught[value.id] ? fishCaught[value.id] : 0}</h3>
-            <h4>{Number(value.id) + 1}</h4>
           </div>
         </div>
       ))}

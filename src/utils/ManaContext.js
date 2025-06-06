@@ -305,6 +305,7 @@ export function ManaProvider({ children }) {
     <ManaContext.Provider
       value={{
         userID,
+        setUserID,
         username,
         handleBalanceLogin,
         handleBalanceLogout,
