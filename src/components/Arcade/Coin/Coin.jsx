@@ -15,7 +15,7 @@ function Coin({ bet, setCloseIsDisabled, openBroke }) {
     const [chooseHead, setChooseHead] = useState(0);
     const [isFlipping, setIsFlipping] = useState(false);
     const [coinChoice, setCoinChoice] = useState(0);
-    const [HEADS, TAILS, OTHER] = [18, 36, 38];
+    const [HEADS, TAILS, OTHER] = [18, 36, 37];
 
     const [coinsFlipped, setCoinsFlipped] = useState(0);
     const [coinHistory, setCoinHistory] = useState([]);
