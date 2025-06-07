@@ -10,11 +10,13 @@ import mintletArcadeImage from "../../assets/miscImage/mintletArcade.png";
 import leaderboardImage from "../../assets/miscImage/leaderboard.png";
 import manaBeachImage from "../../assets/miscImage/manaBeach.png";
 import LogoutButton from "../LogoutButton";
+import { useUtil } from "../../utils/UtilContext";
 // import { useGarden } from "../../utils/GardenContext";
 
 function Home() {
   const navigate = useNavigate();
   const { storedMana, retrieveStoredMana } = useMana();
+  const { playAudio } = useUtil(); 
   // const { isAnyPlantFullyGrown } = useGarden();
   const [claimedMana, setClaimedMana] = useState(0);
 
@@ -33,6 +35,7 @@ function Home() {
         onClick={() => {
           openCredits();
         }}
+        onMouseEnter={() => playAudio("bubble")}
       >
         <div className="BubbleReflection" />
         Credits
@@ -41,6 +44,7 @@ function Home() {
         onClick={() => {
           openPatchNotes();
         }}
+        onMouseEnter={() => playAudio("bubble")}
       >
         <div className="BubbleReflection" />
         Patch Notes
@@ -52,6 +56,7 @@ function Home() {
           setClaimedMana(oldStoredMana);
           retrieveStoredMana();
         }}
+        onMouseEnter={() => playAudio("bubble")}
       >
         <div className="BubbleReflection" />
         <h1
@@ -74,6 +79,7 @@ function Home() {
           onClick={() => {
             navigate("/shop");
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Aivy's Shop
@@ -83,6 +89,7 @@ function Home() {
           onClick={() => {
             navigate("/leaderboard");
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Hall of Legends
@@ -92,6 +99,7 @@ function Home() {
           onClick={() => {
             navigate("/arcade");
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Mintlet's Arcade
@@ -101,6 +109,7 @@ function Home() {
           onClick={() => {
             navigate("/fishing");
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Mana's Beach

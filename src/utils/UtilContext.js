@@ -7,7 +7,9 @@ import {
     useEffect,
     useCallback,
   } from "react";
+import bubbleMP3 from "../assets/audio/bubble.mp3";
 import slotMP3 from "../assets/audio/slot.mp3";
+import coinMP3 from "../assets/audio/coin.mp3";
 import yippeeMP3 from "../assets/audio/yippee.mp3";
 import amazingMP3 from "../assets/audio/amazing.mp3";
 import greatMP3 from "../assets/audio/great.mp3";
@@ -19,7 +21,6 @@ import uhohMP3 from "../assets/audio/uhoh.mp3";
 import wooowMP3 from "../assets/audio/wooow.mp3";
 import wowMP3 from "../assets/audio/wow.mp3";
 import yayMP3 from "../assets/audio/yay.mp3";
-import coinMP3 from "../assets/audio/coin.mp3";
 
 
 const UtilContext = createContext();
@@ -42,6 +43,7 @@ export function UtilProvider({ children }) {
     if (notif) {
       const voiceVolume = 0.2;
       const soundMP3 = {
+        "bubble" : [bubbleMP3, 0.025],
         "slots" : [slotMP3, 0.5],
         "coin" : [coinMP3, 0.25],
         "yippee" : [yippeeMP3, 0.10],

@@ -10,6 +10,7 @@ import { useFish } from "../../utils/FishContext";
 import { useRef } from "react";
 import HomeButton from "../HomeButton";
 import LogoutButton from "../LogoutButton";
+import { useUtil } from "../../utils/UtilContext";
 
 //const SERVERURL = "http://localhost:3001";
 const SERVERURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
@@ -19,6 +20,7 @@ function Fishing() {
 
   const { userID, username, currentProfileIcon } = useMana();
   const { fishCaught } = useFish();
+  const { playAudio } = useUtil();
   const [room, setRoom] = useState("");
   const [messagesRecieved, setMessagesRecieved] = useState([]);
   const [playerList, setPlayerList] = useState({});
@@ -152,6 +154,7 @@ function Fishing() {
           onClick={() => {
             openFishionary();
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Fishionary
@@ -165,6 +168,7 @@ function Fishing() {
               setRoom(generateLobbyCode());
             }
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Random Room
@@ -173,6 +177,7 @@ function Fishing() {
           onClick={() => {
             if (!playerList[userID]) openFishingGame();
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Join Room
@@ -182,6 +187,7 @@ function Fishing() {
         <button
           className="FishingLobbyRefreshButton"
           onClick={refreshLobbyList}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           <img

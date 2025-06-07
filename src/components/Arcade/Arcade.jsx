@@ -8,9 +8,11 @@ import Slots from "./Slots";
 import Coin from "./Coin";
 import HomeButton from "../HomeButton";
 import LogoutButton from "../LogoutButton";
+import { useUtil } from "../../utils/UtilContext";
 
 function Arcade() {
   const { mana, updateMana } = useMana();
+  const { playAudio } = useUtil();
   const MINBET = 10;
   const MAXBET = 100000;
   const [bet, setBet] = useState(MINBET);
@@ -67,6 +69,7 @@ function Arcade() {
             mana < MINBET ? setBet(MINBET) :
             setBet(mana)
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >ALL IN</button>
       </div>
       <HomeButton />
@@ -80,6 +83,7 @@ function Arcade() {
               openScratch();
             }
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Scratch
@@ -92,6 +96,7 @@ function Arcade() {
               openBJ();
             }
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Blackjack
@@ -104,6 +109,7 @@ function Arcade() {
               openSlots();
             }
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Slots
@@ -112,6 +118,7 @@ function Arcade() {
           onClick={() => {
             openCoin();
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Coin
@@ -124,6 +131,7 @@ function Arcade() {
               openDonate();
             }
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Donate

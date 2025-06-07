@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import "./HomeButton.css";
+import { useUtil } from "../../utils/UtilContext";
 
 function HomeButton() {
     const navigate = useNavigate();
+    const { playAudio } = useUtil(); 
 
     return (
     <button
@@ -10,6 +12,7 @@ function HomeButton() {
         onClick={() => {
           navigate("/");
         }}
+        onMouseEnter={() => playAudio("bubble")}
       >
         <div className="BubbleReflection" />
         <img
