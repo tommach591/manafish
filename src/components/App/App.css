@@ -200,3 +200,10 @@
   border-radius: 50%;
   background: red;
 }
+
+.Version {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  text-align: right;
+}

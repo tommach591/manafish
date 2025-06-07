@@ -6,7 +6,6 @@ import mintArcade1 from "../../../assets/miscImage/mintArcade1.png";
 import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
-import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 import { useUtil } from "../../../utils/UtilContext";
 
 function Scratch({ bet, setCloseIsDisabled, openBroke }) {
@@ -16,7 +15,7 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
   );
   const [winnings, setWinnings] = useState(0);
   const { mana, updateMana } = useMana();
-  const { notif } = useUtil();
+  const { playAudio } = useUtil();
   const [mintCheers, setMintCheers] = useState(true);
 
   const COLORS = [
@@ -36,16 +35,18 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
       const newRange = new Array(8);
       newRange[4] = median; // center of the 9-element array
     
-      const increment = Math.floor(0.1 * (2 * median));
+      const increment = Math.floor(0.1 * (4 * median));
     
       // Fill left side
       for (let i = 3; i >= 0; i--) {
-        newRange[i] = newRange[i + 1] - increment;
+        newRange[i] = newRange[i + 1] - increment <= 0 ? 1 :
+         newRange[i + 1] - increment;
       }
     
       // Fill right side
       for (let i = 4; i < 8; i++) {
-        newRange[i] = newRange[i - 1] + increment;
+        newRange[i] = newRange[i - 1] + increment <= 0 ? 1 : 
+          newRange[i - 1] + increment;
       }
     
       return newRange;
@@ -81,25 +82,23 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
       updateMana(totalEarned);
       setWinnings(totalEarned);
       setCloseIsDisabled(false);
+      setMintCheers(Math.random() < 0.5);
 
-      if (totalEarned >= bet * 1.5) {
-        setMintCheers(Math.random() < 0.5);
-        if (notif) {
-          const yippeeAudio = new Audio(yippeeMP3);
-          yippeeAudio.volume = 0.25;
-          yippeeAudio.play();
-                        
-          return () => {
-            yippeeAudio.pause();
-            yippeeAudio.currentTime = 0;
-          };
-        }
+      if (totalEarned > bet * 2.5) {
+        playAudio("yippee");
+        const sounds = ["ohMyGosh", "amazing", "wooow"];
+        playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
+      }
+      else if (totalEarned >= bet * 1.5) {
+        playAudio("yippee");
+        const sounds = ["great", "lucky", "wow", "yay"];
+        playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
       }
     }
 
     if (!numbers.includes(0)) calculateWinnings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numbers, notif]);
+  }, [numbers, playAudio]);
 
   return (
     <div className="Scratch">
@@ -171,11 +170,11 @@ function Scratch({ bet, setCloseIsDisabled, openBroke }) {
       )}
       <div className="MintArcade" 
         style={winnings >= bet * 1.5 && mintCheers && !numbers.includes(0) ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings > bet * 20 ? mintArcade2 : mintArcade1} alt=""/>
+        <img src={winnings > bet * 2.5 ? mintArcade2 : mintArcade1} alt=""/>
       </div>
       <div className="ScarletArcade" 
         style={winnings >= bet * 1.5 && !mintCheers && !numbers.includes(0) ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings > bet * 20 ? scarletArcade2 : scarletArcade1} alt=""/>
+        <img src={winnings > bet * 2.5 ? scarletArcade2 : scarletArcade1} alt=""/>
       </div>
     </div>
   );

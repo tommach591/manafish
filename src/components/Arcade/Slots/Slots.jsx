@@ -2,17 +2,15 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import "./Slots.css";
 import { useMana } from "../../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../../utils/Helper";
-import audioMP3 from "../../../assets/audio/slot.mp3";
 import mintArcade1 from "../../../assets/miscImage/mintArcade1.png";
 import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
-import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 import { useUtil } from "../../../utils/UtilContext";
 
 function Slots({ bet, setCloseIsDisabled, openBroke }) {
   const { mana, updateMana } = useMana();
-  const { notif } = useUtil();
+  const { playAudio } = useUtil();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [mintCheers, setMintCheers] = useState(true);
   const [winnings, setWinnings] = useState(0);
@@ -74,43 +72,32 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
             setWinnings(newWinnings);
             setCloseIsDisabled(false);
           }
-
-          if (notif) {
-            const slotAudio = new Audio(audioMP3);
-            slotAudio.play();
-
-            return () => {
-              slotAudio.pause();
-              slotAudio.currentTime = 0;
-            };
-          }
+          playAudio("slots");
         }, (i + 1) * 333) // Stops each slot one second apart
       );
     }
 
     return () => spinTimeouts.forEach(clearTimeout); // Clear timeouts on cleanup
-  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots, notif]);
+  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots, playAudio]);
 
   useEffect(() => {
     if (!slots.includes("") && winnings > 0) { 
       updateMana(winnings);
-      if (winnings >= bet * 2.5) {
-        setMintCheers(Math.random() < 0.5);
-
-        if (notif) {
-          const yippeeAudio = new Audio(yippeeMP3);
-          yippeeAudio.volume = 0.25;
-          yippeeAudio.play();
-                        
-          return () => {
-            yippeeAudio.pause();
-            yippeeAudio.currentTime = 0;
-          };
-        }
+      setMintCheers(Math.random() < 0.5);
+      
+      if (winnings >= bet * 15) {
+        playAudio("yippee");
+        const sounds = ["ohMyGosh", "amazing", "wooow"];
+        playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
+      }
+      else if (winnings >= bet * 2.5) {
+        playAudio("yippee");
+        const sounds = ["great", "lucky", "wow", "yay", "niceHit"];
+        playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slots, winnings, notif]);
+  }, [slots, winnings, playAudio]);
 
   useEffect(() => {
     setCloseIsDisabled(true);
@@ -243,11 +230,11 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
       </div>
       <div className="MintArcade" 
         style={winnings >= bet * 2.5 && mintCheers ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings > bet * 20 ? mintArcade2 : mintArcade1} alt=""/>
+        <img src={winnings >= bet * 15 ? mintArcade2 : mintArcade1} alt=""/>
       </div>
       <div className="ScarletArcade" 
         style={winnings >= bet * 2.5 && !mintCheers ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings > bet * 20 ? scarletArcade2 : scarletArcade1} alt=""/>
+        <img src={winnings >= bet * 15 ? scarletArcade2 : scarletArcade1} alt=""/>
       </div>
     </div>
   );

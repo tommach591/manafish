@@ -15,6 +15,7 @@ import { formatNumberWithCommas, formatTime } from "../../utils/Helper";
 import Modal from "../Modal";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 import VolumeSlider from "./VolumeSlider";
+import patchNotes from "../../assets/PatchNotes.json"
 
 function App() {
   const {
@@ -48,6 +49,7 @@ function App() {
       <div className="Wave" />
       <div className="Wave" />
       <div className="Wave" />
+      <h1 className="Version">Version: {Object.keys(patchNotes)[0]}</h1>
       {userID ? (
         <div className="AppHeader">
           <div className="Mana">

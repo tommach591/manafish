@@ -13,12 +13,6 @@ function LogoutButton() {
             await handleFishLogout();
             await handleBalanceLogout();
             localStorage.removeItem(userID);
-            const timeout = setTimeout(() => {
-                window.location.reload(true); 
-            }, 300);
-            return () => {
-                clearTimeout(timeout);
-            }
         }}
     >
         <div className="BubbleReflection" />

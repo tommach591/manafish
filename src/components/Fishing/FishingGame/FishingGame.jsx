@@ -8,7 +8,6 @@ import { useFish } from "../../../utils/FishContext";
 import Modal from "../../Modal";
 import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
 import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
-import yippeeMP3 from "../../../assets/audio/yippee.mp3";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
 import { useUtil } from "../../../utils/UtilContext";
@@ -21,7 +20,7 @@ function FishingGame({
 }) {
   const { userID, mana, updateMana } = useMana();
   const { fishCaught, addFish } = useFish();
-  const { notif } = useUtil();
+  const { playAudio } = useUtil();
   const [fishPrize, setFishPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
@@ -102,17 +101,17 @@ function FishingGame({
     sendMessage({ userID, fish });
     updateMana(Number(fish.value));
 
-    if (category >= 3 & notif) {
-      const yippeeAudio = new Audio(yippeeMP3);
-      yippeeAudio.volume = 0.25;
-      yippeeAudio.play();
-      
-      return () => {
-        yippeeAudio.pause();
-        yippeeAudio.currentTime = 0;
-      };
+    if (category >= 5) {
+      playAudio("yippee");
+      const sounds = ["ohMyGosh", "amazing", "wooow"];
+      playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
     }
-  }, [userID, updateMana, sendMessage, addFish, weights, notif]);
+    else if (category >= 3) {
+      playAudio("yippee");
+      const sounds = ["great", "lucky", "wow", "yay", "niceCatch"];
+      playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
+    }
+  }, [userID, updateMana, sendMessage, addFish, weights, playAudio]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
     setMessageQueue((prev) => {

@@ -4,6 +4,7 @@ import {
   useState,
   useCallback,
   useEffect,
+  useRef,
 } from "react";
 import { createBalance, getBalance, updateBalance } from "./Balance";
 
@@ -136,6 +137,7 @@ export function ManaProvider({ children }) {
   ]);
 
   // Save Locally.
+  const lastSaved = useRef(null);
   useEffect(() => {
     if (!userID) return; 
     const saveInterval = setInterval(() => {
@@ -152,6 +154,9 @@ export function ManaProvider({ children }) {
       };
       const existingData = JSON.parse(localStorage.getItem(userID)) || {};
 
+      const isSame = lastSaved.current && JSON.stringify(lastSaved.current) === JSON.stringify(updateFields.balance);
+      if (isSame) return;
+
       const mergedData = {
         ...existingData,
         balance: {
@@ -161,7 +166,8 @@ export function ManaProvider({ children }) {
       };
 
       localStorage.setItem(userID, JSON.stringify(mergedData));
-    }, 1000);
+      lastSaved.current = updateFields.balance;
+    }, 500);
 
     return () => clearInterval(saveInterval);
   }, [

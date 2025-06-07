@@ -128,6 +128,7 @@ function Home() {
           <h1>Developer - @tummylol_</h1>
           <h1>Artist - @aivysu</h1>
           <h1>BGM - @damahysk</h1>
+          <h1>Voice - @mi10ne</h1>
         </div>
       </Modal>
       <Modal

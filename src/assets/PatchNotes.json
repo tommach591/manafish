@@ -1,4 +1,5 @@
 {
+    "0.13" : "06/06/2025 05:15 PM \nSaves slightly more frequently (still working on it). Added version number on bottom right. Added voicelines.",
     "0.12" : "06/05/2025 09:10 PM \nScary save bug was not fixed, hopefully it is now. Added icons for navigation bubbles.",
     "0.11" : "06/05/2025 04:10 PM \nAdded teaser to shop. Fixed scary bug with logout button.",
     "0.10" : "06/05/2025 08:17 AM \nAdded renamed Logout to Save & Logout and placed it everywhere.",
