@@ -8,14 +8,14 @@ import mintArcade1 from "../../../assets/miscImage/mintArcade1.png";
 import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
-import { useUtil } from "../../../utils/UtilContext";
+import { useAudio } from "../../../utils/AudioContext";
 
 function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
   const [winnings, setWinnings] = useState(0);
   const [mintCheers, setMintCheers] = useState(true);
 
   const { mana, updateMana } = useMana();
-  const { playAudio } = useUtil();
+  const { playAudio } = useAudio();
 
   const [BLACKJACK, DEALERMIN] = [21, 16];
 
@@ -165,8 +165,7 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
           playAudio("yippee");
           const sounds = ["ohMyGosh", "amazing", "wooow"];
           playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
-        }
-        else if (totalEarned >= game.bet * 2) {
+        } else if (totalEarned >= game.bet * 2) {
           playAudio("yippee");
           const sounds = ["great", "lucky", "wow", "yay"];
           playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
@@ -307,23 +306,36 @@ function Blackjack({ bet, setCloseIsDisabled, openBroke }) {
         </button>
       )}
       {!game.done ? (
-        <div className="Winnings">
-          {``}
-        </div>
+        <div className="Winnings">{``}</div>
       ) : (
         <div className="Winnings">{`Earned ${formatNumberWithCommas(
           winnings
         )} mana. Net gain ${formatNumberWithCommas(
-          winnings - (game.bet * game.player.length)
+          winnings - game.bet * game.player.length
         )} mana.`}</div>
       )}
-      <div className="MintArcade" 
-        style={winnings >= game.bet * 2 && mintCheers ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings > bet * 2 ? mintArcade2 : mintArcade1} alt=""/>
+      <div
+        className="MintArcade"
+        style={
+          winnings >= game.bet * 2 && mintCheers
+            ? { animation: "MintCheer 2s ease-out forwards" }
+            : {}
+        }
+      >
+        <img src={winnings > bet * 2 ? mintArcade2 : mintArcade1} alt="" />
       </div>
-      <div className="ScarletArcade" 
-        style={winnings >= game.bet * 2 && !mintCheers ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings > bet * 2 ? scarletArcade2 : scarletArcade1} alt=""/>
+      <div
+        className="ScarletArcade"
+        style={
+          winnings >= game.bet * 2 && !mintCheers
+            ? { animation: "ScarletCheer 2s ease-out forwards" }
+            : {}
+        }
+      >
+        <img
+          src={winnings > bet * 2 ? scarletArcade2 : scarletArcade1}
+          alt=""
+        />
       </div>
     </div>
   );

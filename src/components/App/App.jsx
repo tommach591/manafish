@@ -15,7 +15,7 @@ import { formatNumberWithCommas, formatTime } from "../../utils/Helper";
 import Modal from "../Modal";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 import VolumeSlider from "./VolumeSlider";
-import patchNotes from "../../assets/PatchNotes.json"
+import patchNotes from "../../assets/PatchNotes.json";
 
 function App() {
   const {
@@ -24,13 +24,11 @@ function App() {
     mana,
     storedMana,
     maxStoredMana,
-    nextManaInterval,
     lastManaInterval,
     setCurrentProfileIcon,
     currentProfileIcon,
     profileIcons,
   } = useMana();
-  const TICK_RATE = 1000;
   const MANA_RATE = 30;
   const navigate = useNavigate();
 
@@ -54,29 +52,42 @@ function App() {
         <div className="AppHeader">
           <div className="Mana">
             <h1 className="Username">{`${username}`}</h1>
-            <h1>{`Mana: ${formatNumberWithCommas(mana)}`}
-              <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+            <h1>
+              {`Mana: ${formatNumberWithCommas(mana)}`}
+              <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
             </h1>
-            <h1>{`Stored Mana: ${storedMana}/${maxStoredMana}`} 
-              <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+            <h1>
+              {`Stored Mana: ${storedMana}/${maxStoredMana}`}
+              <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
             </h1>
             <h2>
               {`Replenishes In:
-        ${
-          storedMana === maxStoredMana ? "00:00:00" : 
-          Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1 < 0 ? "00:00:00" : 
-          formatTime(Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1)
-        } / ${
-          storedMana === maxStoredMana ? "00:00:00" : 
-          Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1 < 0 ? "00:00:00" :
-           formatTime((maxStoredMana - storedMana - 1) * MANA_RATE + Math.round((nextManaInterval - lastManaInterval) / TICK_RATE) + 1)
-          }`} 
+                ${
+                  storedMana >= maxStoredMana
+                    ? "00:00:00"
+                    : formatTime(
+                        Math.max(
+                          0,
+                          -Math.floor((Date.now() - lastManaInterval) / 1000)
+                        )
+                      )
+                } / ${
+                storedMana >= maxStoredMana
+                  ? "00:00:00"
+                  : formatTime(
+                      Math.max(
+                        0,
+                        -Math.floor((Date.now() - lastManaInterval) / 1000)
+                      ) +
+                        (maxStoredMana - storedMana - 1) * MANA_RATE
+                    )
+              }`}
             </h2>
           </div>
           <div className="ProfileIcon" onClick={openProfileIcon}>
             <img src={getProfileIcon(currentProfileIcon)} alt="" />
           </div>
-          <VolumeSlider/>
+          <VolumeSlider />
         </div>
       ) : (
         <div className="AppHeader" />
@@ -123,4 +134,3 @@ function App() {
 }
 
 export default App;
-

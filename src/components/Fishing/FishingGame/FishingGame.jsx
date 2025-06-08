@@ -10,7 +10,7 @@ import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
 import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
-import { useUtil } from "../../../utils/UtilContext";
+import { useAudio } from "../../../utils/AudioContext";
 
 function FishingGame({
   playerList,
@@ -20,7 +20,7 @@ function FishingGame({
 }) {
   const { userID, mana, updateMana } = useMana();
   const { fishCaught, addFish } = useFish();
-  const { playAudio } = useUtil();
+  const { playAudio } = useAudio();
   const [fishPrize, setFishPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
@@ -31,13 +31,13 @@ function FishingGame({
 
   const [fishRates, setFishRates] = useState(1);
   const baseWeights = [
-    550000,  // Common
-    350000,  // Uncommon
-    100000,  // Rare
-    10000,   // Epic
-    2500,    // Unique
-    500,     // Legendary
-    10       // Mythic
+    550000, // Common
+    350000, // Uncommon
+    100000, // Rare
+    10000, // Epic
+    2500, // Unique
+    500, // Legendary
+    10, // Mythic
   ];
   const [weights, setWeights] = useState(baseWeights);
 
@@ -55,7 +55,9 @@ function FishingGame({
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
-    const [COMMON, UNCOMMON, RARE, EPIC, UNIQUE, LEGENDARY] = [10, 25, 50, 75, 300, 5000]
+    const [COMMON, UNCOMMON, RARE, EPIC, UNIQUE, LEGENDARY] = [
+      10, 25, 50, 75, 300, 5000,
+    ];
 
     Object.keys(fishionary).forEach((key) => {
       const item = fishionary[key];
@@ -105,8 +107,7 @@ function FishingGame({
       playAudio("yippee");
       const sounds = ["ohMyGosh", "amazing", "wooow"];
       playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
-    }
-    else if (category >= 3) {
+    } else if (category >= 3) {
       playAudio("yippee");
       const sounds = ["great", "lucky", "wow", "yay", "niceCatch"];
       playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
@@ -135,14 +136,14 @@ function FishingGame({
     }, 20 * 60 * 1000); // every 20 min
 
     updateFishRates();
-  
+
     return () => clearInterval(interval);
   }, []);
-  
+
   useEffect(() => {
     function getSkewedWeights(baseWeights, fishRates) {
       const maxIndex = baseWeights.length - 1;
-    
+
       return baseWeights.map((weight, index) => {
         const skewFactor = Math.pow(fishRates, maxIndex - index);
         return weight * skewFactor;
@@ -157,7 +158,7 @@ function FishingGame({
       return percent.toFixed(5) + "%";
     }));
     */
-    
+
     setWeights(newWeights);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fishRates]);
@@ -231,20 +232,20 @@ function FishingGame({
   const getFishingFilter = useCallback(() => {
     const normalized = (fishRates - 0.8) / (1.2 - 0.8);
 
-    const brightness = 0.95 + normalized * 0.08; 
-    const contrast = 0.98 + normalized * 0.04;  
-  
+    const brightness = 0.95 + normalized * 0.08;
+    const contrast = 0.98 + normalized * 0.04;
+
     return `brightness(${brightness}) contrast(${contrast})`;
   }, [fishRates]);
 
   const getFishingOverlayStyle = useCallback(() => {
-    const normalized = (fishRates - 0.8) / (1.2 - 0.8); 
+    const normalized = (fishRates - 0.8) / (1.2 - 0.8);
     const tintStrength = Math.abs(normalized - 0.5) * 1;
-  
+
     if (fishRates > 1.0) {
-      return `rgba(255, 255, 100, ${tintStrength})`; 
+      return `rgba(255, 255, 100, ${tintStrength})`;
     } else if (fishRates < 1.0) {
-      return `rgba(20, 10, 50, ${tintStrength})`; 
+      return `rgba(20, 10, 50, ${tintStrength})`;
     } else {
       return `rgba(0,0,0,0)`;
     }
@@ -253,8 +254,9 @@ function FishingGame({
   return (
     <div className="FishingGame">
       <div className="ManaDisplayWhileFishing">
-        <h1>{`Mana: ${formatNumberWithCommas(mana)}`}
-          <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+        <h1>
+          {`Mana: ${formatNumberWithCommas(mana)}`}
+          <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
         </h1>
       </div>
       <div className="FishingDisplay">
@@ -262,13 +264,28 @@ function FishingGame({
           <div className="FishingDisplayImages">
             <img
               className="FishingAnimation"
-              src={Object.keys(playerList).length === 1 ? soloFishingGif : duoFishingGif}
+              src={
+                Object.keys(playerList).length === 1
+                  ? soloFishingGif
+                  : duoFishingGif
+              }
               alt=""
-              style={{ filter: getFishingFilter(), backgroundColor: getFishingOverlayStyle() }}
+              style={{
+                filter: getFishingFilter(),
+                backgroundColor: getFishingOverlayStyle(),
+              }}
             />
-            <img src={fishRates >= 1.05 ? "https://api.iconify.design/line-md:sun-rising-filled-loop.svg?color=%23ffda75" 
-              : fishRates < 0.95 ? "https://api.iconify.design/line-md:sunny-filled-loop-to-moon-filled-alt-loop-transition.svg?color=%23c4d0e3" 
-              : ""} alt=""  className="FishingRateIndicator"/>
+            <img
+              src={
+                fishRates >= 1.05
+                  ? "https://api.iconify.design/line-md:sun-rising-filled-loop.svg?color=%23ffda75"
+                  : fishRates < 0.95
+                  ? "https://api.iconify.design/line-md:sunny-filled-loop-to-moon-filled-alt-loop-transition.svg?color=%23c4d0e3"
+                  : ""
+              }
+              alt=""
+              className="FishingRateIndicator"
+            />
           </div>
         ) : fishPrize ? (
           <div className="FishCaughtInfo">
@@ -298,7 +315,8 @@ function FishingGame({
           disabled={isFishing || autoFish}
         >
           <span>
-          Fish - {BAITCOST} <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+            Fish - {BAITCOST}{" "}
+            <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
           </span>
         </button>
         <button

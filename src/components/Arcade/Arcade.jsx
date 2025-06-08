@@ -8,11 +8,11 @@ import Slots from "./Slots";
 import Coin from "./Coin";
 import HomeButton from "../HomeButton";
 import LogoutButton from "../LogoutButton";
-import { useUtil } from "../../utils/UtilContext";
+import { useAudio } from "../../utils/AudioContext";
 
 function Arcade() {
   const { mana, updateMana } = useMana();
-  const { playAudio } = useUtil();
+  const { playAudio } = useAudio();
   const MINBET = 10;
   const MAXBET = 100000;
   const [bet, setBet] = useState(MINBET);
@@ -65,12 +65,16 @@ function Arcade() {
         <button
           className="BetAll"
           onClick={() => {
-            mana > MAXBET ? setBet(MAXBET) :
-            mana < MINBET ? setBet(MINBET) :
-            setBet(mana)
+            mana > MAXBET
+              ? setBet(MAXBET)
+              : mana < MINBET
+              ? setBet(MINBET)
+              : setBet(mana);
           }}
           onMouseEnter={() => playAudio("bubble")}
-        >ALL IN</button>
+        >
+          ALL IN
+        </button>
       </div>
       <HomeButton />
       <LogoutButton />

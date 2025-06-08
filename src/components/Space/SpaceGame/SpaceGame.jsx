@@ -10,7 +10,7 @@ import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
 import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
 import { formatNumberWithCommas } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
-import { useUtil } from "../../../utils/UtilContext";
+import { useAudio } from "../../../utils/AudioContext";
 
 function SpaceGame({
   playerList,
@@ -20,7 +20,7 @@ function SpaceGame({
 }) {
   const { userID, mana, updateMana } = useMana();
   const { aliensCaught, addAlien } = useFish();
-  const { playAudio } = useUtil();
+  const { playAudio } = useAudio();
   const [alienPrize, setAlienPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
@@ -36,8 +36,8 @@ function SpaceGame({
     100000,  // Rare
     10000,   // Epic
     2500,    // Unique
-    500,     // Legendary
-    10       // Mythic
+    300,     // Legendary
+    5       // Mythic
   ];
   const [weights, setWeights] = useState(baseWeights);
 

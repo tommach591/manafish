@@ -1,4 +1,4 @@
-//const serverURL = "http://localhost:3001";
+// const serverURL = "http://localhost:3001";
 const serverURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
 
 export function getAllFish() {
@@ -43,6 +43,8 @@ export function updateFish(userIDEntered, updatedBody) {
   const body = { userID: userIDEntered };
   if (updatedBody.fishCaught !== undefined)
     body.fishCaught = updatedBody.fishCaught;
+  if (updatedBody.aliensCaught !== undefined)
+    body.aliensCaught = updatedBody.aliensCaught;
 
   return fetch(`${serverURL}/api/fish/update`, {
     method: "POST",
@@ -57,4 +59,15 @@ export function updateFish(userIDEntered, updatedBody) {
       else return;
     })
     .catch((err) => console.error(err));
+}
+
+export function updateFishOnUnload(userIDEntered, updatedBody) {
+  const body = { userID: userIDEntered };
+  if (updatedBody.fishCaught !== undefined)
+    body.fishCaught = updatedBody.fishCaught;
+  if (updatedBody.aliensCaught !== undefined)
+    body.aliensCaught = updatedBody.aliensCaught;
+
+  const blob = new Blob([JSON.stringify(body)], { type: "application/json" });
+  navigator.sendBeacon(`${serverURL}/api/fish/update`, blob);
 }

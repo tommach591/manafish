@@ -1,29 +1,35 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Space.css";
 import Modal from "../Modal";
 import Spacedex from "./Spacedex";
 import spacedex from "../../assets/Spacedex.json";
-import io from "socket.io-client";
 import { useMana } from "../../utils/ManaContext";
 import SpaceGame from "./SpaceGame";
 import { useFish } from "../../utils/FishContext";
-import { useRef } from "react";
 import LogoutButton from "../LogoutButton";
 import HomeButton from "../HomeButton";
-
-//const SERVERURL = "http://localhost:3001";
-const SERVERURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
+import { useAudio } from "../../utils/AudioContext";
+import { useSocket } from "../../utils/SocketContext";
 
 function Space() {
-  const socket = useRef(null);
-
-  const { userID, username, currentProfileIcon } = useMana();
+  const { userID } = useMana();
   const { aliensCaught } = useFish();
-  const [room, setRoom] = useState("");
-  const [messagesRecieved, setMessagesRecieved] = useState([]);
-  const [playerList, setPlayerList] = useState({});
+  const {
+    room,
+    setRoom,
+    roomType,
+    setRoomType,
+    validateRoomCode,
+    refreshLobbyList,
+    playerList,
+    activeLobbies,
+    messagesRecieved,
+    sendMessage,
+    joinRoom,
+    leaveRoom,
+  } = useSocket();
+  const { playAudio } = useAudio();
   const [closeIsDisabled, setCloseIsDisabled] = useState(false);
-  const [activeLobbies, setActiveLobbies] = useState([]);
 
   const [isSpacedexOpen, setIsSpacedexOpen] = useState(false);
   const openSpacedex = () => setIsSpacedexOpen(true);
@@ -42,74 +48,15 @@ function Space() {
     return code;
   }
 
-  const refreshLobbyList = () => {
-    socket.current.emit("refreshLobbies", userID);
-  };
-
-  const validateRoomCode = (code) => {
-    const regex = /^S[A-Z]{5}$/;
-    return regex.test(code);
-  };
-
-  const sendMessage = useCallback(
-    (message) => {
-      if (room && message)
-        socket.current.emit("sendMessage", {
-          room,
-          message,
-        });
-    },
-    [room]
-  );
-
-  const joinRoom = useCallback(() => {
-    if (validateRoomCode(room) && userID && !playerList[userID]) {
-      socket.current.emit("joinRoom", { room, userID, username, currentProfileIcon });
-    }
-  }, [playerList, room, userID, username, currentProfileIcon]);
-
-  const leaveRoom = useCallback(() => {
-    if (room && userID) socket.current.emit("leaveRoom", { room, userID });
-  }, [room, userID]);
-
   useEffect(() => {
-    const handleLobbyPlayers = (data) => {
-      setPlayerList({ ...data });
-    };
-    const handleReceiveMessage = (data) => {
-      setMessagesRecieved((prev) => [...prev, data]);
-    };
-    const handleRoomFull = (data) => {
-      alert("Uh oh. Room is full, try another code.");
-    };
-    const handleRefresh = (data) => {
-      setActiveLobbies(data.filter(([str]) => !str.startsWith("F")));
-    };
-    
-    if (!userID || socket.current) return;
+    if (!userID) return;
 
-    socket.current = io.connect(SERVERURL, {
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-      transports: ["websocket"],
-    });
-    socket.current.emit("register", userID);
-    socket.current.on("lobbyPlayers", handleLobbyPlayers);
-    socket.current.on("recieveMessage", handleReceiveMessage);
-    socket.current.on("roomFull", handleRoomFull);
-    socket.current.on("randomActiveLobbies", handleRefresh);
-
+    setRoomType("S");
     const timeout = setTimeout(() => {
       refreshLobbyList();
-    }, 100); 
+    }, 100);
 
     return () => {
-      socket.current.off("lobbyPlayers", handleLobbyPlayers);
-      socket.current.off("recieveMessage", handleReceiveMessage);
-      socket.current.off("roomFull", handleRoomFull);
-      socket.current.off("randomActiveLobbies", handleRefresh);
-      socket.current.disconnect();
       clearTimeout(timeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,7 +71,7 @@ function Space() {
       joinRoom();
     } else {
       alert(
-        "Invalid room code. It must start with 'S' and contain 6 total uppercase letters."
+        `Invalid room code. It must start with ${roomType} and contain 6 total uppercase letters.`
       );
     }
   };
@@ -136,7 +83,7 @@ function Space() {
   return (
     <div className="Space">
       <HomeButton />
-      <LogoutButton/>
+      <LogoutButton />
       <div className="LobbyInput">
         <input
           placeholder="Room #"
@@ -151,6 +98,7 @@ function Space() {
           onClick={() => {
             openSpacedex();
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Spacedex
@@ -164,6 +112,7 @@ function Space() {
               setRoom(generateLobbyCode());
             }
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Random Room
@@ -172,6 +121,7 @@ function Space() {
           onClick={() => {
             if (!playerList[userID]) openSpaceGame();
           }}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           Join Room
@@ -180,7 +130,8 @@ function Space() {
       <div className="OpenFishingLobbies">
         <button
           className="FishingLobbyRefreshButton"
-          onClick={refreshLobbyList}
+          onClick={() => refreshLobbyList()}
+          onMouseEnter={() => playAudio("bubble")}
         >
           <div className="BubbleReflection" />
           <img
@@ -190,26 +141,26 @@ function Space() {
         </button>
         <h1>Lobbies</h1>
         <div className="FishingLobbies">
-        {activeLobbies.map(([key, value], i) => {
-          return (
-            <div
-              className="FishingLobby"
-              key={i}
-              onClick={() => {
-                setRoom(key);
-              }}
-            >
-              <h1 className="FishingLobbyRoom">{key}</h1>
-              <h1 className="FishingLobbyValue">
-                <img
-                  src="https://api.iconify.design/material-symbols:person.svg?color=%2332323c"
-                  alt=""
-                />
-                {value}/8
-              </h1>
-            </div>
-          );
-        })}
+          {activeLobbies.map(([key, value], i) => {
+            return (
+              <div
+                className="FishingLobby"
+                key={i}
+                onClick={() => {
+                  setRoom(key);
+                }}
+              >
+                <h1 className="FishingLobbyRoom">{key}</h1>
+                <h1 className="FishingLobbyValue">
+                  <img
+                    src="https://api.iconify.design/material-symbols:person.svg?color=%2332323c"
+                    alt=""
+                  />
+                  {value}/8
+                </h1>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -226,11 +177,7 @@ function Space() {
           setCloseIsDisabled={setCloseIsDisabled}
         />
       </Modal>
-      <Modal
-        isOpen={isSpacedexOpen}
-        onClose={closeSpacedex}
-        title="Spacedex"
-      >
+      <Modal isOpen={isSpacedexOpen} onClose={closeSpacedex} title="Spacedex">
         <Spacedex />
       </Modal>
     </div>

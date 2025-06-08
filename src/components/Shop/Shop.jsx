@@ -42,7 +42,7 @@ function Shop() {
   const MAX_MANA_CAP = 20160;
   const PROFILE_ICON_GACHA_PRICE = 5000;
   const PREMIUM_PROFILE_ICON_GACHA_PRICE = 25000;
-  const SPACESHIP_PRICE = 200000;
+  const SPACESHIP_PRICE = 150000;
 
   const [
     CONFIRM_PURCHASE,
@@ -62,12 +62,9 @@ function Shop() {
   const [purchasedIcon, setPurchasedIcon] = useState(0);
 
   const premiumIcons = [
-                        55, 56, 57, 58, 59, 
-                        60, 61, 62, 63, 64, 
-                        65, 66, 67, 68, 69, 
-                        70, 71, 72, 73, 74,
-                        75
-                      ]
+    55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73,
+    74, 75,
+  ];
 
   const getShopMessage = () => {
     switch (confirmedPurchase) {
@@ -133,7 +130,7 @@ function Shop() {
             <h1>{`Fish Caught: ${Object.keys(fishCaught).length}`}</h1>
           </div>
         );
-      case SPACESHIP_ALREADY_UNLOCKED: 
+      case SPACESHIP_ALREADY_UNLOCKED:
         return (
           <div className="ShopMessage">
             <h1>{`You already own a spaceship!`}</h1>
@@ -202,7 +199,12 @@ function Shop() {
 
   return (
     <div className="Shop">
-      <img className="ShopNPC" src={aivyFishingGif} alt="" style={{animation: "ShopNPCAnimation 0.75s ease-out forwards"}}/>
+      <img
+        className="ShopNPC"
+        src={aivyFishingGif}
+        alt=""
+        style={{ animation: "ShopNPCAnimation 0.75s ease-out forwards" }}
+      />
       <div className="ShopButtons">
         <button
           onClick={() => {
@@ -227,8 +229,12 @@ function Shop() {
         <button
           onClick={() => {
             setConfirmedPurchase(CONFIRM_PURCHASE);
-            setPrice(PREMIUM_PROFILE_ICON_GACHA_PRICE + 
-              (2000 * premiumIcons.filter(item => profileIcons.includes(item)).length));
+            setPrice(
+              PREMIUM_PROFILE_ICON_GACHA_PRICE +
+                2000 *
+                  premiumIcons.filter((item) => profileIcons.includes(item))
+                    .length
+            );
             openPremiumIconGacha();
           }}
         >
@@ -259,7 +265,7 @@ function Shop() {
         title="Raise Mana Limit"
       >
         <div className="AivyGremlin">
-          <img src={aivyGremlinGif} alt=""/>
+          <img src={aivyGremlinGif} alt="" />
         </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
@@ -294,7 +300,7 @@ function Shop() {
         title="Profile Icon Gacha"
       >
         <div className="AivyGremlin">
-          <img src={aivyGremlinGif} alt=""/>
+          <img src={aivyGremlinGif} alt="" />
         </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
@@ -309,9 +315,13 @@ function Shop() {
                     setConfirmedPurchase(NOT_ENOUGH_MANA);
                   } else {
                     const profileIconList = getProfileIconList();
-                    let selectedIcon = Math.floor(Math.random() * profileIconList.length);
-                    while (premiumIcons.includes(selectedIcon)) 
-                      selectedIcon = Math.floor(Math.random() * profileIconList.length);
+                    let selectedIcon = Math.floor(
+                      Math.random() * profileIconList.length
+                    );
+                    while (premiumIcons.includes(selectedIcon))
+                      selectedIcon = Math.floor(
+                        Math.random() * profileIconList.length
+                      );
                     setPurchasedIcon(selectedIcon);
                     if (profileIcons.includes(selectedIcon)) {
                       setConfirmedPurchase(DUPLICATE_ICON);
@@ -337,7 +347,7 @@ function Shop() {
         title="Premium Profile Icon Gacha"
       >
         <div className="AivyGremlin">
-          <img src={aivyGremlinGif} alt=""/>
+          <img src={aivyGremlinGif} alt="" />
         </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
@@ -351,7 +361,10 @@ function Shop() {
                   if (mana <= price) {
                     setConfirmedPurchase(NOT_ENOUGH_MANA);
                   } else {
-                    let selectedIcon = premiumIcons[Math.floor(Math.random() * premiumIcons.length)];
+                    let selectedIcon =
+                      premiumIcons[
+                        Math.floor(Math.random() * premiumIcons.length)
+                      ];
                     setPurchasedIcon(selectedIcon);
                     if (profileIcons.includes(selectedIcon)) {
                       setConfirmedPurchase(DUPLICATE_ICON);
@@ -377,7 +390,7 @@ function Shop() {
         title="Purchase Spaceship"
       >
         <div className="AivyGremlin">
-          <img src={aivyGremlinGif} alt=""/>
+          <img src={aivyGremlinGif} alt="" />
         </div>
         {confirmedPurchase === CONFIRM_PURCHASE ? (
           <div className="ShopMessage">
@@ -390,14 +403,11 @@ function Shop() {
                 onClick={() => {
                   if (aliensCaught !== null) {
                     setConfirmedPurchase(SPACESHIP_ALREADY_UNLOCKED);
-                  } 
-                  else if (mana <= price) {
+                  } else if (mana <= price) {
                     setConfirmedPurchase(NOT_ENOUGH_MANA);
-                  }
-                  else if (Object.entries(fishCaught).length < 107) {
+                  } else if (Object.entries(fishCaught).length < 107) {
                     setConfirmedPurchase(NOT_ENOUGH_FISH);
-                  }
-                  else {
+                  } else {
                     setConfirmedPurchase(SPACESHIP_PURCHASED);
                   }
                 }}

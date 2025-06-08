@@ -70,7 +70,7 @@
 
 .Patches {
   display: grid;
-  grid-template-columns: 2.5rem 12rem;
+  grid-template-columns: 2.5rem minmax(13rem, 15rem);
   gap: 1rem;
   border-bottom: 1px solid black;
   padding-bottom: 0.5rem;
@@ -83,7 +83,18 @@
 
 .Patches > h1 {
   margin: 0.25rem;
+  white-space: pre-wrap;
   text-align: left;
+}
+
+.PatchNotification {
+  position: absolute;
+  top: 0px;
+  right: -2px;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: red;
+  border-radius: 50%;
 }
 
 .ClaimButton {

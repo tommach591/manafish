@@ -6,11 +6,11 @@ import mintArcade1 from "../../../assets/miscImage/mintArcade1.png";
 import mintArcade2 from "../../../assets/miscImage/mintArcade2.png";
 import scarletArcade1 from "../../../assets/miscImage/scarletArcade1.png";
 import scarletArcade2 from "../../../assets/miscImage/scarletArcade2.png";
-import { useUtil } from "../../../utils/UtilContext";
+import { useAudio } from "../../../utils/AudioContext";
 
 function Slots({ bet, setCloseIsDisabled, openBroke }) {
   const { mana, updateMana } = useMana();
-  const { playAudio } = useUtil();
+  const { playAudio } = useAudio();
   const [slots, setSlots] = useState(["", "", "", "", ""]);
   const [mintCheers, setMintCheers] = useState(true);
   const [winnings, setWinnings] = useState(0);
@@ -68,7 +68,7 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
           setSlots([...newSlots]);
           if (i === newSlots.length - 1) {
             const newWinnings = calculateWinnings(newSlots, bet);
-            
+
             setWinnings(newWinnings);
             setCloseIsDisabled(false);
           }
@@ -78,19 +78,25 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
     }
 
     return () => spinTimeouts.forEach(clearTimeout); // Clear timeouts on cleanup
-  }, [bet, calculateWinnings, getRandomSymbol, setCloseIsDisabled, slots, playAudio]);
+  }, [
+    bet,
+    calculateWinnings,
+    getRandomSymbol,
+    setCloseIsDisabled,
+    slots,
+    playAudio,
+  ]);
 
   useEffect(() => {
-    if (!slots.includes("") && winnings > 0) { 
+    if (!slots.includes("") && winnings > 0) {
       updateMana(winnings);
       setMintCheers(Math.random() < 0.5);
-      
+
       if (winnings >= bet * 15) {
         playAudio("yippee");
         const sounds = ["ohMyGosh", "amazing", "wooow"];
         playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
-      }
-      else if (winnings >= bet * 2.5) {
+      } else if (winnings >= bet * 2.5) {
         playAudio("yippee");
         const sounds = ["great", "lucky", "wow", "yay", "niceHit"];
         playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
@@ -106,25 +112,28 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
 
   useEffect(() => {
     if (autoSpin) {
-      const autoSpinInterval = setInterval(() => {
-        if (mana >= bet) {
-          if (spinning && !slots.includes("")) {
-            updateMana(-bet);
-            setup();
-          } else if (!spinning) {
-            const startSpinTimeout = setTimeout(() => {
-              handleSpin();
-            }, 1000);
+      const autoSpinInterval = setInterval(
+        () => {
+          if (mana >= bet) {
+            if (spinning && !slots.includes("")) {
+              updateMana(-bet);
+              setup();
+            } else if (!spinning) {
+              const startSpinTimeout = setTimeout(() => {
+                handleSpin();
+              }, 1000);
 
-            return () => {
-              clearTimeout(startSpinTimeout);
-            };
+              return () => {
+                clearTimeout(startSpinTimeout);
+              };
+            }
+          } else {
+            setAutoSpin(false);
+            openBroke();
           }
-        } else {
-          setAutoSpin(false);
-          openBroke();
-        }
-      }, (winnings >= bet * 2.5) ? 2750 : 1200);
+        },
+        winnings >= bet * 2.5 ? 2750 : 1200
+      );
 
       return () => {
         clearInterval(autoSpinInterval);
@@ -228,13 +237,28 @@ function Slots({ bet, setCloseIsDisabled, openBroke }) {
         <h1 className="Condition">{`Any 2`}</h1>
         <h1 className="Multiplier">{`0.25x`}</h1>
       </div>
-      <div className="MintArcade" 
-        style={winnings >= bet * 2.5 && mintCheers ? {animation: "MintCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings >= bet * 15 ? mintArcade2 : mintArcade1} alt=""/>
+      <div
+        className="MintArcade"
+        style={
+          winnings >= bet * 2.5 && mintCheers
+            ? { animation: "MintCheer 2s ease-out forwards" }
+            : {}
+        }
+      >
+        <img src={winnings >= bet * 15 ? mintArcade2 : mintArcade1} alt="" />
       </div>
-      <div className="ScarletArcade" 
-        style={winnings >= bet * 2.5 && !mintCheers ? {animation: "ScarletCheer 2s ease-out forwards"} : {}}>
-        <img src={winnings >= bet * 15 ? scarletArcade2 : scarletArcade1} alt=""/>
+      <div
+        className="ScarletArcade"
+        style={
+          winnings >= bet * 2.5 && !mintCheers
+            ? { animation: "ScarletCheer 2s ease-out forwards" }
+            : {}
+        }
+      >
+        <img
+          src={winnings >= bet * 15 ? scarletArcade2 : scarletArcade1}
+          alt=""
+        />
       </div>
     </div>
   );

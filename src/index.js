@@ -7,20 +7,23 @@ import App from "./components/App";
 import { ManaProvider } from "./utils/ManaContext";
 import { FishProvider } from "./utils/FishContext";
 import { GardenProvider } from "./utils/GardenContext";
-import { UtilProvider } from "./utils/UtilContext";
+import { AudioProvider } from "./utils/AudioContext";
+import { SocketProvider } from "./utils/SocketContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
-    <UtilProvider>
       <ManaProvider>
         <FishProvider>
           <GardenProvider>
-            <App />
+            <SocketProvider>
+              <AudioProvider>
+                <App />
+              </AudioProvider>
+            </SocketProvider>
           </GardenProvider>
         </FishProvider>
       </ManaProvider>
-      </UtilProvider>
     </BrowserRouter>
 );
 

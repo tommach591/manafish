@@ -3,20 +3,25 @@ import { useMana } from "../../utils/ManaContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Modal from "../Modal";
-import Patches from "../../assets/PatchNotes.json"
+import patchNotes from "../../assets/PatchNotes.json";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 import aivyShopImage from "../../assets/miscImage/aivyShop.png";
 import mintletArcadeImage from "../../assets/miscImage/mintletArcade.png";
 import leaderboardImage from "../../assets/miscImage/leaderboard.png";
 import manaBeachImage from "../../assets/miscImage/manaBeach.png";
+import spaceImage from "../../assets/miscImage/space.png";
 import LogoutButton from "../LogoutButton";
-import { useUtil } from "../../utils/UtilContext";
+import { useAudio } from "../../utils/AudioContext";
+import { useFish } from "../../utils/FishContext";
 // import { useGarden } from "../../utils/GardenContext";
 
 function Home() {
   const navigate = useNavigate();
-  const { storedMana, retrieveStoredMana } = useMana();
-  const { playAudio } = useUtil(); 
+  // eslint-disable-next-line no-unused-vars
+  const { updateMana, storedMana, retrieveStoredMana } = useMana();
+  // eslint-disable-next-line no-unused-vars
+  const { addAllFish, aliensCaught } = useFish();
+  const { playAudio } = useAudio();
   // const { isAnyPlantFullyGrown } = useGarden();
   const [claimedMana, setClaimedMana] = useState(0);
 
@@ -31,7 +36,8 @@ function Home() {
   return (
     <div className="Home">
       <LogoutButton />
-      <button className="CreditsButton" 
+      <button
+        className="CreditsButton"
         onClick={() => {
           openCredits();
         }}
@@ -40,13 +46,24 @@ function Home() {
         <div className="BubbleReflection" />
         Credits
       </button>
-      <button className="PatchButton" 
+      <button
+        className="PatchButton"
         onClick={() => {
           openPatchNotes();
+          localStorage.setItem(
+            "patchVersion",
+            JSON.stringify(Object.keys(patchNotes)[0])
+          );
         }}
         onMouseEnter={() => playAudio("bubble")}
       >
         <div className="BubbleReflection" />
+        {JSON.stringify(Object.keys(patchNotes)[0]) !==
+        localStorage.getItem("patchVersion") ? (
+          <div className="PatchNotification"></div>
+        ) : (
+          <div />
+        )}
         Patch Notes
       </button>
       <button
@@ -83,7 +100,7 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Aivy's Shop
-          <img src={aivyShopImage} alt="" className="MenuButtonIcon"/>
+          <img src={aivyShopImage} alt="" className="MenuButtonIcon" />
         </button>
         <button
           onClick={() => {
@@ -93,7 +110,7 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Hall of Legends
-          <img src={leaderboardImage} alt="" className="MenuButtonIcon"/>
+          <img src={leaderboardImage} alt="" className="MenuButtonIcon" />
         </button>
         <button
           onClick={() => {
@@ -103,7 +120,7 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Mintlet's Arcade
-          <img src={mintletArcadeImage} alt="" className="MenuButtonIcon"/>
+          <img src={mintletArcadeImage} alt="" className="MenuButtonIcon" />
         </button>
         <button
           onClick={() => {
@@ -113,18 +130,22 @@ function Home() {
         >
           <div className="BubbleReflection" />
           Mana's Beach
-          <img src={manaBeachImage} alt="" className="MenuButtonIcon"/>
+          <img src={manaBeachImage} alt="" className="MenuButtonIcon" />
         </button>
-        {/* <button
-          onClick={() => {
-            if (aliensCaught) navigate("/space");
-            else alert("How are you going to go to space without a spaceship?")
-          }}
-        >
-          <div className="BubbleReflection" />
-          Space
-          <img src={manaBeachImage} alt="" className="MenuButtonIcon"/>
-        </button> */}
+        {/*
+          <button
+            onClick={() => {
+              if (aliensCaught) navigate("/space");
+              else
+                alert("How are you going to go to space without a spaceship?");
+            }}
+            onMouseEnter={() => playAudio("bubble")}
+          >
+            <div className="BubbleReflection" />
+            Space
+            <img src={spaceImage} alt="" className="MenuButtonIcon" />
+          </button>
+          */}
       </div>
 
       <Modal
@@ -147,14 +168,14 @@ function Home() {
         isDisabled={false}
       >
         <div className="PatchNotes">
-          {
-            Object.entries(Patches).map(([version, notes], i) => {
-              return <div key={i} className="Patches"> 
+          {Object.entries(patchNotes).map(([version, notes], i) => {
+            return (
+              <div key={i} className="Patches">
                 <h1 className="PatchVersion">{version}</h1>
                 <h1>{notes}</h1>
               </div>
-            })
-          }
+            );
+          })}
         </div>
       </Modal>
     </div>

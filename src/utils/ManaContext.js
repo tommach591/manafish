@@ -6,7 +6,12 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { createBalance, getBalance, updateBalance } from "./Balance";
+import {
+  createBalance,
+  getBalance,
+  updateBalance,
+  updateBalanceOnUnload,
+} from "./Balance";
 
 const ManaContext = createContext();
 export function useMana() {
@@ -14,9 +19,6 @@ export function useMana() {
 }
 
 export function ManaProvider({ children }) {
-  const TICK_RATE = 1000;
-  const REGEN_RATE = 30000 - 1000;
-
   const [userID, setUserID] = useState(() => {
     const savedUserID = JSON.stringify(localStorage.getItem("userID"));
     return savedUserID ? JSON.parse(savedUserID) : "";
@@ -27,38 +29,17 @@ export function ManaProvider({ children }) {
     return savedUsername ? JSON.parse(savedUsername) : "";
   });
 
-  const initializeState = useCallback((id, key, defaultValue) => {
-    const savedState = localStorage.getItem(id);
-    if (savedState) {
-      const parsedState = JSON.parse(savedState);
-      if (parsedState["balance"])
-        return parsedState["balance"][key] !== undefined
-          ? parsedState["balance"][key]
-          : defaultValue;
-      else return defaultValue;
-    }
-    return defaultValue;
-  }, []);
+  const [mana, setMana] = useState(0);
+  const [storedMana, setStoredMana] = useState(0);
+  const [maxStoredMana, setMaxStoredMana] = useState(480);
+  const [lastManaInterval, setLastManaInterval] = useState(new Date());
+  const [currentProfileIcon, setCurrentProfileIcon] = useState(0);
+  const [profileIcons, setProfileIcons] = useState([0]);
+  const [refresh, setRefresh] = useState(0);
+  const savedOnUnload = useRef(false);
 
-  const [mana, setMana] = useState(() => initializeState(userID, "mana", 0));
-  const [storedMana, setStoredMana] = useState(() =>
-    initializeState(userID, "storedMana", 0)
-  );
-  const [maxStoredMana, setMaxStoredMana] = useState(() =>
-    initializeState(userID, "maxStoredMana", 480)
-  );
-  const [lastManaInterval, setLastManaInterval] = useState(
-    () => new Date(initializeState(userID, "lastManaInterval", new Date()))
-  );
-  const [nextManaInterval, setNextManaInterval] = useState(
-    () => new Date(initializeState(userID, "nextManaInterval", new Date()))
-  );
-  const [currentProfileIcon, setCurrentProfileIcon] = useState(() =>
-    initializeState(userID, "currentProfileIcon", 0)
-  );
-  const [profileIcons, setProfileIcons] = useState(() =>
-    initializeState(userID, "profileIcons", [0])
-  );
+  const TICK_RATE = 1000;
+  const REGEN_RATE = 30000;
 
   const updateMana = useCallback((val) => {
     setMana((prev) => prev + val);
@@ -70,242 +51,174 @@ export function ManaProvider({ children }) {
   }, [storedMana]);
 
   const updateServerMana = useCallback(() => {
-    const updateFields = JSON.parse(localStorage.getItem(userID));
-    if (userID) updateBalance(userID, updateFields.balance);
-  }, [userID]);
-
-  const handleBalanceLogin = useCallback(
-    (id, username) => {
-      setMana(initializeState(id, "mana", 0));
-      setStoredMana(initializeState(id, "storedMana", 0));
-      setMaxStoredMana(initializeState(id, "maxStoredMana", 480));
-      setLastManaInterval(
-        new Date(initializeState(id, "lastManaInterval", new Date()))
-      );
-      setNextManaInterval(
-        new Date(initializeState(id, "nextManaInterval", new Date()))
-      );
-      setCurrentProfileIcon(initializeState(id, "currentProfileIcon", 0));
-      setProfileIcons(initializeState(id, "profileIcons", [0]));
-
-      setUserID(id);
-      setUsername(username);
-      localStorage.setItem("userID", id);
-      localStorage.setItem("username", username);
-    },
-    [initializeState]
-  );
-
-  const handleBalanceLogout = useCallback(async () => {
+    if (!userID || refresh === 0) return;
+    // console.log("Saving mana to server");
     const updateFields = {
       balance: {
         mana: mana,
         storedMana: storedMana,
         maxStoredMana: maxStoredMana,
         lastManaInterval: lastManaInterval,
-        nextManaInterval: nextManaInterval,
         currentProfileIcon: currentProfileIcon,
         profileIcons: profileIcons,
       },
     };
-    const existingData = JSON.parse(localStorage.getItem(userID)) || {};
+    updateBalance(userID, updateFields.balance);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    userID,
+    mana,
+    storedMana,
+    maxStoredMana,
+    lastManaInterval,
+    currentProfileIcon,
+    profileIcons,
+  ]);
 
-    const mergedData = {
-      ...existingData,
+  const updateServerManaUnload = useCallback(() => {
+    if (!userID || refresh === 0 || savedOnUnload.current) return;
+    savedOnUnload.current = true;
+
+    // console.log("Saving mana to server on unload");
+    const updateFields = {
       balance: {
-        ...updateFields.balance,
+        mana,
+        storedMana,
+        maxStoredMana,
+        lastManaInterval,
+        currentProfileIcon,
+        profileIcons,
       },
     };
-    localStorage.setItem(userID, JSON.stringify(mergedData));
+    updateBalanceOnUnload(userID, updateFields.balance);
+  }, [
+    userID,
+    refresh,
+    mana,
+    storedMana,
+    maxStoredMana,
+    lastManaInterval,
+    currentProfileIcon,
+    profileIcons,
+  ]);
+
+  const handleBalanceLogin = useCallback((id, username) => {
+    setUserID(id);
+    setUsername(username);
+    localStorage.setItem("userID", id);
+    localStorage.setItem("username", username);
+  }, []);
+
+  const handleBalanceLogout = useCallback(() => {
     updateServerMana();
-    
     localStorage.removeItem("userID");
     localStorage.removeItem("username");
-
     setUsername("");
     setUserID("");
-  }, [
-    userID,
-    mana,
-    storedMana,
-    maxStoredMana,
-    lastManaInterval,
-    nextManaInterval,
-    currentProfileIcon,
-    profileIcons,
-    updateServerMana,
-  ]);
-
-  // Save Locally.
-  const lastSaved = useRef(null);
-  useEffect(() => {
-    if (!userID) return; 
-    const saveInterval = setInterval(() => {
-      const updateFields = {
-        balance: {
-          mana: mana,
-          storedMana: storedMana,
-          maxStoredMana: maxStoredMana,
-          lastManaInterval: lastManaInterval,
-          nextManaInterval: nextManaInterval,
-          currentProfileIcon: currentProfileIcon,
-          profileIcons: profileIcons,
-        },
-      };
-      const existingData = JSON.parse(localStorage.getItem(userID)) || {};
-
-      const isSame = lastSaved.current && JSON.stringify(lastSaved.current) === JSON.stringify(updateFields.balance);
-      if (isSame) return;
-
-      const mergedData = {
-        ...existingData,
-        balance: {
-          ...existingData.balance,
-          ...updateFields.balance,
-        },
-      };
-
-      localStorage.setItem(userID, JSON.stringify(mergedData));
-      lastSaved.current = updateFields.balance;
-    }, 500);
-
-    return () => clearInterval(saveInterval);
-  }, [
-    userID,
-    mana,
-    storedMana,
-    maxStoredMana,
-    lastManaInterval,
-    nextManaInterval,
-    currentProfileIcon,
-    profileIcons,
-  ]);
+  }, [updateServerMana]);
 
   // Save to Server
   useEffect(() => {
     if (!userID) return;
-    const saveInterval = setInterval(() => {
-      updateServerMana();
-    }, 1000 * 60 * 5);
-
-    return () => {
-      clearInterval(saveInterval);
-    };
+    const timeout = setTimeout(() => updateServerMana(), 5000);
+    return () => clearTimeout(timeout);
   }, [updateServerMana, userID]);
 
+  // Save on unload
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") updateServerMana();
+    };
+    const handleUnload = () => {
+      updateServerManaUnload();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("beforeunload", handleUnload);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, [updateServerMana, updateServerManaUnload]);
+
+  // Load data
   useEffect(() => {
     if (!userID) return;
-    else {
-      getBalance(userID).then((res) => {
+
+    const fetchBalance = async () => {
+      try {
+        const res = await getBalance(userID);
         if (res) {
-          const savedData = localStorage.getItem(userID)
-            ? JSON.parse(localStorage.getItem(userID))
-            : null;
-          if (!savedData?.balance) {
+          const savedState = JSON.parse(localStorage.getItem(userID));
+          const hasValidLocal = savedState?.balance?.lastManaInterval;
+
+          const localStorageDataTime = hasValidLocal
+            ? new Date(savedState.balance.lastManaInterval).getTime()
+            : 0;
+          const serverStorageDataTime = new Date(
+            res.lastManaInterval
+          ).getTime();
+
+          if (hasValidLocal && localStorageDataTime > serverStorageDataTime) {
+            console.log("Loading local balance data...");
+            setMana(savedState.balance.mana);
+            setStoredMana(savedState.balance.storedMana);
+            setMaxStoredMana(savedState.balance.maxStoredMana);
+            setLastManaInterval(new Date(savedState.balance.lastManaInterval));
+            setCurrentProfileIcon(savedState.balance.currentProfileIcon);
+            setProfileIcons(savedState.balance.profileIcons);
+          } else {
             console.log("Loading server balance data...");
             setMana(res.mana);
             setStoredMana(res.storedMana);
             setMaxStoredMana(res.maxStoredMana);
             setLastManaInterval(new Date(res.lastManaInterval));
-            setNextManaInterval(new Date(res.nextManaInterval));
             setCurrentProfileIcon(res.currentProfileIcon);
             setProfileIcons(res.profileIcons);
-
-            const updateFields = {
-              balance: {
-                mana: res.mana,
-                storedMana: res.storedMana,
-                maxStoredMana: res.maxStoredMana,
-                lastManaInterval: new Date(res.lastManaInterval),
-                nextManaInterval: new Date(res.nextManaInterval),
-                currentProfileIcon: res.currentProfileIcon,
-                profileIcons: res.profileIcons,
-              },
-            };
-            const existingData = JSON.parse(localStorage.getItem(userID)) || {};
-            const mergedData = {
-              ...existingData,
-              balance: {
-                ...existingData.balance,
-                ...updateFields.balance,
-              },
-            };
-
-            localStorage.setItem(userID, JSON.stringify(mergedData));
-          } else {
-            console.log("Using local balance data...");
           }
         } else {
+          console.log("Creating new account...");
           createBalance(userID);
-
           setMana(50);
           setStoredMana(0);
           setMaxStoredMana(480);
           setLastManaInterval(new Date());
-          setNextManaInterval(new Date());
           setCurrentProfileIcon(0);
           setProfileIcons([0]);
-
-          const updateFields = {
-            balance: {
-              mana: 50,
-              storedMana: 0,
-              maxStoredMana: 480,
-              lastManaInterval: new Date(),
-              nextManaInterval: new Date(),
-              currentProfileIcon: 0,
-              profileIcons: [0],
-            },
-          };
-
-          const existingData = JSON.parse(localStorage.getItem(userID)) || {};
-          const mergedData = {
-            ...existingData,
-            balance: {
-              ...existingData.balance,
-              ...updateFields.balance,
-            },
-          };
-
-          localStorage.setItem(userID, JSON.stringify(mergedData));
         }
-      });
-    }
+      } catch (err) {
+        console.error("Failed to fetch balance. Logging out user.", err);
+        localStorage.removeItem("userID");
+        localStorage.removeItem("username");
+        setUsername("");
+        setUserID("");
+      }
+    };
+
+    fetchBalance();
   }, [userID]);
 
   useEffect(() => {
     if (!userID) return;
-
     const manaRegenInterval = setInterval(() => {
-      const now = new Date();
-      const timeElapsed = nextManaInterval - lastManaInterval;
+      const now = Date.now();
+      const nextTime = new Date(lastManaInterval).getTime();
+
       if (storedMana >= maxStoredMana) {
-        now.setTime(now.getTime() + REGEN_RATE);
-        setNextManaInterval(new Date(now.getTime()));
-      } else if (timeElapsed < 0) {
-        const newStoredMana =
-          storedMana + Math.abs(Math.floor(timeElapsed / REGEN_RATE)) >
-          maxStoredMana
-            ? maxStoredMana
-            : storedMana + Math.abs(Math.floor(timeElapsed / REGEN_RATE));
-        setStoredMana(newStoredMana);
-
-        now.setTime(now.getTime() + REGEN_RATE);
-        setNextManaInterval(new Date(now.getTime()));
+        setLastManaInterval(new Date(now + REGEN_RATE));
+      } else {
+        const timeElapsed = now - nextTime;
+        if (timeElapsed >= 0) {
+          const increments = Math.floor(timeElapsed / REGEN_RATE) + 1;
+          setStoredMana((prev) => Math.min(prev + increments, maxStoredMana));
+          setLastManaInterval(new Date(nextTime + increments * REGEN_RATE));
+        }
       }
-
-      setLastManaInterval(new Date());
-    }, TICK_RATE - (new Date() % TICK_RATE));
+      setRefresh((prev) => prev + 1);
+    }, TICK_RATE);
 
     return () => clearInterval(manaRegenInterval);
-  }, [
-    REGEN_RATE,
-    userID,
-    lastManaInterval,
-    maxStoredMana,
-    nextManaInterval,
-    storedMana,
-  ]);
+  }, [userID, maxStoredMana, lastManaInterval, storedMana]);
 
   return (
     <ManaContext.Provider
@@ -322,7 +235,6 @@ export function ManaProvider({ children }) {
         maxStoredMana,
         setMaxStoredMana,
         lastManaInterval,
-        nextManaInterval,
         currentProfileIcon,
         setCurrentProfileIcon,
         profileIcons,

@@ -3,12 +3,10 @@ import "./Login.css";
 import { createAccount, loginAccount } from "../../utils/Account";
 import { useNavigate } from "react-router-dom";
 import { useMana } from "../../utils/ManaContext";
-import { useFish } from "../../utils/FishContext";
 
 function Login() {
   const navigate = useNavigate();
   const { userID, handleBalanceLogin } = useMana();
-  const { handleFishLogin } = useFish();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,12 +22,11 @@ function Login() {
       loginAccount(username, password).then((res) => {
         if (res) {
           handleBalanceLogin(res._id, username);
-          handleFishLogin(res._id);
           navigate("/");
         } else alert("Invalid username or password.");
       });
     else alert("Invalid username or password.");
-  }, [username, password, handleBalanceLogin, handleFishLogin, navigate])
+  }, [username, password, handleBalanceLogin, navigate]);
 
   return (
     <div className="Login">
@@ -61,11 +58,7 @@ function Login() {
         />
       </div>
       <div className="LoginButtons">
-        <button
-          onClick={handleLogin}
-        >
-          Sign In
-        </button>
+        <button onClick={handleLogin}>Sign In</button>
         <button
           onClick={() => {
             if (username.length >= 3 && password.length >= 8)
