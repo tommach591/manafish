@@ -120,7 +120,7 @@ export function ManaProvider({ children }) {
   // Save to Server
   useEffect(() => {
     if (!userID) return;
-    const timeout = setTimeout(() => updateServerMana(), 5000);
+    const timeout = setTimeout(() => updateServerMana(), 500);
     return () => clearTimeout(timeout);
   }, [updateServerMana, userID]);
 

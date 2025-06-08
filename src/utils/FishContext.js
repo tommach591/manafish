@@ -118,7 +118,7 @@ export function FishProvider({ children }) {
   // Save to Server
   useEffect(() => {
     if (!userID) return;
-    const timeout = setTimeout(() => updateServerFish(), 5000);
+    const timeout = setTimeout(() => updateServerFish(), 500);
     return () => clearTimeout(timeout);
   }, [updateServerFish, userID]);
 
