@@ -4,10 +4,9 @@ import {
   useState,
   useCallback,
   useEffect,
-  useRef,
 } from "react";
 import { useMana } from "./ManaContext";
-import { createFish, getFish, updateFish, updateFishOnUnload } from "./Fish";
+import { createFish, getFish, updateFish } from "./Fish";
 import fishionary from "../assets/Fishionary.json";
 
 const FishContext = createContext();
@@ -20,7 +19,6 @@ export function FishProvider({ children }) {
 
   const [fishCaught, setFishCaught] = useState({});
   const [aliensCaught, setAliensCaught] = useState(null);
-  const savedOnUnload = useRef(false);
 
   const updateServerFish = useCallback(() => {
     if (!userID) return;
@@ -32,19 +30,6 @@ export function FishProvider({ children }) {
       },
     };
     updateFish(userID, updateFields.fish);
-  }, [userID, fishCaught, aliensCaught]);
-
-  const updateServerFishUnload = useCallback(() => {
-    if (!userID || savedOnUnload.current) return;
-    savedOnUnload.current = true;
-    // console.log("Saving fish to server on unload");
-    const updateFields = {
-      fish: {
-        fishCaught: fishCaught,
-        aliensCaught: aliensCaught,
-      },
-    };
-    updateFishOnUnload(userID, updateFields.fish);
   }, [userID, fishCaught, aliensCaught]);
 
   const addFish = useCallback(
@@ -121,23 +106,6 @@ export function FishProvider({ children }) {
     const timeout = setTimeout(() => updateServerFish(), 500);
     return () => clearTimeout(timeout);
   }, [updateServerFish, userID]);
-
-  // Save on unload
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") updateServerFish();
-    };
-    const handleUnload = () => {
-      updateServerFishUnload();
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("beforeunload", handleUnload);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("beforeunload", handleUnload);
-    };
-  }, [updateServerFish, updateServerFishUnload]);
 
   // Load data
   useEffect(() => {

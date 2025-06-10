@@ -4,14 +4,8 @@ import {
   useState,
   useCallback,
   useEffect,
-  useRef,
 } from "react";
-import {
-  createBalance,
-  getBalance,
-  updateBalance,
-  updateBalanceOnUnload,
-} from "./Balance";
+import { createBalance, getBalance, updateBalance } from "./Balance";
 
 const ManaContext = createContext();
 export function useMana() {
@@ -36,7 +30,6 @@ export function ManaProvider({ children }) {
   const [currentProfileIcon, setCurrentProfileIcon] = useState(0);
   const [profileIcons, setProfileIcons] = useState([0]);
   const [refresh, setRefresh] = useState(0);
-  const savedOnUnload = useRef(false);
 
   const TICK_RATE = 1000;
   const REGEN_RATE = 30000;
@@ -75,33 +68,6 @@ export function ManaProvider({ children }) {
     profileIcons,
   ]);
 
-  const updateServerManaUnload = useCallback(() => {
-    if (!userID || refresh === 0 || savedOnUnload.current) return;
-    savedOnUnload.current = true;
-
-    // console.log("Saving mana to server on unload");
-    const updateFields = {
-      balance: {
-        mana,
-        storedMana,
-        maxStoredMana,
-        lastManaInterval,
-        currentProfileIcon,
-        profileIcons,
-      },
-    };
-    updateBalanceOnUnload(userID, updateFields.balance);
-  }, [
-    userID,
-    refresh,
-    mana,
-    storedMana,
-    maxStoredMana,
-    lastManaInterval,
-    currentProfileIcon,
-    profileIcons,
-  ]);
-
   const handleBalanceLogin = useCallback((id, username) => {
     setUserID(id);
     setUsername(username);
@@ -123,23 +89,6 @@ export function ManaProvider({ children }) {
     const timeout = setTimeout(() => updateServerMana(), 500);
     return () => clearTimeout(timeout);
   }, [updateServerMana, userID]);
-
-  // Save on unload
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") updateServerMana();
-    };
-    const handleUnload = () => {
-      updateServerManaUnload();
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("beforeunload", handleUnload);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("beforeunload", handleUnload);
-    };
-  }, [updateServerMana, updateServerManaUnload]);
 
   // Load data
   useEffect(() => {
