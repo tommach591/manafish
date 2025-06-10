@@ -1,0 +1,32 @@
+.ManaBubble {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+
+  z-index: 999;
+  opacity: 1;
+  animation: none;
+  transition: none;
+}
+
+.ManaBubble > img {
+  width: 750%;
+}
+
+.HideBubble {
+  pointer-events: none;
+  animation: fadeOut 0.75s linear forwards 1;
+}
+
+.ShowBubble {
+  opacity: 1;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

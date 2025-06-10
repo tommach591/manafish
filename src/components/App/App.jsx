@@ -16,6 +16,7 @@ import Modal from "../Modal";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 import VolumeSlider from "./VolumeSlider";
 import patchNotes from "../../assets/PatchNotes.json";
+import ManaBubble from "./ManaBubble";
 
 function App() {
   const {
@@ -92,6 +93,7 @@ function App() {
       ) : (
         <div className="AppHeader" />
       )}
+      {userID ? <ManaBubble /> : <div />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

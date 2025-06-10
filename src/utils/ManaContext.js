@@ -30,6 +30,7 @@ export function ManaProvider({ children }) {
   const [currentProfileIcon, setCurrentProfileIcon] = useState(0);
   const [profileIcons, setProfileIcons] = useState([0]);
   const [refresh, setRefresh] = useState(0);
+  const [isManaBubbleOn, setIsManaBubbleOn] = useState(false);
 
   const TICK_RATE = 1000;
   const REGEN_RATE = 30000;
@@ -156,13 +157,14 @@ export function ManaProvider({ children }) {
           const increments = Math.floor(timeElapsed / REGEN_RATE) + 1;
           setStoredMana((prev) => Math.min(prev + increments, maxStoredMana));
           setLastManaInterval(new Date(nextTime + increments * REGEN_RATE));
+          if (!isManaBubbleOn) setIsManaBubbleOn(Math.random() < 0.05);
         }
       }
       setRefresh((prev) => prev + 1);
     }, TICK_RATE);
 
     return () => clearInterval(manaRegenInterval);
-  }, [userID, maxStoredMana, lastManaInterval, storedMana]);
+  }, [userID, maxStoredMana, lastManaInterval, storedMana, isManaBubbleOn]);
 
   return (
     <ManaContext.Provider
@@ -183,6 +185,8 @@ export function ManaProvider({ children }) {
         setCurrentProfileIcon,
         profileIcons,
         setProfileIcons,
+        isManaBubbleOn,
+        setIsManaBubbleOn,
       }}
     >
       {children}
