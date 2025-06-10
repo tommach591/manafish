@@ -39,7 +39,7 @@ function Fishing() {
 
   function generateLobbyCode() {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let code = "F"; // Start with F
+    let code = roomType; // Start with F
 
     for (let i = 0; i < 5; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
@@ -141,26 +141,28 @@ function Fishing() {
         </button>
         <h1>Lobbies</h1>
         <div className="FishingLobbies">
-          {activeLobbies.map(([key, value], i) => {
-            return (
-              <div
-                className="FishingLobby"
-                key={i}
-                onClick={() => {
-                  setRoom(key);
-                }}
-              >
-                <h1 className="FishingLobbyRoom">{key}</h1>
-                <h1 className="FishingLobbyValue">
-                  <img
-                    src="https://api.iconify.design/material-symbols:person.svg?color=%2332323c"
-                    alt=""
-                  />
-                  {value}/8
-                </h1>
-              </div>
-            );
-          })}
+          {activeLobbies
+            .filter(([str]) => str.startsWith(roomType))
+            .map(([key, value], i) => {
+              return (
+                <div
+                  className="FishingLobby"
+                  key={i}
+                  onClick={() => {
+                    setRoom(key);
+                  }}
+                >
+                  <h1 className="FishingLobbyRoom">{key}</h1>
+                  <h1 className="FishingLobbyValue">
+                    <img
+                      src="https://api.iconify.design/material-symbols:person.svg?color=%2332323c"
+                      alt=""
+                    />
+                    {value}/8
+                  </h1>
+                </div>
+              );
+            })}
         </div>
       </div>
 

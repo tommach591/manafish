@@ -47,6 +47,21 @@ function Home() {
         Credits
       </button>
       <button
+        className="DiscordButton"
+        onClick={() => {
+          const newWindow = window.open(
+            "https://discord.gg/4pfpHqcwpC",
+            "_blank",
+            "noopener,noreferrer"
+          );
+          if (newWindow) newWindow.opener = null;
+        }}
+        onMouseEnter={() => playAudio("bubble")}
+      >
+        <div className="BubbleReflection" />
+        Discord
+      </button>
+      <button
         className="PatchButton"
         onClick={() => {
           openPatchNotes();
@@ -135,8 +150,9 @@ function Home() {
         {/*
           <button
             onClick={() => {
-              if (aliensCaught) navigate("/space");
-              else
+              if (aliensCaught) {
+                navigate("/space");
+              } else
                 alert("How are you going to go to space without a spaceship?");
             }}
             onMouseEnter={() => playAudio("bubble")}

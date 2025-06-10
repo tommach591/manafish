@@ -32,9 +32,9 @@ export function SocketProvider({ children }) {
     return regex.test(room);
   }, [room, roomType]);
 
-  const refreshLobbyList = () => {
+  const refreshLobbyList = useCallback(() => {
     socket.current.emit("refreshLobbies", userID);
-  };
+  }, [userID]);
 
   const joinRoom = useCallback(() => {
     if (validateRoomCode() && userID && !playerList[userID]) {
@@ -82,7 +82,7 @@ export function SocketProvider({ children }) {
       alert("Uh oh. Room is full, try another code.");
     };
     const handleRefresh = (data) => {
-      setActiveLobbies(data.filter(([str]) => str.startsWith(roomType)));
+      setActiveLobbies(data);
     };
     const handleForceLogout = (data) => {
       alert(data.reason || "You were logged out.");

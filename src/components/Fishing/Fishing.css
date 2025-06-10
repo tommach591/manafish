@@ -48,6 +48,7 @@
 
 .FishionaryCount {
   font-size: 11px;
+  text-wrap: nowrap;
 }
 
 .OpenFishingLobbies {

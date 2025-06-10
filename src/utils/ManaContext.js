@@ -176,15 +176,6 @@ export function ManaProvider({ children }) {
             setCurrentProfileIcon(res.currentProfileIcon);
             setProfileIcons(res.profileIcons);
           }
-        } else {
-          console.log("Creating new account...");
-          createBalance(userID);
-          setMana(50);
-          setStoredMana(0);
-          setMaxStoredMana(480);
-          setLastManaInterval(new Date());
-          setCurrentProfileIcon(0);
-          setProfileIcons([0]);
         }
       } catch (err) {
         // console.error("Failed to fetch balance. Logging out user.", err);

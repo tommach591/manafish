@@ -26,18 +26,18 @@ function SpaceGame({
   const [autoFish, setAutoFish] = useState(false);
 
   const [messageQueue, setMessageQueue] = useState({});
-  const BAITCOST = 18;
+  const BAITCOST = 20;
   const FISHINGTIME = 1000 * 7;
 
   const [fishRates, setFishRates] = useState(1);
   const baseWeights = [
-    550000,  // Common
-    350000,  // Uncommon
-    100000,  // Rare
-    10000,   // Epic
-    2500,    // Unique
-    300,     // Legendary
-    5       // Mythic
+    550000, // Common
+    350000, // Uncommon
+    100000, // Rare
+    10000, // Epic
+    2500, // Unique
+    300, // Legendary
+    5, // Mythic
   ];
   const [weights, setWeights] = useState(baseWeights);
 
@@ -55,7 +55,9 @@ function SpaceGame({
 
   const handleCatchFish = useCallback(() => {
     const FISHES = [[], [], [], [], [], [], []];
-    const [COMMON, UNCOMMON, RARE, EPIC, UNIQUE, LEGENDARY] = [25, 50, 70, 150, 500, 5000]
+    const [COMMON, UNCOMMON, RARE, EPIC, UNIQUE, LEGENDARY] = [
+      25, 50, 70, 150, 500, 5000,
+    ];
 
     Object.keys(spacedex).forEach((key) => {
       const item = spacedex[key];
@@ -105,8 +107,7 @@ function SpaceGame({
       playAudio("yippee");
       const sounds = ["ohMyGosh", "amazing", "wooow"];
       playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
-    }
-    else if (category >= 3) {
+    } else if (category >= 3) {
       playAudio("yippee");
       const sounds = ["great", "lucky", "wow", "yay", "niceCatch"];
       playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
@@ -135,14 +136,14 @@ function SpaceGame({
     }, 20 * 60 * 1000); // every 20 min
 
     updateFishRates();
-  
+
     return () => clearInterval(interval);
   }, []);
-  
+
   useEffect(() => {
     function getSkewedWeights(baseWeights, fishRates) {
       const maxIndex = baseWeights.length - 1;
-    
+
       return baseWeights.map((weight, index) => {
         const skewFactor = Math.pow(fishRates, maxIndex - index);
         return weight * skewFactor;
@@ -157,7 +158,7 @@ function SpaceGame({
       return percent.toFixed(5) + "%";
     }));
     */
-    
+
     setWeights(newWeights);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fishRates]);
@@ -231,20 +232,20 @@ function SpaceGame({
   const getFishingFilter = useCallback(() => {
     const normalized = (fishRates - 0.8) / (1.2 - 0.8);
 
-    const brightness = 0.95 + normalized * 0.08; 
-    const contrast = 0.98 + normalized * 0.04;  
-  
+    const brightness = 0.95 + normalized * 0.08;
+    const contrast = 0.98 + normalized * 0.04;
+
     return `brightness(${brightness}) contrast(${contrast})`;
   }, [fishRates]);
 
   const getFishingOverlayStyle = useCallback(() => {
-    const normalized = (fishRates - 0.8) / (1.2 - 0.8); 
+    const normalized = (fishRates - 0.8) / (1.2 - 0.8);
     const tintStrength = Math.abs(normalized - 0.5) * 1;
-  
+
     if (fishRates > 1.0) {
-      return `rgba(255, 255, 100, ${tintStrength})`; 
+      return `rgba(255, 255, 100, ${tintStrength})`;
     } else if (fishRates < 1.0) {
-      return `rgba(20, 10, 50, ${tintStrength})`; 
+      return `rgba(20, 10, 50, ${tintStrength})`;
     } else {
       return `rgba(0,0,0,0)`;
     }
@@ -253,8 +254,9 @@ function SpaceGame({
   return (
     <div className="SpaceGame">
       <div className="ManaDisplayWhileFishing">
-        <h1>{`Mana: ${formatNumberWithCommas(mana)}`}
-          <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+        <h1>
+          {`Mana: ${formatNumberWithCommas(mana)}`}
+          <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
         </h1>
       </div>
       <div className="FishingDisplay">
@@ -262,13 +264,28 @@ function SpaceGame({
           <div className="FishingDisplayImages">
             <img
               className="FishingAnimation"
-              src={Object.keys(playerList).length === 1 ? soloFishingGif : duoFishingGif}
+              src={
+                Object.keys(playerList).length === 1
+                  ? soloFishingGif
+                  : duoFishingGif
+              }
               alt=""
-              style={{ filter: getFishingFilter(), backgroundColor: getFishingOverlayStyle() }}
+              style={{
+                filter: getFishingFilter(),
+                backgroundColor: getFishingOverlayStyle(),
+              }}
             />
-            <img src={fishRates >= 1.05 ? "https://api.iconify.design/line-md:sun-rising-filled-loop.svg?color=%23ffda75" 
-              : fishRates < 0.95 ? "https://api.iconify.design/line-md:sunny-filled-loop-to-moon-filled-alt-loop-transition.svg?color=%23c4d0e3" 
-              : ""} alt=""  className="FishingRateIndicator"/>
+            <img
+              src={
+                fishRates >= 1.05
+                  ? "https://api.iconify.design/line-md:sun-rising-filled-loop.svg?color=%23ffda75"
+                  : fishRates < 0.95
+                  ? "https://api.iconify.design/line-md:sunny-filled-loop-to-moon-filled-alt-loop-transition.svg?color=%23c4d0e3"
+                  : ""
+              }
+              alt=""
+              className="FishingRateIndicator"
+            />
           </div>
         ) : alienPrize ? (
           <div className="AlienCaughtInfo">
@@ -298,7 +315,8 @@ function SpaceGame({
           disabled={isFishing || autoFish}
         >
           <span>
-          Fish - {BAITCOST} <img className="CurrencyIcon" src={manaCurrencyImg} alt=""/>
+            Fish - {BAITCOST}{" "}
+            <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
           </span>
         </button>
         <button

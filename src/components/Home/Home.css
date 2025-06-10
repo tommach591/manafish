@@ -36,7 +36,7 @@
 
   position: absolute;
   bottom: 10px;
-  left: 10px;
+  left: 0.75rem;
 }
 
 .Credits {
@@ -50,7 +50,7 @@
   font-weight: bold;
 }
 
-.PatchButton {
+.DiscordButton {
   width: 2rem;
   height: 2rem;
   font-size: 10px;
@@ -58,6 +58,16 @@
   position: absolute;
   bottom: 10px;
   left: 4rem;
+}
+
+.PatchButton {
+  width: 2rem;
+  height: 2rem;
+  font-size: 10px;
+
+  position: absolute;
+  bottom: 10px;
+  left: 7.25rem;
 }
 
 .PatchNotes {
