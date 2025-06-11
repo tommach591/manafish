@@ -8,7 +8,7 @@ import { useFish } from "../../../utils/FishContext";
 import Modal from "../../Modal";
 import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
 import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
-import { formatNumberWithCommas } from "../../../utils/Helper";
+import { formatNumberWithCommas, formatTime } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
 import { useAudio } from "../../../utils/AudioContext";
 
@@ -24,6 +24,7 @@ function FishingGame({
   const [fishPrize, setFishPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
+  const [timePassed, setTimePassed] = useState(0);
 
   const [messageQueue, setMessageQueue] = useState({});
   const BAITCOST = 10;
@@ -135,9 +136,16 @@ function FishingGame({
       updateFishRates();
     }, 20 * 60 * 1000); // every 20 min
 
+    const timerInterval = setInterval(() => {
+      setTimePassed((prev) => prev + 1);
+    }, 1000); // every 20 min
+
     updateFishRates();
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearInterval(timerInterval);
+    };
   }, []);
 
   useEffect(() => {
@@ -253,6 +261,7 @@ function FishingGame({
 
   return (
     <div className="FishingGame">
+      <h1 className="Timer">{formatTime(timePassed)}</h1>
       <div className="ManaDisplayWhileFishing">
         <h1>
           {`Mana: ${formatNumberWithCommas(mana)}`}

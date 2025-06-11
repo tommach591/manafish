@@ -26,7 +26,7 @@ function ManaBubble() {
   }, [isManaBubbleOn]);
 
   useEffect(() => {
-    const padding = 56;
+    const padding = 57;
 
     const interval = setInterval(() => {
       setX((prevX) => {

@@ -58,7 +58,7 @@
   animation: none;
 }
 
-.FishingButtons > button > span { 
+.FishingButtons > button > span {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,5 +119,11 @@
   box-sizing: border-box;
 
   padding-top: 5rem;
+}
 
+.Timer {
+  position: absolute;
+  top: 1.35rem;
+  right: 1rem;
+  text-align: right;
 }
