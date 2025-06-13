@@ -99,6 +99,15 @@ function Space() {
             openSpacedex();
           }}
           onMouseEnter={() => playAudio("bubble")}
+          style={
+            isSpaceGameOpen
+              ? {
+                  position: "absolute",
+                  top: "1rem",
+                  zIndex: "999",
+                }
+              : {}
+          }
         >
           <div className="BubbleReflection" />
           Spacedex

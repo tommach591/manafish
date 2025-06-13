@@ -99,6 +99,15 @@ function Fishing() {
             openFishionary();
           }}
           onMouseEnter={() => playAudio("bubble")}
+          style={
+            isFishingGameOpen
+              ? {
+                  position: "absolute",
+                  top: "1rem",
+                  zIndex: "999",
+                }
+              : {}
+          }
         >
           <div className="BubbleReflection" />
           Fishionary

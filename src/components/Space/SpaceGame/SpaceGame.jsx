@@ -24,7 +24,8 @@ function SpaceGame({
   const [alienPrize, setAlienPrize] = useState("");
   const [isFishing, setIsFishing] = useState(false);
   const [autoFish, setAutoFish] = useState(false);
-  const [timePassed, setTimePassed] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [timePassed, setTimePassed] = useState(new Date());
 
   const [messageQueue, setMessageQueue] = useState({});
   const BAITCOST = 20;
@@ -136,15 +137,10 @@ function SpaceGame({
       updateFishRates();
     }, 20 * 60 * 1000); // every 20 min
 
-    const timerInterval = setInterval(() => {
-      setTimePassed((prev) => prev + 1);
-    }, 1000); // every 20 min
-
     updateFishRates();
 
     return () => {
       clearInterval(interval);
-      clearInterval(timerInterval);
     };
   }, []);
 
@@ -261,7 +257,7 @@ function SpaceGame({
 
   return (
     <div className="SpaceGame">
-      <h1 className="Timer">{formatTime(timePassed)}</h1>
+      {formatTime(Math.floor((Date.now() - timePassed.getTime()) / 1000))}
       <div className="ManaDisplayWhileFishing">
         <h1>
           {`Mana: ${formatNumberWithCommas(mana)}`}

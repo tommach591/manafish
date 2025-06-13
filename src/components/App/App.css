@@ -75,6 +75,7 @@
   position: absolute;
   top: 2rem;
   right: 1rem;
+  z-index: 999;
 }
 
 .ProfileIcon > img {

@@ -1,24 +1,25 @@
 .VolumeSlider {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.75rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
 
-    width: 8rem;
-    display: flex;
-    justify-content: center;
+  width: 8rem;
+  display: flex;
+  justify-content: center;
+  z-index: 999;
 }
 
 .BGMIcon {
-    width: 1.5rem;
+  width: 1.5rem;
 }
 
 .VolumeSlider > input {
-    width: 100%;
+  width: 100%;
 }
 
 .NotificationsIcon {
-    position: absolute;
-    width: 1.5rem;
-    right: 6.5rem;
-    top: 1.5rem
+  position: absolute;
+  width: 1.5rem;
+  right: 6.5rem;
+  top: 1.5rem;
 }
