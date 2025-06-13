@@ -103,14 +103,17 @@ function Space() {
             isSpaceGameOpen
               ? {
                   position: "absolute",
-                  top: "1rem",
+                  bottom: "0.5rem",
+                  left: "0.5rem",
                   zIndex: "999",
+                  width: "2rem",
+                  height: "2rem",
                 }
               : {}
           }
         >
           <div className="BubbleReflection" />
-          Spacedex
+          {isSpacedexOpen ? "" : "Spacedex"}
           <h1 className="SpacedexCount">
             {Object.keys(aliensCaught).length} / {Object.keys(spacedex).length}
           </h1>

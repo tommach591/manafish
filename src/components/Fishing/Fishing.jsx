@@ -103,14 +103,17 @@ function Fishing() {
             isFishingGameOpen
               ? {
                   position: "absolute",
-                  top: "1rem",
+                  bottom: "0.5rem",
+                  left: "0.5rem",
                   zIndex: "999",
+                  width: "2rem",
+                  height: "2rem",
                 }
               : {}
           }
         >
           <div className="BubbleReflection" />
-          Fishionary
+          {isFishingGameOpen ? "" : "Fishionary"}
           <h1 className="FishionaryCount">
             {Object.keys(fishCaught).length} / {Object.keys(fishionary).length}
           </h1>
