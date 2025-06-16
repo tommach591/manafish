@@ -5,7 +5,7 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { createBalance, getBalance, updateBalance } from "./Balance";
+import { getBalance, updateBalance } from "./Balance";
 
 const ManaContext = createContext();
 export function useMana() {
@@ -99,44 +99,20 @@ export function ManaProvider({ children }) {
       try {
         const res = await getBalance(userID);
         if (res) {
-          const savedState = JSON.parse(localStorage.getItem(userID));
-          const hasValidLocal = savedState?.balance?.lastManaInterval;
-
-          const localStorageDataTime = hasValidLocal
-            ? new Date(savedState.balance.lastManaInterval).getTime()
-            : 0;
-          const serverStorageDataTime = new Date(
-            res.lastManaInterval
-          ).getTime();
-
-          if (hasValidLocal && localStorageDataTime > serverStorageDataTime) {
-            console.log("Loading local balance data...");
-            setMana(savedState.balance.mana);
-            setStoredMana(savedState.balance.storedMana);
-            setMaxStoredMana(savedState.balance.maxStoredMana);
-            setLastManaInterval(new Date(savedState.balance.lastManaInterval));
-            setCurrentProfileIcon(savedState.balance.currentProfileIcon);
-            setProfileIcons(savedState.balance.profileIcons);
-          } else {
-            console.log("Loading server balance data...");
-            setMana(res.mana);
-            setStoredMana(res.storedMana);
-            setMaxStoredMana(res.maxStoredMana);
-            setLastManaInterval(new Date(res.lastManaInterval));
-            setCurrentProfileIcon(res.currentProfileIcon);
-            setProfileIcons(res.profileIcons);
-          }
+          console.log("Loading server balance data...");
+          setMana(res.mana);
+          setStoredMana(res.storedMana);
+          setMaxStoredMana(res.maxStoredMana);
+          setLastManaInterval(new Date(res.lastManaInterval));
+          setCurrentProfileIcon(res.currentProfileIcon);
+          setProfileIcons(res.profileIcons);
         }
       } catch (err) {
-        // console.error("Failed to fetch balance. Logging out user.", err);
-        console.log("Creating new account...");
-        createBalance(userID);
-        setMana(50);
-        setStoredMana(0);
-        setMaxStoredMana(480);
-        setLastManaInterval(new Date());
-        setCurrentProfileIcon(0);
-        setProfileIcons([0]);
+        alert("Error in fetching account, logging out...");
+        localStorage.removeItem("userID");
+        localStorage.removeItem("username");
+        setUsername("");
+        setUserID("");
       }
     };
 

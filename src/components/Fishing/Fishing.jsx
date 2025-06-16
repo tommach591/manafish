@@ -10,9 +10,13 @@ import HomeButton from "../HomeButton";
 import LogoutButton from "../LogoutButton";
 import { useAudio } from "../../utils/AudioContext";
 import { useSocket } from "../../utils/SocketContext";
+import manaNPC from "../../assets/miscImage/manaNPC.png";
+import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 
 function Fishing() {
-  const { userID } = useMana();
+  const { userID, storedMana, retrieveStoredMana } = useMana();
+  const [claimedMana, setClaimedMana] = useState(0);
+
   const { fishCaught } = useFish();
   const {
     room,
@@ -82,6 +86,7 @@ function Fishing() {
 
   return (
     <div className="Fishing">
+      <img src={manaNPC} alt="" className="NPC" />
       <HomeButton />
       <LogoutButton />
       <div className="LobbyInput">
@@ -94,6 +99,43 @@ function Fishing() {
         />
       </div>
       <div className="LobbyButtons">
+        {isFishingGameOpen ? (
+          <button
+            className="ClaimButton"
+            onClick={() => {
+              const oldStoredMana = storedMana;
+              setClaimedMana(oldStoredMana);
+              retrieveStoredMana();
+            }}
+            onMouseEnter={() => playAudio("bubble")}
+            style={{
+              position: "absolute",
+              bottom: "0.5rem",
+              left: "4rem",
+              zIndex: "999",
+              width: "2rem",
+              height: "2rem",
+            }}
+          >
+            <div className="BubbleReflection" />
+            <h1
+              className="TextPopUp"
+              style={
+                claimedMana !== 0
+                  ? {
+                      animation: "textPopUp 1.5s forwards ease-in-out 1",
+                    }
+                  : {}
+              }
+              onAnimationEnd={() => setClaimedMana(0)}
+            >
+              +{claimedMana}
+            </h1>
+            <img src={manaCurrencyImg} alt="" style={{ width: "1.5rem" }} />
+          </button>
+        ) : (
+          <div />
+        )}
         <button
           onClick={() => {
             openFishionary();

@@ -3,6 +3,7 @@ import "./SpacePlayer.css";
 import { getProfileIcon } from "../../../../utils/ProfileIcon";
 import { useMana } from "../../../../utils/ManaContext";
 import { getSpaceImage } from "../../../../utils/Spacedex";
+import border from "../../../../assets/borderImage/0.png";
 
 function SpacePlayer({
   playerID,
@@ -23,8 +24,23 @@ function SpacePlayer({
   return (
     <div className="SpacePlayer">
       <div className="PlayerContent">
-        <h1 className="PlayerName" style={playerID === userID ? {fontWeight: "bold"} : {}}>{playerInfo.username}</h1>
-        <img src={getProfileIcon(playerInfo.currentProfileIcon)} alt="" />
+        <h1
+          className="PlayerName"
+          style={playerID === userID ? { fontWeight: "bold" } : {}}
+        >
+          {playerInfo.username}
+        </h1>
+        <img
+          className="PlayerProfilePic"
+          src={getProfileIcon(playerInfo.currentProfileIcon)}
+          alt=""
+          style={false ? {} : { border: "1px solid black" }}
+        />
+        {false ? (
+          <img className="PlayerProfileBorder" src={border} alt="" />
+        ) : (
+          <div />
+        )}
         {message ? (
           <div
             className="SpaceMessage"

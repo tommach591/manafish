@@ -3,7 +3,6 @@
   height: 100%;
   background: white;
   position: relative;
-
 }
 
 button {
@@ -39,10 +38,14 @@ button {
   font-size: 14px;
 }
 
-.PlayerContent > img {
+.PlayerProfilePic {
   width: 100%;
-  border: 1px solid black;
   border-radius: 5px;
+}
+
+.PlayerProfileBorder {
+  position: absolute;
+  width: 145%;
 }
 
 @keyframes messageAndFade {

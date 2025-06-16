@@ -10,9 +10,11 @@ import LogoutButton from "../LogoutButton";
 import HomeButton from "../HomeButton";
 import { useAudio } from "../../utils/AudioContext";
 import { useSocket } from "../../utils/SocketContext";
+import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 
 function Space() {
-  const { userID } = useMana();
+  const { userID, storedMana, retrieveStoredMana } = useMana();
+  const [claimedMana, setClaimedMana] = useState(0);
   const { aliensCaught } = useFish();
   const {
     room,
@@ -94,6 +96,43 @@ function Space() {
         />
       </div>
       <div className="LobbyButtons">
+        {isSpaceGameOpen ? (
+          <button
+            className="ClaimButton"
+            onClick={() => {
+              const oldStoredMana = storedMana;
+              setClaimedMana(oldStoredMana);
+              retrieveStoredMana();
+            }}
+            onMouseEnter={() => playAudio("bubble")}
+            style={{
+              position: "absolute",
+              bottom: "0.5rem",
+              left: "4rem",
+              zIndex: "999",
+              width: "2rem",
+              height: "2rem",
+            }}
+          >
+            <div className="BubbleReflection" />
+            <h1
+              className="TextPopUp"
+              style={
+                claimedMana !== 0
+                  ? {
+                      animation: "textPopUp 1.5s forwards ease-in-out 1",
+                    }
+                  : {}
+              }
+              onAnimationEnd={() => setClaimedMana(0)}
+            >
+              +{claimedMana}
+            </h1>
+            <img src={manaCurrencyImg} alt="" style={{ width: "1.5rem" }} />
+          </button>
+        ) : (
+          <div />
+        )}
         <button
           onClick={() => {
             openSpacedex();
@@ -113,7 +152,7 @@ function Space() {
           }
         >
           <div className="BubbleReflection" />
-          {isSpacedexOpen ? "" : "Spacedex"}
+          {isSpaceGameOpen ? "" : "Spacedex"}
           <h1 className="SpacedexCount">
             {Object.keys(aliensCaught).length} / {Object.keys(spacedex).length}
           </h1>

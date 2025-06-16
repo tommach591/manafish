@@ -26,6 +26,9 @@ function FishingGame({
   const [autoFish, setAutoFish] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [timePassed, setTimePassed] = useState(new Date());
+  // eslint-disable-next-line no-unused-vars
+  const [startingMana, setStartingMana] = useState(mana);
+  const [rarestFish, setRarestFish] = useState();
 
   const [messageQueue, setMessageQueue] = useState({});
   const BAITCOST = 10;
@@ -101,6 +104,7 @@ function FishingGame({
     const fish = FISHES[category][index];
 
     setFishPrize(fish);
+    if (!rarestFish || rarestFish.value < fish.value) setRarestFish(fish);
     addFish(fish.id);
     sendMessage({ userID, fish });
     updateMana(Number(fish.value));
@@ -114,7 +118,15 @@ function FishingGame({
       const sounds = ["great", "lucky", "wow", "yay", "niceCatch"];
       playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
     }
-  }, [userID, updateMana, sendMessage, addFish, weights, playAudio]);
+  }, [
+    userID,
+    updateMana,
+    sendMessage,
+    addFish,
+    weights,
+    playAudio,
+    rarestFish,
+  ]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
     setMessageQueue((prev) => {
@@ -257,9 +269,23 @@ function FishingGame({
 
   return (
     <div className="FishingGame">
-      <h1 className="Timer">
-        {formatTime(Math.floor((Date.now() - timePassed.getTime()) / 1000))}
-      </h1>
+      <div className="FishingGameInfo">
+        <h1 className="Timer">
+          {formatTime(Math.floor((Date.now() - timePassed.getTime()) / 1000))} |
+        </h1>
+        <h1 className="ManaProfit">
+          {mana - startingMana}
+          <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
+        </h1>
+        {rarestFish ? (
+          <div className="RarestFish">
+            <h1>| {rarestFish.value}</h1>
+            <img src={getFishImage(rarestFish.id)} alt="" />
+          </div>
+        ) : (
+          <div />
+        )}
+      </div>
       <div className="ManaDisplayWhileFishing">
         <h1>
           {`Mana: ${formatNumberWithCommas(mana)}`}

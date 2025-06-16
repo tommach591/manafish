@@ -40,6 +40,7 @@ function Home() {
         className="CreditsButton"
         onClick={() => {
           openCredits();
+          // addAllFish();
         }}
         onMouseEnter={() => playAudio("bubble")}
       >
@@ -160,8 +161,7 @@ function Home() {
             <div className="BubbleReflection" />
             Space
             <img src={spaceImage} alt="" className="MenuButtonIcon" />
-          </button>
-          */}
+          </button> */}
       </div>
 
       <Modal

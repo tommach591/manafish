@@ -26,6 +26,9 @@ function SpaceGame({
   const [autoFish, setAutoFish] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [timePassed, setTimePassed] = useState(new Date());
+  // eslint-disable-next-line no-unused-vars
+  const [startingMana, setStartingMana] = useState(mana);
+  const [rarestAlien, setRarestAlien] = useState();
 
   const [messageQueue, setMessageQueue] = useState({});
   const BAITCOST = 20;
@@ -101,6 +104,7 @@ function SpaceGame({
     const fish = FISHES[category][index];
 
     setAlienPrize(fish);
+    if (!rarestAlien || rarestAlien.value < fish.value) setRarestAlien(fish);
     addAlien(fish.id);
     sendMessage({ userID, fish });
     updateMana(Number(fish.value));
@@ -114,7 +118,15 @@ function SpaceGame({
       const sounds = ["great", "lucky", "wow", "yay", "niceCatch"];
       playAudio(sounds[Math.floor(Math.random() * sounds.length)]);
     }
-  }, [userID, updateMana, sendMessage, addAlien, weights, playAudio]);
+  }, [
+    userID,
+    updateMana,
+    sendMessage,
+    addAlien,
+    weights,
+    playAudio,
+    rarestAlien,
+  ]);
 
   const handleMessageQueueShift = useCallback((playerID) => {
     setMessageQueue((prev) => {
@@ -257,7 +269,23 @@ function SpaceGame({
 
   return (
     <div className="SpaceGame">
-      {formatTime(Math.floor((Date.now() - timePassed.getTime()) / 1000))}
+      <div className="FishingGameInfo">
+        <h1 className="Timer">
+          {formatTime(Math.floor((Date.now() - timePassed.getTime()) / 1000))} |
+        </h1>
+        <h1 className="ManaProfit">
+          {mana - startingMana}
+          <img className="CurrencyIcon" src={manaCurrencyImg} alt="" />
+        </h1>
+        {rarestAlien ? (
+          <div className="RarestFish">
+            <h1>| {rarestAlien.value}</h1>
+            <img src={getSpaceImage(rarestAlien.id)} alt="" />
+          </div>
+        ) : (
+          <div />
+        )}
+      </div>
       <div className="ManaDisplayWhileFishing">
         <h1>
           {`Mana: ${formatNumberWithCommas(mana)}`}

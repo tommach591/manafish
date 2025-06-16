@@ -9,6 +9,11 @@ import Coin from "./Coin";
 import HomeButton from "../HomeButton";
 import LogoutButton from "../LogoutButton";
 import { useAudio } from "../../utils/AudioContext";
+import scratchImage from "../../assets/miscImage/scratch.png";
+import blackjackImage from "../../assets/miscImage/blackjack.png";
+import slotsImage from "../../assets/miscImage/slots.png";
+import coinsImage from "../../assets/miscImage/coins.png";
+import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 
 function Arcade() {
   const { mana, updateMana } = useMana();
@@ -88,9 +93,11 @@ function Arcade() {
             }
           }}
           onMouseEnter={() => playAudio("bubble")}
+          style={{ fontSize: "14px", paddingBottom: "2.5rem" }}
         >
           <div className="BubbleReflection" />
           Scratch
+          <img src={scratchImage} alt="" className="MenuButtonIcon" />
         </button>
         <button
           onClick={() => {
@@ -101,9 +108,11 @@ function Arcade() {
             }
           }}
           onMouseEnter={() => playAudio("bubble")}
+          style={{ fontSize: "14px", paddingBottom: "2.5rem" }}
         >
           <div className="BubbleReflection" />
           Blackjack
+          <img src={blackjackImage} alt="" className="MenuButtonIcon" />
         </button>
         <button
           onClick={() => {
@@ -114,18 +123,32 @@ function Arcade() {
             }
           }}
           onMouseEnter={() => playAudio("bubble")}
+          style={{ fontSize: "14px", paddingBottom: "2.5rem" }}
         >
           <div className="BubbleReflection" />
           Slots
+          <img
+            src={slotsImage}
+            alt=""
+            className="MenuButtonIcon"
+            style={{ bottom: "0.85rem", left: "0.68rem" }}
+          />
         </button>
         <button
           onClick={() => {
             openCoin();
           }}
           onMouseEnter={() => playAudio("bubble")}
+          style={{ fontSize: "14px", paddingBottom: "2.5rem" }}
         >
           <div className="BubbleReflection" />
           Coin
+          <img
+            src={coinsImage}
+            alt=""
+            className="MenuButtonIcon"
+            style={{ bottom: "0.85rem" }}
+          />
         </button>
         <button
           onClick={() => {
@@ -136,9 +159,16 @@ function Arcade() {
             }
           }}
           onMouseEnter={() => playAudio("bubble")}
+          style={{ fontSize: "14px", paddingBottom: "2.5rem" }}
         >
           <div className="BubbleReflection" />
           Donate
+          <img
+            src={manaCurrencyImg}
+            alt=""
+            className="MenuButtonIcon"
+            style={{ width: "2.5rem", bottom: "0.85rem" }}
+          />
         </button>
       </div>
       <Modal

@@ -6,7 +6,7 @@ import {
   useEffect,
 } from "react";
 import { useMana } from "./ManaContext";
-import { createFish, getFish, updateFish } from "./Fish";
+import { getFish, updateFish } from "./Fish";
 import fishionary from "../assets/Fishionary.json";
 
 const FishContext = createContext();
@@ -15,7 +15,7 @@ export function useFish() {
 }
 
 export function FishProvider({ children }) {
-  const { userID, lastManaInterval } = useMana();
+  const { userID } = useMana();
 
   const [fishCaught, setFishCaught] = useState({});
   const [aliensCaught, setAliensCaught] = useState(null);
@@ -59,9 +59,13 @@ export function FishProvider({ children }) {
     const newFishCaught = { ...fishCaught };
     Object.keys(fishionary).forEach((key) => {
       const fishID = Number(key);
-      if (newFishCaught[fishID]) {
-        newFishCaught[fishID] += 1;
-      } else newFishCaught[fishID] = 1;
+      // Update to exclude from adding.
+      const excluded = [0, 23, 69, 70, 110, 107, 108, 109];
+
+      if (!excluded.includes(fishID))
+        if (newFishCaught[fishID]) {
+          newFishCaught[fishID] += 1;
+        } else newFishCaught[fishID] = 1;
     });
 
     const sortedFishCaught = {};
@@ -113,28 +117,9 @@ export function FishProvider({ children }) {
     else {
       getFish(userID).then((res) => {
         if (res) {
-          const savedState = JSON.parse(localStorage.getItem(userID));
-          const hasValidLocal = savedState?.balance?.lastManaInterval;
-
-          const localStorageDataTime = hasValidLocal
-            ? new Date(savedState.balance.lastManaInterval).getTime()
-            : 0;
-          const serverStorageDataTime = new Date(lastManaInterval).getTime();
-          if (hasValidLocal && localStorageDataTime > serverStorageDataTime) {
-            console.log("Loading local fish data...");
-            setFishCaught(savedState.fish.fishCaught);
-            setAliensCaught(savedState.fish.aliensCaught);
-          } else {
-            // Everything above, will be deleted later once localstorage is no longer used.
-            console.log("Loading server fish data...");
-            setFishCaught(res.fishCaught);
-            setAliensCaught(res.aliensCaught);
-          }
-        } else {
-          console.log("Creating new account...");
-          createFish(userID);
-          setFishCaught({});
-          setAliensCaught(null);
+          console.log("Loading server fish data...");
+          setFishCaught(res.fishCaught);
+          setAliensCaught(res.aliensCaught);
         }
       });
     }

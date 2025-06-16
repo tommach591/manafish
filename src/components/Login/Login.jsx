@@ -3,6 +3,8 @@ import "./Login.css";
 import { createAccount, loginAccount } from "../../utils/Account";
 import { useNavigate } from "react-router-dom";
 import { useMana } from "../../utils/ManaContext";
+import { createBalance } from "../../utils/Balance";
+import { createFish } from "../../utils/Fish";
 
 function Login() {
   const navigate = useNavigate();
@@ -64,6 +66,8 @@ function Login() {
             if (username.length >= 3 && password.length >= 8)
               createAccount(username, password).then((res) => {
                 if (res) {
+                  createBalance(res._id);
+                  createFish(res._id);
                   alert("Account created. Please log in.");
                 } else {
                   alert("Account already exists.");
