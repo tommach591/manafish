@@ -134,6 +134,33 @@ export function FishProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userID]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && userID) {
+        getFish(userID).then((res) => {
+          if (res) {
+            console.log("Loading server fish data...");
+            setFishCaught(res.fishCaught);
+            setAliensCaught(res.aliensCaught);
+            setLoadedSucessfully(true);
+          } else {
+            alert("Error in fetching account, logging out...");
+            localStorage.removeItem("userID");
+            localStorage.removeItem("username");
+            setUsername("");
+            setUserID("");
+          }
+        });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [userID, setUserID, setUsername]);
+
   return (
     <FishContext.Provider
       value={{

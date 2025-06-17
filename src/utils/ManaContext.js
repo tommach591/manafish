@@ -147,19 +147,40 @@ export function ManaProvider({ children }) {
   }, [userID, maxStoredMana, lastManaInterval, storedMana, isManaBubbleOn]);
 
   useEffect(() => {
-    const handleUnload = () => {
-      localStorage.removeItem("userID");
-      localStorage.removeItem("username");
-      setUsername("");
-      setUserID("");
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && userID) {
+        const fetchBalance = async () => {
+          try {
+            const res = await getBalance(userID);
+            if (res) {
+              console.log("Loading server balance data...");
+              setMana(res.mana);
+              setStoredMana(res.storedMana);
+              setMaxStoredMana(res.maxStoredMana);
+              setLastManaInterval(new Date(res.lastManaInterval));
+              setCurrentProfileIcon(res.currentProfileIcon);
+              setProfileIcons(res.profileIcons);
+              setLoadedSucessfully(true);
+            }
+          } catch (err) {
+            alert("Error in fetching account, logging out...");
+            localStorage.removeItem("userID");
+            localStorage.removeItem("username");
+            setUsername("");
+            setUserID("");
+          }
+        };
+
+        fetchBalance();
+      }
     };
 
-    window.addEventListener("beforeunload", handleUnload);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.removeEventListener("beforeunload", handleUnload);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, []);
+  }, [userID]);
 
   return (
     <ManaContext.Provider
