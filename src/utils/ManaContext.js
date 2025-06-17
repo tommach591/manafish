@@ -23,6 +23,8 @@ export function ManaProvider({ children }) {
     return savedUsername ? JSON.parse(savedUsername) : "";
   });
 
+  const [loadedSuccessfully, setLoadedSucessfully] = useState(false);
+
   const [mana, setMana] = useState(0);
   const [storedMana, setStoredMana] = useState(0);
   const [maxStoredMana, setMaxStoredMana] = useState(480);
@@ -45,7 +47,7 @@ export function ManaProvider({ children }) {
   }, [storedMana]);
 
   const updateServerMana = useCallback(() => {
-    if (!userID || refresh === 0) return;
+    if (!userID || !loadedSuccessfully || refresh === 0) return;
     // console.log("Saving mana to server");
     const updateFields = {
       balance: {
@@ -67,6 +69,7 @@ export function ManaProvider({ children }) {
     lastManaInterval,
     currentProfileIcon,
     profileIcons,
+    loadedSuccessfully,
   ]);
 
   const handleBalanceLogin = useCallback((id, username) => {
@@ -86,10 +89,10 @@ export function ManaProvider({ children }) {
 
   // Save to Server
   useEffect(() => {
-    if (!userID) return;
+    if (!userID || !loadedSuccessfully) return;
     const timeout = setTimeout(() => updateServerMana(), 500);
     return () => clearTimeout(timeout);
-  }, [updateServerMana, userID]);
+  }, [updateServerMana, userID, loadedSuccessfully]);
 
   // Load data
   useEffect(() => {
@@ -106,6 +109,7 @@ export function ManaProvider({ children }) {
           setLastManaInterval(new Date(res.lastManaInterval));
           setCurrentProfileIcon(res.currentProfileIcon);
           setProfileIcons(res.profileIcons);
+          setLoadedSucessfully(true);
         }
       } catch (err) {
         alert("Error in fetching account, logging out...");

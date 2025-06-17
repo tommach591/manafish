@@ -15,13 +15,14 @@ export function useFish() {
 }
 
 export function FishProvider({ children }) {
-  const { userID } = useMana();
+  const { userID, setUserID, setUsername } = useMana();
 
+  const [loadedSuccessfully, setLoadedSucessfully] = useState(false);
   const [fishCaught, setFishCaught] = useState({});
   const [aliensCaught, setAliensCaught] = useState(null);
 
   const updateServerFish = useCallback(() => {
-    if (!userID) return;
+    if (!userID || !loadedSuccessfully) return;
     // console.log("Saving fish to server");
     const updateFields = {
       fish: {
@@ -30,7 +31,7 @@ export function FishProvider({ children }) {
       },
     };
     updateFish(userID, updateFields.fish);
-  }, [userID, fishCaught, aliensCaught]);
+  }, [userID, fishCaught, aliensCaught, loadedSuccessfully]);
 
   const addFish = useCallback(
     (fishID) => {
@@ -60,7 +61,7 @@ export function FishProvider({ children }) {
     Object.keys(fishionary).forEach((key) => {
       const fishID = Number(key);
       // Update to exclude from adding.
-      const excluded = [0, 23, 69, 70, 110, 107, 108, 109];
+      const excluded = [23, 69, 70, 110, 107, 108];
 
       if (!excluded.includes(fishID))
         if (newFishCaught[fishID]) {
@@ -106,10 +107,10 @@ export function FishProvider({ children }) {
 
   // Save to Server
   useEffect(() => {
-    if (!userID) return;
+    if (!userID || !loadedSuccessfully) return;
     const timeout = setTimeout(() => updateServerFish(), 500);
     return () => clearTimeout(timeout);
-  }, [updateServerFish, userID]);
+  }, [updateServerFish, userID, loadedSuccessfully]);
 
   // Load data
   useEffect(() => {
@@ -120,6 +121,13 @@ export function FishProvider({ children }) {
           console.log("Loading server fish data...");
           setFishCaught(res.fishCaught);
           setAliensCaught(res.aliensCaught);
+          setLoadedSucessfully(true);
+        } else {
+          alert("Error in fetching account, logging out...");
+          localStorage.removeItem("userID");
+          localStorage.removeItem("username");
+          setUsername("");
+          setUserID("");
         }
       });
     }
