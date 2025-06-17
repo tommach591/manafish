@@ -154,30 +154,10 @@ export function ManaProvider({ children }) {
       setUserID("");
     };
 
-    function isMobileDevice() {
-      return (
-        navigator.userAgentData?.mobile === true ||
-        /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        )
-      );
-    }
-
-    const handleVisibilityChange = () => {
-      if (isMobileDevice() && document.visibilityState === "hidden") {
-        localStorage.removeItem("userID");
-        localStorage.removeItem("username");
-        setUsername("");
-        setUserID("");
-      }
-    };
-
     window.addEventListener("beforeunload", handleUnload);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       window.removeEventListener("beforeunload", handleUnload);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
