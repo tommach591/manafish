@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import "./SpacePlayer.css";
-import { getProfileIcon } from "../../../../utils/ProfileIcon";
+import {
+  getProfileBorder,
+  getProfileIcon,
+} from "../../../../utils/ProfileIcon";
 import { useMana } from "../../../../utils/ManaContext";
 import { getSpaceImage } from "../../../../utils/Spacedex";
-import border from "../../../../assets/borderImage/0.png";
 
 function SpacePlayer({
   playerID,
@@ -36,8 +38,12 @@ function SpacePlayer({
           alt=""
           style={false ? {} : { border: "1px solid black" }}
         />
-        {false ? (
-          <img className="PlayerProfileBorder" src={border} alt="" />
+        {playerInfo.currentProfileBorder ? (
+          <img
+            className="PlayerProfileBorder"
+            src={getProfileBorder(playerInfo.currentProfileBorder)}
+            alt=""
+          />
         ) : (
           <div />
         )}

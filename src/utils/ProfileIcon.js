@@ -14,16 +14,30 @@ function importAll(folder) {
 
   return images;
 }
-const images = importAll(
+const profileImages = importAll(
   require.context("../assets/profileImage", false, /\.(png|jpe?g|svg)$/)
 );
 
 export function getProfileIconList() {
-  const length = Object.keys(images).length;
+  const length = Object.keys(profileImages).length;
   const profileIconList = Array.from({ length: length }, (_, i) => i);
   return profileIconList;
 }
 
 export function getProfileIcon(index) {
-  return images[`${index}.png`];
+  return profileImages[`${index}.png`];
+}
+
+const borderImages = importAll(
+  require.context("../assets/borderImage", false, /\.(png|jpe?g|svg)$/)
+);
+
+export function getProfileBorderList() {
+  const length = Object.keys(borderImages).length;
+  const profileBorderList = Array.from({ length: length }, (_, i) => i);
+  return profileBorderList;
+}
+
+export function getProfileBorder(index) {
+  return borderImages[`${index}.png`];
 }

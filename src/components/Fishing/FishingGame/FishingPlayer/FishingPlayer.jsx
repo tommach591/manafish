@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import "./FishingPlayer.css";
 import { getFishImage } from "../../../../utils/Fishionary";
-import { getProfileIcon } from "../../../../utils/ProfileIcon";
+import {
+  getProfileBorder,
+  getProfileIcon,
+} from "../../../../utils/ProfileIcon";
 import { useMana } from "../../../../utils/ManaContext";
-import border from "../../../../assets/borderImage/0.png";
 
 function FishingPlayer({
   playerID,
@@ -36,8 +38,12 @@ function FishingPlayer({
           alt=""
           style={false ? {} : { border: "1px solid black" }}
         />
-        {false ? (
-          <img className="PlayerProfileBorder" src={border} alt="" />
+        {playerInfo.currentProfileBorder ? (
+          <img
+            className="PlayerProfileBorder"
+            src={getProfileBorder(playerInfo.currentProfileBorder)}
+            alt=""
+          />
         ) : (
           <div />
         )}

@@ -18,8 +18,13 @@ export function useSocket() {
 const SERVERURL = "https://manafish-server-47d29a19afc3.herokuapp.com";
 
 export function SocketProvider({ children }) {
-  const { userID, username, currentProfileIcon, handleBalanceLogout } =
-    useMana();
+  const {
+    userID,
+    username,
+    currentProfileIcon,
+    currentProfileBorder,
+    handleBalanceLogout,
+  } = useMana();
   const socket = useRef(null);
   const [roomType, setRoomType] = useState("F");
   const [room, setRoom] = useState("");
@@ -43,6 +48,7 @@ export function SocketProvider({ children }) {
         userID,
         username,
         currentProfileIcon,
+        currentProfileBorder,
       });
     }
   }, [
@@ -50,6 +56,7 @@ export function SocketProvider({ children }) {
     userID,
     username,
     currentProfileIcon,
+    currentProfileBorder,
     room,
     validateRoomCode,
   ]);

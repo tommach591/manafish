@@ -54,6 +54,10 @@ export function updateBalance(userIDEntered, updatedBody) {
     body.currentProfileIcon = updatedBody.currentProfileIcon;
   if (updatedBody.profileIcons !== undefined)
     body.profileIcons = updatedBody.profileIcons;
+  if (updatedBody.currentProfileBorder !== undefined)
+    body.currentProfileBorder = updatedBody.currentProfileBorder;
+  if (updatedBody.profileBorders !== undefined)
+    body.profileBorders = updatedBody.profileBorders;
 
   return fetch(`${serverURL}/api/balance/update`, {
     method: "POST",

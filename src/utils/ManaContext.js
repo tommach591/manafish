@@ -31,6 +31,9 @@ export function ManaProvider({ children }) {
   const [lastManaInterval, setLastManaInterval] = useState(new Date());
   const [currentProfileIcon, setCurrentProfileIcon] = useState(0);
   const [profileIcons, setProfileIcons] = useState([0]);
+  const [currentProfileBorder, setCurrentProfileBorder] = useState(null);
+  const [profileBorders, setProfileBorders] = useState(null);
+
   const [refresh, setRefresh] = useState(0);
   const [isManaBubbleOn, setIsManaBubbleOn] = useState(false);
 
@@ -57,6 +60,8 @@ export function ManaProvider({ children }) {
         lastManaInterval: lastManaInterval,
         currentProfileIcon: currentProfileIcon,
         profileIcons: profileIcons,
+        currentProfileBorder: currentProfileBorder,
+        profileBorders: profileBorders,
       },
     };
     updateBalance(userID, updateFields.balance);
@@ -69,6 +74,8 @@ export function ManaProvider({ children }) {
     lastManaInterval,
     currentProfileIcon,
     profileIcons,
+    currentProfileBorder,
+    profileBorders,
     loadedSuccessfully,
   ]);
 
@@ -109,6 +116,8 @@ export function ManaProvider({ children }) {
           setLastManaInterval(new Date(res.lastManaInterval));
           setCurrentProfileIcon(res.currentProfileIcon);
           setProfileIcons(res.profileIcons);
+          setCurrentProfileBorder(res.currentProfileBorder);
+          setProfileBorders(res.profileBorders);
           setLoadedSucessfully(true);
         }
       } catch (err) {
@@ -160,6 +169,8 @@ export function ManaProvider({ children }) {
               setLastManaInterval(new Date(res.lastManaInterval));
               setCurrentProfileIcon(res.currentProfileIcon);
               setProfileIcons(res.profileIcons);
+              setCurrentProfileBorder(res.currentProfileBorder);
+              setProfileBorders(res.profileBorders);
               setLoadedSucessfully(true);
             }
           } catch (err) {
@@ -201,6 +212,10 @@ export function ManaProvider({ children }) {
         setCurrentProfileIcon,
         profileIcons,
         setProfileIcons,
+        currentProfileBorder,
+        setCurrentProfileBorder,
+        profileBorders,
+        setProfileBorders,
         isManaBubbleOn,
         setIsManaBubbleOn,
       }}

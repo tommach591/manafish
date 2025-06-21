@@ -7,12 +7,13 @@ import { useMana } from "../../utils/ManaContext";
 import manaCurrencyImg from "../../assets/miscImage/manacurrency.png";
 import HomeButton from "../HomeButton";
 import LogoutButton from "../LogoutButton";
-import { getProfileIcon } from "../../utils/ProfileIcon";
+import { getProfileBorder, getProfileIcon } from "../../utils/ProfileIcon";
 
 function Leaderboard() {
   const { userID } = useMana();
   const [playerList, setPlayerList] = useState([]);
   const [playerIndex, setPlayerIndex] = useState(0);
+  const TOP_PLAYERS = 20;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,11 +87,31 @@ function Leaderboard() {
               alt=""
             />
             <h1 className="PlayerRankPlacement">#{playerIndex + 1}</h1>
-            <img
+            <div
               className="PlayerRankIcon"
-              src={getProfileIcon(playerList[playerIndex].currentProfileIcon)}
-              alt=""
-            />
+              style={
+                playerList[playerIndex].currentProfileBorder
+                  ? {}
+                  : { border: "1px solid black" }
+              }
+            >
+              {playerList[playerIndex].currentProfileBorder ? (
+                <img
+                  className="PlayerRankBorder"
+                  src={getProfileBorder(
+                    playerList[playerIndex].currentProfileBorder
+                  )}
+                  alt=""
+                />
+              ) : (
+                <div />
+              )}
+              <img
+                className="PlayerRankImage"
+                src={getProfileIcon(playerList[playerIndex].currentProfileIcon)}
+                alt=""
+              />
+            </div>
             <h1 className="PlayerRankName">
               {playerList[playerIndex].username}
             </h1>
@@ -103,7 +124,7 @@ function Leaderboard() {
           <div />
         )}
         <div className="RankingsDivider" />
-        {playerList.slice(0, 10).map((player, i) => {
+        {playerList.slice(0, TOP_PLAYERS).map((player, i) => {
           return (
             <div
               className="PlayerRank"
@@ -132,11 +153,29 @@ function Leaderboard() {
                 alt=""
               />
               <h1 className="PlayerRankPlacement">#{i + 1}</h1>
-              <img
+              <div
                 className="PlayerRankIcon"
-                src={getProfileIcon(player.currentProfileIcon)}
-                alt=""
-              />
+                style={
+                  player.currentProfileBorder
+                    ? {}
+                    : { border: "1px solid black" }
+                }
+              >
+                {player.currentProfileBorder ? (
+                  <img
+                    className="PlayerRankBorder"
+                    src={getProfileBorder(player.currentProfileBorder)}
+                    alt=""
+                  />
+                ) : (
+                  <div />
+                )}
+                <img
+                  className="PlayerRankImage"
+                  src={getProfileIcon(player.currentProfileIcon)}
+                  alt=""
+                />
+              </div>
               <h1 className="PlayerRankName">{player.username}</h1>
               <h1 className="PlayerRankMana">
                 {formatCompactNumber(player.mana)}

@@ -71,6 +71,22 @@
   margin-right: 0.75rem;
   border: 1px solid black;
   border-radius: 5px;
+
+  position: relative;
+}
+
+.PlayerRankBorder {
+  width: 140%;
+  height: 140%;
+
+  position: absolute;
+  top: -20%;
+  left: -20%;
+}
+
+.PlayerRankImage {
+  width: 100%;
+  height: 100%;
 }
 
 .PlayerRankName {

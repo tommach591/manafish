@@ -60,12 +60,18 @@
   margin: 0.5rem;
 }
 
-.ShopMessage > button {
+.ShopMessageButtons {
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ShopMessageButtons > button {
   border: 1px solid rgb(50, 50, 60);
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   padding: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
   border-radius: 5px;
 
   bottom: 0px;

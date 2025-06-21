@@ -3,7 +3,12 @@ import Modal from "../Modal";
 import { useEffect, useState } from "react";
 import { useMana } from "../../utils/ManaContext";
 import { formatNumberWithCommas } from "../../utils/Helper";
-import { getProfileIcon, getProfileIconList } from "../../utils/ProfileIcon";
+import {
+  getProfileBorder,
+  getProfileIcon,
+  getProfileIconList,
+} from "../../utils/ProfileIcon";
+import borders from "../../assets/Borders.json";
 import aivyGremlinGif from "../../assets/miscImage/aivyGremlin.gif";
 import aivyFishingGif from "../../assets/miscImage/aivyFishing.gif";
 import { useFish } from "../../utils/FishContext";
@@ -19,6 +24,9 @@ function Shop() {
     setCurrentProfileIcon,
     profileIcons,
     setProfileIcons,
+    setCurrentProfileBorder,
+    profileBorders,
+    setProfileBorders,
   } = useMana();
   const { fishCaught, aliensCaught, unlockAliens } = useFish();
   const [isManaLimitOpen, setIsManaLimitOpen] = useState(false);
@@ -33,6 +41,10 @@ function Shop() {
   const openPremiumIconGacha = () => setIsPremiumIconGachaOpen(true);
   const closePremiumIconGacha = () => setIsPremiumIconGachaOpen(false);
 
+  const [isBorderGachaOpen, setIsBorderGachaOpen] = useState(false);
+  const openBorderGacha = () => setIsBorderGachaOpen(true);
+  const closeBorderGacha = () => setIsBorderGachaOpen(false);
+
   const [isSpaceshipOpen, setIsSpaceshipOpen] = useState(false);
   const openSpaceship = () => setIsSpaceshipOpen(true);
   const closeSpaceship = () => setIsSpaceshipOpen(false);
@@ -42,7 +54,8 @@ function Shop() {
   const MAX_MANA_CAP = 20160;
   const PROFILE_ICON_GACHA_PRICE = 5000;
   const PREMIUM_PROFILE_ICON_GACHA_PRICE = 25000;
-  const SPACESHIP_PRICE = 150000;
+  const PROFILE_BORDER_GACHA_PRICE = 5000;
+  const SPACESHIP_PRICE = 100000;
 
   const [
     CONFIRM_PURCHASE,
@@ -52,11 +65,13 @@ function Shop() {
     DUPLICATE_ICON,
     ICON_PURCHASED,
     PREMIUM_ICON_PURCHASED,
+    DUPLICATE_BORDER,
+    BORDER_PURCHASED,
     NOT_ENOUGH_FISH,
     SPACESHIP_ALREADY_UNLOCKED,
     SPACESHIP_PURCHASED,
     COMING_SOON,
-  ] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  ] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   const [confirmedPurchase, setConfirmedPurchase] = useState(CONFIRM_PURCHASE);
   const [price, setPrice] = useState(0);
   const [purchasedIcon, setPurchasedIcon] = useState(0);
@@ -98,9 +113,14 @@ function Shop() {
             <h1>{`Refunded: ${formatNumberWithCommas(
               Math.floor(price * 0.2)
             )}`}</h1>
-            <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
-              Equip
-            </button>
+            <div className="ShopMessageButtons">
+              <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
+                Equip
+              </button>
+              <button onClick={() => setConfirmedPurchase(CONFIRM_PURCHASE)}>
+                Again
+              </button>
+            </div>
           </div>
         );
       case ICON_PURCHASED:
@@ -108,9 +128,14 @@ function Shop() {
           <div className="ShopMessage">
             <h1>{`Obtained new icon!`}</h1>
             <img src={getProfileIcon(purchasedIcon)} alt="" />
-            <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
-              Equip
-            </button>
+            <div className="ShopMessageButtons">
+              <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
+                Equip
+              </button>
+              <button onClick={() => setConfirmedPurchase(CONFIRM_PURCHASE)}>
+                Again
+              </button>
+            </div>
           </div>
         );
       case PREMIUM_ICON_PURCHASED:
@@ -118,9 +143,58 @@ function Shop() {
           <div className="ShopMessage">
             <h1>{`Obtained new icon!`}</h1>
             <img src={getProfileIcon(purchasedIcon)} alt="" />
-            <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
-              Equip
-            </button>
+            <div className="ShopMessageButtons">
+              <button onClick={() => setCurrentProfileIcon(purchasedIcon)}>
+                Equip
+              </button>
+              <button onClick={() => setConfirmedPurchase(CONFIRM_PURCHASE)}>
+                Again
+              </button>
+            </div>
+          </div>
+        );
+      case DUPLICATE_BORDER:
+        return (
+          <div className="ShopMessage">
+            <h1>{`You got a duplicate border!`}</h1>
+            <h2>
+              {borders[purchasedIcon].tier === 0
+                ? "★★★"
+                : borders[purchasedIcon].tier === 1
+                ? "★★★★"
+                : "★★★★★"}
+            </h2>
+            <img src={getProfileBorder(purchasedIcon)} alt="" />
+            <div className="ShopMessageButtons">
+              <button onClick={() => setCurrentProfileBorder(purchasedIcon)}>
+                Equip
+              </button>
+              <button onClick={() => setConfirmedPurchase(CONFIRM_PURCHASE)}>
+                Again
+              </button>
+            </div>
+          </div>
+        );
+      case BORDER_PURCHASED:
+        return (
+          <div className="ShopMessage">
+            <h1>{`Obtained new border!`}</h1>
+            <img src={getProfileBorder(purchasedIcon)} alt="" />
+            <h2>
+              {borders[purchasedIcon].tier === 0
+                ? "★★★"
+                : borders[purchasedIcon].tier === 1
+                ? "★★★★"
+                : "★★★★★"}
+            </h2>
+            <div className="ShopMessageButtons">
+              <button onClick={() => setCurrentProfileBorder(purchasedIcon)}>
+                Equip
+              </button>
+              <button onClick={() => setConfirmedPurchase(CONFIRM_PURCHASE)}>
+                Again
+              </button>
+            </div>
           </div>
         );
       case NOT_ENOUGH_FISH:
@@ -174,6 +248,19 @@ function Shop() {
         setProfileIcons((prev) => [...prev, purchasedIcon]);
         break;
       }
+      case DUPLICATE_BORDER: {
+        updateMana(-price);
+        break;
+      }
+      case BORDER_PURCHASED: {
+        updateMana(-price);
+        setProfileBorders((prev) =>
+          prev === null || prev === undefined
+            ? [purchasedIcon]
+            : [...prev, purchasedIcon]
+        );
+        break;
+      }
       case SPACESHIP_PURCHASED: {
         updateMana(-price);
         unlockAliens();
@@ -186,12 +273,15 @@ function Shop() {
     confirmedPurchase,
     DUPLICATE_ICON,
     ICON_PURCHASED,
+    DUPLICATE_BORDER,
+    BORDER_PURCHASED,
     INCREASE_MAX,
     PREMIUM_ICON_PURCHASED,
     SPACESHIP_PURCHASED,
     purchasedIcon,
     setMaxStoredMana,
     setProfileIcons,
+    setProfileBorders,
     updateMana,
     price,
     unlockAliens,
@@ -240,6 +330,16 @@ function Shop() {
         >
           <div className="BubbleReflection" />
           Premium Gacha
+        </button>
+        <button
+          onClick={() => {
+            setConfirmedPurchase(CONFIRM_PURCHASE);
+            setPrice(PROFILE_BORDER_GACHA_PRICE);
+            openBorderGacha();
+          }}
+        >
+          <div className="BubbleReflection" />
+          Border Gacha
         </button>
         <button
           onClick={() => {
@@ -377,6 +477,58 @@ function Shop() {
                 Yes
               </button>
               <button onClick={closePremiumIconGacha}>No</button>
+            </div>
+          </div>
+        ) : (
+          getShopMessage()
+        )}
+      </Modal>
+
+      <Modal
+        isOpen={isBorderGachaOpen}
+        onClose={closeBorderGacha}
+        title="Profile Border Gacha"
+      >
+        <div className="AivyGremlin">
+          <img src={aivyGremlinGif} alt="" />
+        </div>
+        {confirmedPurchase === CONFIRM_PURCHASE ? (
+          <div className="ShopMessage">
+            <h1>{`Spend ${formatNumberWithCommas(
+              price
+            )} to get a random profile border?`}</h1>
+            <h1>{`★ ★ ★ ★ ★ (5%)`}</h1>
+            <h1>{`★ ★ ★ ★ (10%)`}</h1>
+            <h1>{`★ ★ ★ (85%)`}</h1>
+            <div className="ShopDecision">
+              <button
+                onClick={() => {
+                  if (mana <= price) {
+                    setConfirmedPurchase(NOT_ENOUGH_MANA);
+                  } else {
+                    const random = Math.random();
+                    const tier = random <= 0.05 ? 2 : random <= 0.15 ? 1 : 0;
+                    const bordersByTier = Object.entries(borders).filter(
+                      ([k, v]) => v.tier === tier
+                    );
+
+                    let selectedBorder =
+                      bordersByTier[
+                        Math.floor(Math.random() * bordersByTier.length)
+                      ][1].id;
+
+                    setPurchasedIcon(selectedBorder);
+                    if (profileBorders?.includes(selectedBorder)) {
+                      setConfirmedPurchase(DUPLICATE_BORDER);
+                    } else {
+                      setConfirmedPurchase(BORDER_PURCHASED);
+                    }
+                  }
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={closeBorderGacha}>No</button>
             </div>
           </div>
         ) : (
