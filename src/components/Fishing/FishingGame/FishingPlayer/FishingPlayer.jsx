@@ -36,7 +36,9 @@ function FishingPlayer({
           className="PlayerProfilePic"
           src={getProfileIcon(playerInfo.currentProfileIcon)}
           alt=""
-          style={false ? {} : { border: "1px solid black" }}
+          style={
+            playerInfo.currentProfileBorder ? {} : { border: "1px solid black" }
+          }
         />
         {playerInfo.currentProfileBorder ? (
           <img
