@@ -6,8 +6,8 @@ import { useMana } from "../../../utils/ManaContext";
 import SpacePlayer from "./SpacePlayer";
 import { useFish } from "../../../utils/FishContext";
 import Modal from "../../Modal";
-import soloFishingGif from "../../../assets/miscImage/manafishsolo.gif";
-import duoFishingGif from "../../../assets/miscImage/manafishduo.gif";
+import soloFishingGif from "../../../assets/miscImage/yamiespacesolo.gif";
+import duoFishingGif from "../../../assets/miscImage/yamiespaceduo.gif";
 import { formatNumberWithCommas, formatTime } from "../../../utils/Helper";
 import manaCurrencyImg from "../../../assets/miscImage/manacurrency.png";
 import { useAudio } from "../../../utils/AudioContext";
@@ -31,7 +31,7 @@ function SpaceGame({
   const [rarestAlien, setRarestAlien] = useState();
 
   const [messageQueue, setMessageQueue] = useState({});
-  const BAITCOST = 20;
+  const BAITCOST = 25;
   const FISHINGTIME = 1000 * 7;
 
   const [fishRates, setFishRates] = useState(1);
@@ -41,7 +41,7 @@ function SpaceGame({
     100000, // Rare
     10000, // Epic
     2500, // Unique
-    300, // Legendary
+    200, // Legendary
     5, // Mythic
   ];
   const [weights, setWeights] = useState(baseWeights);

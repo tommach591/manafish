@@ -102,6 +102,7 @@ function FishingGame({
     const category = getRandomCategory();
     const index = Math.floor(Math.random() * FISHES[category].length);
     const fish = FISHES[category][index];
+    // const fish = fishionary[110];
 
     setFishPrize(fish);
     if (!rarestFish || rarestFish.value < fish.value) setRarestFish(fish);

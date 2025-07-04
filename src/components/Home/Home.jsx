@@ -148,7 +148,7 @@ function Home() {
           Mana's Beach
           <img src={manaBeachImage} alt="" className="MenuButtonIcon" />
         </button>
-        {/*
+        {
           <button
             onClick={() => {
               if (aliensCaught) {
@@ -161,7 +161,8 @@ function Home() {
             <div className="BubbleReflection" />
             Space
             <img src={spaceImage} alt="" className="MenuButtonIcon" />
-          </button> */}
+          </button>
+        }
       </div>
 
       <Modal

@@ -343,14 +343,14 @@ function Shop() {
         </button>
         <button
           onClick={() => {
+            /*
             setConfirmedPurchase(COMING_SOON);
             setPrice(0);
             openSpaceship();
-            /*
+            */
             setConfirmedPurchase(CONFIRM_PURCHASE);
             setPrice(SPACESHIP_PRICE);
             openSpaceship();
-            */
           }}
         >
           <div className="BubbleReflection" />
@@ -549,7 +549,7 @@ function Shop() {
             <h1>{`Spend ${formatNumberWithCommas(
               price
             )} to unlock Spaceship?`}</h1>
-            <h1>Must have caught 107 fishes from Mana's Beach.</h1>
+            <h1>Must have caught 100 fishes from Mana's Beach.</h1>
             <div className="ShopDecision">
               <button
                 onClick={() => {
@@ -557,7 +557,7 @@ function Shop() {
                     setConfirmedPurchase(SPACESHIP_ALREADY_UNLOCKED);
                   } else if (mana <= price) {
                     setConfirmedPurchase(NOT_ENOUGH_MANA);
-                  } else if (Object.entries(fishCaught).length < 107) {
+                  } else if (Object.entries(fishCaught).length < 100) {
                     setConfirmedPurchase(NOT_ENOUGH_FISH);
                   } else {
                     setConfirmedPurchase(SPACESHIP_PURCHASED);

@@ -153,9 +153,16 @@ function Space() {
         >
           <div className="BubbleReflection" />
           {isSpaceGameOpen ? "" : "Spacedex"}
-          <h1 className="SpacedexCount">
-            {Object.keys(aliensCaught).length} / {Object.keys(spacedex).length}
-          </h1>
+          {aliensCaught ? (
+            <h1 className="SpacedexCount">
+              {Object.keys(aliensCaught).length} /{" "}
+              {Object.keys(spacedex).length}
+            </h1>
+          ) : (
+            <h1 className="SpacedexCount">
+              {0} / {Object.keys(spacedex).length}
+            </h1>
+          )}
         </button>
         <button
           onClick={() => {
