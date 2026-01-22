@@ -47,6 +47,7 @@ function Home() {
         <div className="BubbleReflection" />
         Credits
       </button>
+      {/*
       <button
         className="DiscordButton"
         onClick={() => {
@@ -62,6 +63,7 @@ function Home() {
         <div className="BubbleReflection" />
         Discord
       </button>
+      */}
       <button
         className="PatchButton"
         onClick={() => {
